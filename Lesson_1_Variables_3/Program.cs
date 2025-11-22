@@ -2,7 +2,7 @@
 
 public class Program  
 {  
-    static void Main()  
+    static void Main(string[] args)  
     {        
         string name;  // Оголошення пустої текстової змінної
         int age;  // Оголошення пустої цілочисельної змінної

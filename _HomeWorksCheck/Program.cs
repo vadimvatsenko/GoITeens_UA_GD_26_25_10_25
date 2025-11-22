@@ -1,27 +1,32 @@
 ﻿using System;
 
-public class Program
+class Program
 {
     static void Main(string[] args)
     {
-        int a;
-        int b;
+        int x = 5;
+        int y = 2;
 
-        string numbA;
+        int difference = x - y;
+
+        Console.WriteLine(difference);
         
-        Console.WriteLine("Enter a number: ");
-        
-        numbA = Console.ReadLine();
-        
-        a = int.Parse(numbA);
-        
-        Console.Write("Enter b number: ");
-        
-        /*a = int.Parse(Console.ReadLine());
-        
-        Console.Write("Enter b number: ");*/
-        
-        
+        Console.WriteLine($"У мене було {x} яблук, я з'їв {y} яблук, залишилось {difference} яблук");
+
+        int a = 3;
+        int b = 4;
+
+        int multiply = 4 * 3;
+
+        Console.WriteLine(multiply);
+
+        int z = 10;
+        int v = 2;
+
+        int depliy = z / v;
+
+        Console.WriteLine(depliy);
     }
 }
-
+        
+    
