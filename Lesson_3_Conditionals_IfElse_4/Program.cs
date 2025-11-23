@@ -11,8 +11,6 @@ namespace Lesson_3_Conditionals_IfElse_4
             Random rnd = new Random();
             
             int damage = rnd.Next(1, 101);
-
-            damage = 70;
             
             if (damage > 0 && damage <= 33)
             {
