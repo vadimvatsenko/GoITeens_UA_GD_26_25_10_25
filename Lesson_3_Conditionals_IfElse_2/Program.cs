@@ -15,7 +15,7 @@ namespace Lesson_3_Conditionals_IfElse_2
 
             Console.WriteLine();
             
-            string aNumber = Console.ReadLine();
+            string? aNumber = Console.ReadLine();
             bool isANumber = int.TryParse(aNumber, out a);
             
             /*Console.ForegroundColor = isANumber ? ConsoleColor.Green : ConsoleColor.Red;
