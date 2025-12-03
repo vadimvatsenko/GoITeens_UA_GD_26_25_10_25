@@ -23,6 +23,9 @@ class Program
             
             for (int i = 0; i < color.Length; i++)
             {
+
+                // formatedColor += i == 0 ? char.ToUpper(color[i]) : char.ToLower(color[i]); 
+                
                 if (i == 0)
                 {
                     formatedColor += char.ToUpper(color[i]);
