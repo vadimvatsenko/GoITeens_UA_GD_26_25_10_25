@@ -21,38 +21,15 @@ class Program
             Console.WriteLine("Enter color: Red, Green, Blue or Yellow");
             color = Console.ReadLine()?.Trim();
             
+            // валыдація кольора
             for (int i = 0; i < color.Length; i++)
             {
-
-                // formatedColor += i == 0 ? char.ToUpper(color[i]) : char.ToLower(color[i]); 
-                
-                if (i == 0)
-                {
-                    formatedColor += char.ToUpper(color[i]);
-                }
-                else
-                {
-                    formatedColor += char.ToLower(color[i]);
-                }
+                formatedColor += i == 0 ? char.ToUpper(color[i]) : char.ToLower(color[i]); 
             }
 
             string logMessage 
                 = colors.Contains(formatedColor) ? "Color already exists" : "Color not exists, try again";
             Console.WriteLine(logMessage);
-            
-            /*if (colors.Contains(formatedColor))
-            {
-                Console.WriteLine("Color already exists");
-            }
-            else
-            {
-                Console.WriteLine("Color not exists, try again");
-            }*/
-            
-            /*if (colors.Contains(formatedColor))
-                Console.WriteLine("Color already exists");
-            else
-                Console.WriteLine("Color not exists, try again");*/
             
             
         } while (!colors.Contains(formatedColor));

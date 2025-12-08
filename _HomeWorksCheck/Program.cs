@@ -5,81 +5,61 @@ class Program
 {
     static void Main(string[] args)
     {
-        string[] colors = new[]
+        Random random = new Random();
+        int secretNumber = random.Next(1, 101); // Загадане число від 1 до 100
+        int attempts = 0;
+        bool isPlaying = true;
+
+        Console.WriteLine("=== ГРА: ВГАДАЙ ЧИСЛО ===");
+        Console.WriteLine("Я загадав число від 1 до 100.");
+        Console.WriteLine("Введіть 'exit', щоб вийти з гри.\n");
+
+        while (isPlaying)
         {
-            "Red",
-            "Green",
-            "Blue",
-            "Yellow"
-        };
-        
-        string color = string.Empty;
-        string formatedColor = string.Empty;
-        
-        do
-        {
-            Console.WriteLine("Enter color: Red, Green, Blue or Yellow");
-            color = Console.ReadLine()?.Trim();
-            
-            for (int i = 0; i < color.Length; i++)
+            Console.Write("Введіть ваше число: ");
+            string input = Console.ReadLine();
+
+            // Можливість завершити гру
+            if (input.ToLower() == "exit")
             {
-                if (i == 0)
-                {
-                    formatedColor += char.ToUpper(color[i]);
-                }
-                else
-                {
-                    formatedColor += char.ToLower(color[i]);
-                }
+                Console.WriteLine("Гру завершено.");
+                Console.WriteLine("Загадане число було: " + secretNumber);
+                break;
             }
 
-            string logMessage 
-                = colors.Contains(formatedColor) ? "Color already exists" : "Color not exists, try again";
-            Console.WriteLine(logMessage);
-            
-            /*if (colors.Contains(formatedColor))
+            // Перевірка, чи введено число
+            if (!int.TryParse(input, out int userNumber))
             {
-                Console.WriteLine("Color already exists");
+                Console.WriteLine("❗ Помилка: введіть число!");
+                continue;
+            }
+
+            attempts++;
+
+            // Перевірка числа
+            if (userNumber < secretNumber)
+            {
+                Console.WriteLine("Моє число БІЛЬШЕ ✅");
+            }
+            else if (userNumber > secretNumber)
+            {
+                Console.WriteLine("Моє число МЕНШЕ ✅");
             }
             else
             {
-                Console.WriteLine("Color not exists, try again");
-            }*/
-            
-            /*if (colors.Contains(formatedColor))
-                Console.WriteLine("Color already exists");
-            else
-                Console.WriteLine("Color not exists, try again");*/
-            
-            
-        } while (!colors.Contains(formatedColor));
-        
-        
-        switch (formatedColor)
-        {
-            case "Red":
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Red-Its a Dragon");
-                break;
-            case "Blue":
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Blue-Its a Fairy");
-                break;
-            case "Green":
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Green-Its a Woodman");
-                break;
-            case "Yellow":
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Yellow-Its a King");
-                break;
-            default:
-                Console.WriteLine("In our Land there`s no one with this kind of colour :(");
-                break;
+                Console.WriteLine("\n🎉 ВІТАЮ! Ви вгадали число!");
+                Console.WriteLine("✅ Загадане число: " + secretNumber);
+                Console.WriteLine("✅ Кількість спроб: " + attempts);
+                isPlaying = false;
+            }
         }
-        
-        Console.ReadLine();
 
+        Console.WriteLine("\nНатисніть будь-яку клавішу для виходу...");
+        Console.ReadKey();
     }
 }
+
+
+
+
 
