@@ -1,0 +1,8 @@
+﻿Healer,1,5
+Barbarian,5,3
+Warrior,4,4
+Witcher,4,2
+Explosion,8,0
+Lightning,6,1
+Phantom,3,1
+Familiar,1,1

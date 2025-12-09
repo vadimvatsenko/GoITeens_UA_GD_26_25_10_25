@@ -6,58 +6,33 @@ class Program
     static void Main(string[] args)
     {
         Random random = new Random();
-        int secretNumber = random.Next(1, 101); // Загадане число від 1 до 100
-        int attempts = 0;
-        bool isPlaying = true;
+        int secretNumber = random.Next(1, 101);
+        int guess = 0;
 
-        Console.WriteLine("=== ГРА: ВГАДАЙ ЧИСЛО ===");
-        Console.WriteLine("Я загадав число від 1 до 100.");
-        Console.WriteLine("Введіть 'exit', щоб вийти з гри.\n");
+        Console.WriteLine("Вгадай число від 1 до 100");
 
-        while (isPlaying)
+        while (guess != secretNumber)
         {
-            Console.Write("Введіть ваше число: ");
-            string input = Console.ReadLine();
+            Console.Write("Введи число: ");
+            guess = int.Parse(Console.ReadLine());
 
-            // Можливість завершити гру
-            if (input.ToLower() == "exit")
+            if (guess > secretNumber)
             {
-                Console.WriteLine("Гру завершено.");
-                Console.WriteLine("Загадане число було: " + secretNumber);
-                break;
+                Console.WriteLine("Менше");
             }
-
-            // Перевірка, чи введено число
-            if (!int.TryParse(input, out int userNumber))
+            else if (guess < secretNumber)
             {
-                Console.WriteLine("❗ Помилка: введіть число!");
-                continue;
-            }
-
-            attempts++;
-
-            // Перевірка числа
-            if (userNumber < secretNumber)
-            {
-                Console.WriteLine("Моє число БІЛЬШЕ ✅");
-            }
-            else if (userNumber > secretNumber)
-            {
-                Console.WriteLine("Моє число МЕНШЕ ✅");
-            }
-            else
-            {
-                Console.WriteLine("\n🎉 ВІТАЮ! Ви вгадали число!");
-                Console.WriteLine("✅ Загадане число: " + secretNumber);
-                Console.WriteLine("✅ Кількість спроб: " + attempts);
-                isPlaying = false;
+                Console.WriteLine("Більше");
             }
         }
 
-        Console.WriteLine("\nНатисніть будь-яку клавішу для виходу...");
+        Console.WriteLine("Ти вгадав!");
+
         Console.ReadKey();
     }
 }
+
+
 
 
 
