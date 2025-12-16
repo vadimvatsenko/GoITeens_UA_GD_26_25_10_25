@@ -11,12 +11,13 @@ namespace hw_5
             int x;
             int count;
             count = 0;
+            
 
             do
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("\nEnter your guess number between 0 and 100 (or write 200 to leave the game): ");
-                bool success = Int32.TryParse(Console.ReadLine(), out x);
+                bool success = Int32.TryParse(Console.ReadLine(), out x) && (x > 0 && x <= 100);
 
                 Console.Clear();
                 
@@ -26,6 +27,14 @@ namespace hw_5
                     Console.WriteLine("You did not follow the rulers! " +
                                       "\nTry again!");
                     continue;
+                }
+
+                if (x == 200)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You did not follow the rulers! " +
+                                      "\nTry again!");
+                    break;
                 }
 
                     if (x > number && x != 0 && x != 200)

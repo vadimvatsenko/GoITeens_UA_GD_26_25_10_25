@@ -8,6 +8,7 @@ namespace Lesson_4_Conditionals_Switch_4
         {
             Console.Write("Введіть поточний час (0-23): ");
             int hour = int.Parse(Console.ReadLine());
+            
 
             switch (hour)
             {
