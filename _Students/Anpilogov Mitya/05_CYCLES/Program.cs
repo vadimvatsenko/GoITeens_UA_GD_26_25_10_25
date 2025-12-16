@@ -16,7 +16,7 @@
                 Console.WriteLine($"\nPlease enter your guess number (1-100) or write '143' to Exit: ");
 
                 bool success = int.TryParse(Console.ReadLine(), out x);
-
+                
                 Console.Clear();
 
                 if (x == 143)
@@ -38,7 +38,25 @@
                     {
                         count++;
                         
-                        if (x > num)
+                        switch (x)
+                        {
+                            case int v when v > num:
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine($"The guessed number is smaller then {x}\nTry again!");
+                                break;
+
+                            case int v when v < num:
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine($"The guessed number is bigger then {x}\nTry again!");
+                                break;
+
+                            default: // значит x == num
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("You Win!\nGG");
+                                break;
+                        }
+                        
+                        /*if (x > num)
                         {
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.Write($"The guessed number is smaller then {x}" +
@@ -55,7 +73,7 @@
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("You Win!" +
                                               "\nGG");
-                        }
+                        }*/
                     }
                 }
                 
