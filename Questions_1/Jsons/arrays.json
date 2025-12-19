@@ -1,0 +1,112 @@
+﻿[
+  {
+    "id": 1,
+    "difficulty": "easy",
+    "question": "Що таке масив (array)?",
+    "answers": [
+      { "text": "Команда для зупинки програми", "correct": false },
+      { "text": "Набір елементів одного типу, що зберігаються разом", "correct": true },
+      { "text": "Помилка компілятора", "correct": false },
+      { "text": "Окрема змінна, яка завжди зберігає тільки одне число", "correct": false }
+    ]
+  },
+  {
+    "id": 2,
+    "difficulty": "easy",
+    "question": "Як називається номер елемента в масиві?",
+    "answers": [
+      { "text": "Коментар", "correct": false },
+      { "text": "Індекс", "correct": true },
+      { "text": "Процесор", "correct": false },
+      { "text": "Пароль", "correct": false }
+    ]
+  },
+  {
+    "id": 3,
+    "difficulty": "easy",
+    "question": "З якого числа зазвичай починаються індекси в масиві (у C#)?",
+    "answers": [
+      { "text": "З 10", "correct": false },
+      { "text": "З 0", "correct": true },
+      { "text": "З -1", "correct": false },
+      { "text": "З 1", "correct": false }
+    ]
+  },
+  {
+    "id": 4,
+    "difficulty": "easy",
+    "question": "Що повертає властивість Length у масиву?",
+    "answers": [
+      { "text": "Найменший елемент масиву", "correct": false },
+      { "text": "Кількість елементів у масиві", "correct": true },
+      { "text": "Індекс останнього елемента", "correct": false },
+      { "text": "Найбільший елемент масиву", "correct": false }
+    ]
+  },
+  {
+    "id": 5,
+    "difficulty": "easy",
+    "question": "Який індекс має останній елемент масиву, якщо його довжина (Length) дорівнює 5?",
+    "answers": [
+      { "text": "0", "correct": false },
+      { "text": "4", "correct": true },
+      { "text": "5", "correct": false },
+      { "text": "3", "correct": false }
+    ]
+  },
+  {
+    "id": 6,
+    "difficulty": "easy",
+    "question": "Як правильно звернутися до першого елемента масиву arr?",
+    "answers": [
+      { "text": "arr{0}", "correct": false },
+      { "text": "arr[0]", "correct": true },
+      { "text": "arr(first)", "correct": false },
+      { "text": "arr[1]", "correct": false }
+    ]
+  },
+  {
+    "id": 7,
+    "difficulty": "medium",
+    "question": "Який цикл найзручніше використати, щоб вивести всі елементи масиву без роботи з індексами?",
+    "answers": [
+      { "text": "try-catch", "correct": false },
+      { "text": "foreach", "correct": true },
+      { "text": "if", "correct": false },
+      { "text": "switch", "correct": false }
+    ]
+  },
+  {
+    "id": 8,
+    "difficulty": "medium",
+    "question": "Що станеться, якщо звернутися до arr[10], а в масиві лише 5 елементів?",
+    "answers": [
+      { "text": "Повернеться 0", "correct": false },
+      { "text": "Буде помилка виходу за межі масиву (IndexOutOfRange)", "correct": true },
+      { "text": "Масив автоматично розшириться", "correct": false },
+      { "text": "Повернеться останній елемент", "correct": false }
+    ]
+  },
+  {
+    "id": 9,
+    "difficulty": "medium",
+    "question": "Як правильно пройти масив arr індексами від 0 до останнього елемента?",
+    "answers": [
+      { "text": "for (int i = 0; i <= arr.Length; i++)", "correct": false },
+      { "text": "for (int i = 0; i < arr.Length; i++)", "correct": true },
+      { "text": "for (int i = 1; i <= arr.Length; i++)", "correct": false },
+      { "text": "for (int i = arr.Length; i >= 0; i++)", "correct": false }
+    ]
+  },
+  {
+    "id": 10,
+    "difficulty": "medium",
+    "question": "Для чого часто використовують Array.IndexOf(arr, value)?",
+    "answers": [
+      { "text": "Щоб відсортувати масив", "correct": false },
+      { "text": "Щоб знайти індекс першого входження value в масиві", "correct": true },
+      { "text": "Щоб перетворити масив на рядок", "correct": false },
+      { "text": "Щоб видалити масив", "correct": false }
+    ]
+  }
+]

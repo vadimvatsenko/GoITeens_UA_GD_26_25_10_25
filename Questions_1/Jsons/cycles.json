@@ -1,0 +1,112 @@
+﻿[
+  {
+    "id": 1,
+    "difficulty": "easy",
+    "question": "Що таке цикл у програмуванні?",
+    "answers": [
+      { "text": "Малюнок у графічному редакторі", "correct": false },
+      { "text": "Повторення дій кілька разів", "correct": true },
+      { "text": "Один рядок коду, який виконується лише один раз", "correct": false },
+      { "text": "Команда для видалення файлів", "correct": false }
+    ]
+  },
+  {
+    "id": 2,
+    "difficulty": "easy",
+    "question": "Для чого найчастіше використовують цикл for?",
+    "answers": [
+      { "text": "Щоб змінити колір фону в Windows", "correct": false },
+      { "text": "Коли знаємо, скільки разів треба повторити дію", "correct": true },
+      { "text": "Щоб створити новий файл на комп’ютері", "correct": false },
+      { "text": "Щоб зупинити програму назавжди", "correct": false }
+    ]
+  },
+  {
+    "id": 3,
+    "difficulty": "easy",
+    "question": "Яка частина циклу for відповідає за збільшення лічильника?",
+    "answers": [
+      { "text": "Ім’я змінної (наприклад, i)", "correct": false },
+      { "text": "Крок (інкремент), наприклад i++", "correct": true },
+      { "text": "Тіло циклу (код у фігурних дужках)", "correct": false },
+      { "text": "Умова, наприклад i < 10", "correct": false }
+    ]
+  },
+  {
+    "id": 4,
+    "difficulty": "easy",
+    "question": "Що станеться, якщо умова в while одразу false?",
+    "answers": [
+      { "text": "Комп’ютер перезавантажиться", "correct": false },
+      { "text": "Цикл не виконається жодного разу", "correct": true },
+      { "text": "Програма обов’язково зависне", "correct": false },
+      { "text": "Цикл виконається рівно один раз", "correct": false }
+    ]
+  },
+  {
+    "id": 5,
+    "difficulty": "easy",
+    "question": "У чому головна відмінність do-while від while?",
+    "answers": [
+      { "text": "while не може бути нескінченним", "correct": false },
+      { "text": "do-while виконується хоча б один раз", "correct": true },
+      { "text": "while завжди виконується хоча б один раз", "correct": false },
+      { "text": "do-while не має умови", "correct": false }
+    ]
+  },
+  {
+    "id": 6,
+    "difficulty": "easy",
+    "question": "Що робить команда break у циклі?",
+    "answers": [
+      { "text": "Створює новий цикл", "correct": false },
+      { "text": "Одразу виходить з циклу", "correct": true },
+      { "text": "Повертає програму на початок файлу", "correct": false },
+      { "text": "Пропускає лише одну ітерацію", "correct": false }
+    ]
+  },
+  {
+    "id": 7,
+    "difficulty": "medium",
+    "question": "Що робить команда continue у циклі?",
+    "answers": [
+      { "text": "Виходить з циклу назавжди", "correct": false },
+      { "text": "Пропускає поточну ітерацію і переходить до наступної", "correct": true },
+      { "text": "Змінює умову циклу на false", "correct": false },
+      { "text": "Повністю завершує програму", "correct": false }
+    ]
+  },
+  {
+    "id": 8,
+    "difficulty": "medium",
+    "question": "Скільки разів виконається цикл: for (int i = 0; i < 5; i++) ?",
+    "answers": [
+      { "text": "6 разів", "correct": false },
+      { "text": "5 разів", "correct": true },
+      { "text": "Цикл нескінченний", "correct": false },
+      { "text": "4 рази", "correct": false }
+    ]
+  },
+  {
+    "id": 9,
+    "difficulty": "medium",
+    "question": "Скільки разів виконається тіло циклу, якщо i починається з 1 і умова i <= 3 (крок i++)?",
+    "answers": [
+      { "text": "0 разів", "correct": false },
+      { "text": "3 рази", "correct": true },
+      { "text": "2 рази", "correct": false },
+      { "text": "4 рази", "correct": false }
+    ]
+  },
+  {
+    "id": 10,
+    "difficulty": "medium",
+    "question": "Який цикл зручніше для перебору всіх елементів масиву без індексів?",
+    "answers": [
+      { "text": "try-catch", "correct": false },
+      { "text": "foreach", "correct": true },
+      { "text": "namespace", "correct": false },
+      { "text": "switch", "correct": false }
+    ]
+  }
+]

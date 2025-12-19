@@ -4,38 +4,45 @@ using System.Text;
 
 class Program
 {
-
-
     static void Main(string[] args)
     {
-        string str1 = "sihT si na !elpmaxe";
         
-        ReverseWords(str1);
+        //Масив з назвами пісень
+        string[] songs = {
+            "Bohemian Rhapsody",
+            "Imagine",
+            "Hotel California",
+            "Smells Like Teen Spirit",
+            "Billie Jean"
+        };
 
-        Console.ReadKey();
-    }
-    
-    public static string ReverseWords(string str)
-      {
+        // Масив з рейтингами пісень
+        int[] ratings = { 5, 4, 5, 4, 5 };
         
-        string[] strs = str.Split(' ');
-        
-        string[] revers = new string[strs.Length];
-        
-        for(int i = 0; i < strs.Length; i++)
+        Console.WriteLine("Список пісень та рейтингів:\n");
+        for (int i = 0; i < songs.Length; i++)
         {
-            string tempWord = strs[i];
-            
-            for (int j = tempWord.Length - 1; j >= 0; j--)
+            Console.WriteLine($"Пісня: {songs[i]} - Рейтинг: {ratings[i]}");
+        }
+        
+        int maxRating = ratings[0];
+        int maxIndex = 0;
+
+        for (int i = 1; i < ratings.Length; i++)
+        {
+            if (ratings[i] > maxRating)
             {
-                revers[i] += tempWord[j];
+                maxRating = ratings[i];
+                maxIndex = i;
             }
         }
         
-        string reversStr = string.Join(" ", revers);
+        Console.WriteLine("\nПісня з найвищим рейтингом:");
+        Console.WriteLine($"Пісня: {songs[maxIndex]} - Рейтинг: {maxRating}");
+
+            Console.ReadKey();
         
-        return reversStr;
-      }
+    }
 }
 
 

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.Json;
 
 // вікторина
 
@@ -7,51 +9,134 @@ namespace Questions_1
 {
     internal class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;   
             Console.InputEncoding  = Encoding.UTF8;
-
-            List<string> studentsNames = Names.GetNames();
-            List<string> qa = Topic_1.GetQuestions();
             
             Random random = new Random();
+            List<Student> students = new List<Student>();
+            List<Question> questions = new List<Question>();
+            bool isCorrect =  false;
             
-            /*Console.WriteLine(studentsNames[1]); // елемент за індексом
-            Console.WriteLine(studentsNames.Count); // кількість елементів 16*/
-
-            Console.Write("Вітаю всіх учнів");
-            for (int i = 0; i < studentsNames.Count; i++)
+            string studentsPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/_students.json";
+            string arraysPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/arrays.json";
+            string cyclesPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/cycles.json";
+            
+            try
             {
-                Console.WriteLine(studentsNames[i]);
+                using (FileStream fs = new FileStream(studentsPath, FileMode.OpenOrCreate))
+                {
+                    var studentsArray = await JsonSerializer.DeserializeAsync<Student[]>(fs);
+                    students.AddRange(studentsArray);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            try
+            {
+                using (FileStream fs = new FileStream(arraysPath, FileMode.OpenOrCreate))
+                {
+                    Question[]? qa = await JsonSerializer.DeserializeAsync<Question[]>(fs);
+                    questions.AddRange(qa);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
 
-            Thread.Sleep(1000);
             do
             {
                 Console.Clear();
                 Console.ResetColor();
+                Student student = students[random.Next(students.Count)];
+                Console.WriteLine("На питання буде відповідати: ");
+                Console.WriteLine($"{student.FirstName} {student.SecondName}");
                 
-                Console.WriteLine("Знайди учня, який буде відповідати.");
-                int randomStudentIndex = random.Next(0, studentsNames.Count);
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(studentsNames[randomStudentIndex]);
-                
-                Thread.Sleep(500);
-                int randomQuestionIndex = random.Next(0, qa.Count);
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine(qa[randomQuestionIndex]);
-                
-                qa.RemoveAt(randomQuestionIndex);
-
-                Console.WriteLine($"Питань залишилось {qa.Count}");
-                
+                Console.WriteLine("Натисни будь-яку клавішу щоб продовжити...");
                 Console.ReadKey();
                 
-            } while (qa.Count > 0);
+                Question question = questions[random.Next(questions.Count)];
+                Console.Write("Питання: ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(question.Quest);
+                
+
+                for (int i = 0; i < question.Answers.Count; i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"[{i + 1}] ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine($"{question.Answers[i].Answ}");
+                }
+
+                do
+                {
+                    Console.ResetColor();
+                    Console.Write("Вибери правильну відповідь від 1 до 4: ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    string input = Console.ReadLine();
+                    
+                    isCorrect = int.TryParse(input, out int correctAnswer) && (correctAnswer >= 1 && correctAnswer <= 4);
+
+                    if (isCorrect)
+                    {
+                        if (question.Answers[correctAnswer - 1].IsCorrect)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"[{correctAnswer}] {question.Answers[correctAnswer - 1].Answ} - Правильна відповідь");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Відповідь не вірна, ");
+                            
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write($"Правильна відповідь була ");
+
+                            for (int i = 0; i < question.Answers.Count; i++)
+                            {
+                                if (question.Answers[i].IsCorrect)
+                                {
+                                    Console.Write($"[{i + 1}] {question.Answers[i].Answ}");
+                                }
+                            }
+                            
+                            foreach (var ans in question.Answers)
+                            {
+                                if (ans.IsCorrect)
+                                {
+                                    Console.Write(ans.Answ);
+                                }
+                            }
+                        }
+                        
+                        questions.Remove(question); 
+                        students.Remove(student);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Incorect Format of answer");
+                        continue;
+                    }
+                    
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    Console.WriteLine("Натисни будь-яку клавішу щоб продовжити...");
+                    
+                } while (!isCorrect);
+                
+            } while (questions.Count > 0);
             
-            Console.WriteLine("Питання закінчились!");
+            
+            Console.WriteLine("Питання закінчились, дякую");
             Console.ReadKey();
+            
         }
     }
 }
