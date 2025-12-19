@@ -55,7 +55,8 @@ namespace Questions_1
                 Console.ResetColor();
                 Student student = students[random.Next(students.Count)];
                 Console.WriteLine("На питання буде відповідати: ");
-                Console.WriteLine($"{student.FirstName} {student.SecondName}");
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"***{student.FirstName} {student.SecondName}***");
                 
                 Console.WriteLine("Натисни будь-яку клавішу щоб продовжити...");
                 Console.ReadKey();
@@ -103,14 +104,6 @@ namespace Questions_1
                                 if (question.Answers[i].IsCorrect)
                                 {
                                     Console.Write($"[{i + 1}] {question.Answers[i].Answ}");
-                                }
-                            }
-                            
-                            foreach (var ans in question.Answers)
-                            {
-                                if (ans.IsCorrect)
-                                {
-                                    Console.Write(ans.Answ);
                                 }
                             }
                         }
