@@ -57,6 +57,7 @@ namespace Questions_1
                 Console.WriteLine("На питання буде відповідати: ");
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine($"***{student.FirstName} {student.SecondName}***");
+                Console.ResetColor();
                 
                 Console.WriteLine("Натисни будь-яку клавішу щоб продовжити...");
                 Console.ReadKey();
