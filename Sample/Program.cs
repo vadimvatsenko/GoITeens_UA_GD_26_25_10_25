@@ -7,7 +7,11 @@ namespace Sample
     {
         static void Main(string[] args)
         {
+
+            int[] numbs = new int[5];
             
+            Console.WriteLine(numbs[10]);
+
 
         }
     }

@@ -45,7 +45,6 @@ namespace Lesson_6_Arrays_1
                 Console.WriteLine();
             }
             
-            
             Console.ReadKey();
         }
     }

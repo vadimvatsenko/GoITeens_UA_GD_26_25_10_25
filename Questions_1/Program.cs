@@ -20,8 +20,8 @@ namespace Questions_1
             bool isCorrect =  false;
             
             string studentsPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/_students.json";
-            string arraysPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/arrays.json";
-            string cyclesPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/cycles.json";
+            //string qaPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/arrays.json";
+            string qaPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/cycles.json";
             
             try
             {
@@ -38,7 +38,7 @@ namespace Questions_1
             
             try
             {
-                using (FileStream fs = new FileStream(arraysPath, FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(qaPath, FileMode.OpenOrCreate))
                 {
                     Question[]? qa = await JsonSerializer.DeserializeAsync<Question[]>(fs);
                     questions.AddRange(qa);
