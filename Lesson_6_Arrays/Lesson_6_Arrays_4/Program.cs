@@ -14,7 +14,6 @@ namespace Lesson_6_Arrays_4
             for (int i = 0; i < arr.Length; i++)
             {
                 arr[i] += '!';
-                
             }
             
             string line = arr[0];
