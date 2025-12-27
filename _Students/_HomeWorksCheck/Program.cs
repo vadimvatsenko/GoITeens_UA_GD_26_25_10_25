@@ -1,34 +1,63 @@
-﻿using System;
-using System.Diagnostics;
-using System.Text;
-
+﻿
 class Program
 {
     static void Main(string[] args)
     {
         
-        string[] songs = { "Mozart", "Notion", "stephanie", "megusta stu", "yugoslavskiy groove" };
-        int[] rating = { 5, 4, 4, 5, 4 };
-        for (int i = 0; i < songs.Length; i++)
+        string[] songs =
         {
-            Console.WriteLine($"{songs[i]} - {rating[i]}");
-        }
-        int maxrating = rating[0];
-        int maxIndex = 0;
-		
-        for (int i  = 0; i < songs.Length; i++)
+            "And One - Panzermensch", "Modern Talking - Cherry Cherry Lady", "Bee Gees - Stayin' Alive",
+            "And One - Steine sind Steine", "U96 - Das Boot"
+        };
+
+        int[] ratings = { 5, 1, 5, 3, 4 };
+
+        int minRating = ratings[0];
+
+        for (int i = 1; i < ratings.Length; i++)
         {
-            if (rating[i] > maxrating)
+            if (ratings[i - 1] > ratings[i])
             {
-                maxrating = rating[i];
-                maxIndex = i; 
+                (ratings[i - 1], ratings[i]) = (ratings[i], ratings[i - 1]);
+
+                (songs[i - 1], songs[i]) = (songs[i], songs[i - 1]);
             }
         }
-        Console.WriteLine($"Max rating: {maxrating}");
-        Console.WriteLine($"Max index: {maxIndex}");
+
+        for (int i = 0; i < ratings.Length; i++)
+        {
+            Console.WriteLine($"{songs[i]} - {ratings[i]}");
+        }
+
+        int maxRatings = ratings[0];
+        int maxIndex = 0;
+            
+        for (int i = 1; i < ratings.Length; i++)
+        {
+            if (ratings[i] > maxRatings)
+            {
+                maxRatings = ratings[i];
+                maxIndex = i;
+            }
+        }
+            
+        //Console.Write($" The maxRating :{songs[maxIndex]} - {ratings[maxIndex]}");
+
         Console.ReadKey();
+        
     }
+        
 }
+
+
+
+        
+    
+
+
+
+    
+
 
 
 

@@ -6,8 +6,93 @@ namespace Lesson_7_List_Dictionary_1
     {
         static void Main(string[] args)
         {
+            List<string> names = new List<string>();
+
+            List<string> people = new List<string>() 
+                { "Tom", "Bill", "John" };
+
+            // копія
+            List<string> newList = new List<string>(people); // "Tom", "Bill", "John", "Bob"
+            newList.Add("Bob");
+            
+            newList.Remove("Bill");
+
+            // силка на newList
+            List<string> newPeople = newList; // "Tom", "Bill", "John", "Mike"
+            
+            // void Add(T item): додавання нового елемента до списку
+            newPeople.Add("Mike");
+            
+            // bool Remove(T item): видаляє елемент item зі списку, і якщо видалення успішне — повертає true. Якщо у списку кілька однакових елементів — видаляється лише перший з них
+            newPeople.Remove("Tom");
+            
+            // довжина списку. newPeople.Count
+            int langthnewPeople = newPeople.Count;
+            
+            // bool Contains(T item): повертає true, якщо елемент item є у списку
+            bool isContainsRoman = newPeople.Contains("Roman");
+            bool isContainsMile = newPeople.Contains("Mike");
+            Console.WriteLine(isContainsRoman);
+            Console.WriteLine(isContainsMile);
+
+            if (isContainsRoman)
+            {
+                newPeople.Add("Roman");
+            }
+            
+            // void Sort(): сортування списку
+            newPeople.Sort();
+
+            // void Reverse(): змінює порядок елементів на зворотний
+            newList.Reverse();
+            
+            foreach (var n in newPeople)
+            {
+                Console.WriteLine(n);
+            }
+            
+            // void Insert(int index, T item): вставляє елемент item у список за індексом index. Якщо такого індексу у списку немає — генерується виняток
+            newPeople.Insert(1, "Roman");
+
+            // newPeople[1] = "Poly";
+            
+            Console.WriteLine();
+            
+            foreach (var n in newPeople)
+            {
+                Console.WriteLine(n);
+            }
+            
+            // void Clear(): видаляє зі списку всі елементи
+            newPeople.Clear();
+            
+            Console.WriteLine("Empty list");
+            foreach (var n in newPeople)
+            {
+                Console.WriteLine(n);
+            }
+            
+            
+            /*for (int i = 0; i < newList.Count; i++)
+            {
+                Console.WriteLine(newList[i]);
+            }*/
+            
+            /*foreach (string person in newList)
+            {
+                Console.WriteLine(person);
+            }
+            
+            Console.WriteLine();
+            
+            foreach (string person in newPeople)
+            {
+                Console.WriteLine(person);
+            }*/
+            
             
             Console.ReadKey();
+            
         }
     }
 }
@@ -19,16 +104,13 @@ namespace Lesson_7_List_Dictionary_1
 // int BinarySearch(T item): бінарний пошук елемента у списку. 
 // Якщо елемент знайдено — метод повертає індекс цього елемента в колекції. 
 // При цьому список має бути відсортований.
+// Дуже швидкий пошук
 
 // void CopyTo(T[] array): копіює список у масив array
 
 // void CopyTo(int index, T[] array, int arrayIndex, int count):
 // копіює зі списку, починаючи з індексу index, 
 // елементи в кількості count і вставляє їх у масив array, починаючи з індексу arrayIndex
-
-// bool Contains(T item): повертає true, якщо елемент item є у списку
-
-// void Clear(): видаляє зі списку всі елементи
 
 // bool Exists(Predicate<T> match): повертає true, якщо у списку є елемент, який відповідає делегату match
 
@@ -47,7 +129,7 @@ namespace Lesson_7_List_Dictionary_1
 
 // List<T> GetRange(int index, int count): повертає список елементів у кількості count, починаючи з індексу index
 
-// void Insert(int index, T item): вставляє елемент item у список за індексом index. Якщо такого індексу у списку немає — генерується виняток
+
 
 // void InsertRange(int index, collection): вставляє колекцію елементів collection у поточний список, починаючи з індексу index. Якщо такого індексу у списку немає — генерується виняток
 
@@ -59,11 +141,8 @@ namespace Lesson_7_List_Dictionary_1
 
 // int RemoveAll(Predicate<T> match): видаляє всі елементи, які відповідають делегату match. Повертає кількість видалених елементів
 
-// void Reverse(): змінює порядок елементів на зворотний
-
 // void Reverse(int index, int count): змінює порядок на зворотний для елементів у кількості count, починаючи з індексу index
 
-// void Sort(): сортування списку
 
 
 
