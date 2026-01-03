@@ -7,7 +7,7 @@
 // void Remove(2,6)
 // void Replace("V", "W")
 // void Split(';') - розділить у масив слова
-// void ToCharArray() - розбере строку на массив символів
+// void ToCharArray() - розділить строку на массив символів
 // void ToLower() ToUpper()
 // void Trim()
 
