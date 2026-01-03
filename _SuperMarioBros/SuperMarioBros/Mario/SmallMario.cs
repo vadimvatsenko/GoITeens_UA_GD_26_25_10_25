@@ -9,14 +9,16 @@ public class SmallMario : IUpdatable, IDisposable
     private Vector2 _position;
     private AnimationSystem _animSystem;
     
-    public SmallMario(AnimationSystem animSystem, Input input)
+    public SmallMario(AnimationSystem animSystem, Input input, Vector2 position)
     {
-        _position = new Vector2(20, 20);
+        _position = position;
         _input = input;
         _animSystem = animSystem;
         
         _input.OnLeft += MoveLeft;
         _input.OnRight += MoveRight;
+        _input.OnUp += MoveUp;
+        _input.OnDown += MoveDown;
     }
     
     public void Update(double deltaTime)
@@ -37,10 +39,24 @@ public class SmallMario : IUpdatable, IDisposable
         _animSystem.DrawFrameFromMario(_position.X, _position.Y);
     }
 
+    public void MoveUp()
+    {
+        _position.Y--;
+        _animSystem.DrawFrameFromMario(_position.X, _position.Y);
+    }
+
+    public void MoveDown()
+    {
+        _position.Y++;
+        _animSystem.DrawFrameFromMario(_position.X, _position.Y);
+    }
+
     public void Dispose()
     {
         _input.OnLeft -= MoveLeft;
         _input.OnRight -= MoveRight;
+        _input.OnUp += MoveUp;
+        _input.OnDown += MoveDown;
     }
 
     public void DrawMario()

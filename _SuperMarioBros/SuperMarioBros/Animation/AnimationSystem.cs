@@ -29,7 +29,7 @@ public class AnimationSystem : IUpdatable
     {
         _clips = animationClips;
         
-        _targetAnimationClip = _clips[0];
+        _targetAnimationClip = _clips[1];
         
         _spriteW = _targetAnimationClip.Sprite[0][0].Length;
         _spriteH = _targetAnimationClip.Sprite[0].Length;
@@ -38,9 +38,9 @@ public class AnimationSystem : IUpdatable
     
     public void Update(double deltaTime)
     {
-        ClearRect(_x, y, _spriteW, _spriteH);
+        /*ClearRect(_x, y, _spriteW, _spriteH);
         // переключаем кадр
-        //_frame = (_frame + 1) % _targetAnimationClip.Sprites.Length;
+        _frame = (_frame + 1) % _targetAnimationClip.Sprite.Length;
         // двигаем раз в N тиков
 
         tick++;
@@ -72,10 +72,19 @@ public class AnimationSystem : IUpdatable
         }
 
         // рисуем в новой позиции
-        //DrawFrame(_targetAnimationClip.Sprites[_frame], _x, y);
+
+        double time = 0;
+        double delay = 1;
+
+        while (time < delay)
+        {
+            time += deltaTime * 1000;
+        }
+        
+        //DrawFrame(_targetAnimationClip.Sprite[_frame], _x, y);
         
         Console.ResetColor();
-        Console.CursorVisible = true;
+        Console.CursorVisible = true;*/
     }
 
     private void ClearRect(int x, int y, int w, int h)
@@ -96,13 +105,15 @@ public class AnimationSystem : IUpdatable
 
     public void DrawFrameFromMario(int x, int y)
     {
-        for (int row = 0; row < SmallMarioSpritesData.SmallMarioIdle1.GetLength(0); row++)
+        ClearRect(_x, y, _spriteW, _spriteH);
+        for (int row = 0; row < SmallMarioSpritesData.Ground.Length; row++)
         {
             Console.SetCursorPosition(x * 2, y + row);
             
-            for (int col = 0; col < SmallMarioSpritesData.SmallMarioIdle1.GetLength(1); col++)
+            for (int col = 0; col < SmallMarioSpritesData.Ground[row].Length; col++)
             {
-                char c = SmallMarioSpritesData.SmallMarioIdle1[row, col];
+                
+                char c = SmallMarioSpritesData.Ground[row][col];
                 var color = ColorsPalette.Palette.ContainsKey(c) ? ColorsPalette.Palette[c] : ConsoleColor.Black;
 
                 //Console.BackgroundColor = color;

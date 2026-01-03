@@ -1,4 +1,6 @@
 ﻿// Пустота строк
+// string.IsNullOrEmpty
+// string.IsNullOrWhiteSpace
 
 namespace Lesson_8_Strings_2
 {
@@ -7,38 +9,35 @@ namespace Lesson_8_Strings_2
         static void Main(string[] args)
         {
             string empty = "";
-            string withSpace = " ";
+            string withWhiteSpace = " ";
             string notEmpty = " a";
             string nullString = null;
             
-            Console.WriteLine("=========isNullOrEmpty===========");
+            bool isNullorEmpty = string.IsNullOrEmpty(empty);
+            Console.WriteLine($"{nameof(empty)}: {isNullorEmpty}");
             
-            bool isNullOrEmpty = string.IsNullOrEmpty(empty);
-            Console.WriteLine($"{nameof(empty)} is {isNullOrEmpty}");
+            isNullorEmpty = string.IsNullOrEmpty(nullString);
+            Console.WriteLine($"{nameof(notEmpty)}: {isNullorEmpty}");
             
-            isNullOrEmpty = string.IsNullOrEmpty(withSpace);
-            Console.WriteLine($"{nameof(withSpace)} is {isNullOrEmpty}");
+            isNullorEmpty = string.IsNullOrEmpty(notEmpty);
+            Console.WriteLine($"{nameof(nullString)}: {isNullorEmpty}");
             
-            isNullOrEmpty = string.IsNullOrEmpty(notEmpty);
-            Console.WriteLine($"{nameof(notEmpty)}  is {isNullOrEmpty}");
+            isNullorEmpty = string.IsNullOrEmpty(notEmpty);
+            Console.WriteLine($"{nameof(isNullorEmpty)}: {isNullorEmpty}");
             
-            isNullOrEmpty = string.IsNullOrEmpty(nullString);
-            Console.WriteLine($"{nameof(nullString)}  is {isNullOrEmpty}");
+            Console.WriteLine();
             
-            Console.WriteLine("=========IsNullOrWhiteSpace===========");
+            bool isNullOrEhiteSpace = string.IsNullOrWhiteSpace(empty);
+            Console.WriteLine($"{nameof(empty)}: {isNullOrEhiteSpace}");
             
-            // якщо у строкі є пробіл, то строка пуста
-            bool isNullOrWhiteSpace = string.IsNullOrWhiteSpace(empty);
-            Console.WriteLine($"{nameof(empty)} is {isNullOrWhiteSpace}");
+            isNullOrEhiteSpace = string.IsNullOrWhiteSpace(withWhiteSpace);
+            Console.WriteLine($"{nameof(withWhiteSpace)}: {isNullOrEhiteSpace}");
             
-            isNullOrWhiteSpace = string.IsNullOrWhiteSpace(withSpace);
-            Console.WriteLine($"{nameof(withSpace)} is {isNullOrWhiteSpace}");
+            isNullOrEhiteSpace = string.IsNullOrWhiteSpace(notEmpty);
+            Console.WriteLine($"{nameof(notEmpty)}: {isNullOrEhiteSpace}");
             
-            isNullOrWhiteSpace = string.IsNullOrWhiteSpace(notEmpty);
-            Console.WriteLine($"{nameof(notEmpty)}  is {isNullOrWhiteSpace}");
-            
-            isNullOrWhiteSpace = string.IsNullOrWhiteSpace(nullString);
-            Console.WriteLine($"{nameof(nullString)}  is {isNullOrWhiteSpace}");
+            isNullOrEhiteSpace = string.IsNullOrWhiteSpace(nullString);
+            Console.WriteLine($"{nameof(nullString)}: {isNullOrEhiteSpace}");
             
             Console.ReadKey();
         }

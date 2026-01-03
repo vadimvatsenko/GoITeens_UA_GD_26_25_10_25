@@ -22,7 +22,27 @@ public static class SmallMarioSpritesData
         "..GGGG....GGGG..",
     };
     
-    public static readonly char[,] SmallMarioIdle1 =
+    public static readonly string[] SmallMarioIdleTest =
+    {
+        "     RRRRR      ",
+        "    RRRRRRRRR   ",
+        "    GGGOOGO     ",
+        "   GOGOOOGOOO   ",
+        "   GOGGOOOGOOO  ",
+        "   GGOOOOGGGG   ",
+        "     OOOOOOO    ",
+        "    GGRGGG      ",
+        "   GGGRGGRGGG   ",
+        "  GGGGRRRRGGGG  ",
+        "  OOGRORRORGOO  ",
+        "  OOORRRRRROOO  ",
+        "  OORRRRRRRROO  ",
+        "    RRR  RRR    ",
+        "   GGG    GGG   ",
+        "  GGGG    GGGG  ",
+    };
+    
+    public static readonly char[,] SmallMarioIdle_ =
     {
         {'.','.','.','.','.','R','R','R','R','R','.','.','.','.','.','.'},
         {'.','.','.','.','R','R','R','R','R','R','R','R','R','.','.','.'},
@@ -41,6 +61,70 @@ public static class SmallMarioSpritesData
         {'.','.','.','G','G','G','.','.','.','.','G','G','G','.','.','.'},
         {'.','.','G','G','G','G','.','.','.','.','G','G','G','G','.','.'},
     };
+    
+    public static readonly string[] Block2 =
+    {
+        ".RRRRRRRRRRRRRR.",
+        "ROOOOOOOOOOOOO.",
+        "ROKOOOOOOOOOOOKO",
+        "ROOOORRRRROOOOKK",
+        "ROOORRKKKRR00OKK",
+        "ROOORRK00RRK00KK",
+        "ROOORRK00RRK00KK",
+        "ROOOOKK0RRRK00KK",
+        "ROOOOO0RRKKK00KK",
+        "ROOOOO0RRK0000KK",
+        "ROOOOOOOKK0000KK",
+        "ROOOOO0RR0000KKK",
+        "ROOOOO0RRK0000KK",
+        "ROKOOOOOOKK00KOK",
+        "ROOOOOOOOOOOOKK",
+        "KKKKKKKKKKKKKKKK",
+    };
+    
+    public static readonly string[] Block =
+    {
+        "KKKKKKK.KKKKKKK.",
+        "KKKKKKK.KKKKKKK.",
+        "KKKKKKK.KKKKKKK.",
+        "................",
+        "KKK.KKKKKKK.KKKK",
+        "KKK.KKKKKKK.KKKK",
+        "KKK.KKKKKKK.KKKK",
+        "................",
+        "KKKKKKK.KKKKKKK.",
+        "KKKKKKK.KKKKKKK.",
+        "KKKKKKK.KKKKKKK.",
+        "................",
+        "KKK.KKKKKKK.KKKK",
+        "KKK.KKKKKKK.KKKK",
+        "KKK.KKKKKKK.KKKK",
+        "................",
+    };
+    
+    public static readonly string[] Ground =
+    {
+        "ROOOOOOOOKROOOOR",
+        "ORRRRRRRRKORRRRK",
+        "ORRRRRRRRKORRRRK",
+        "ORRRRRRRRKORRRRK",
+        "ORRRRRRRRKOKRRRK",
+        "ORRRRRRRRKRKKKKR",
+        "ORRRRRRRRKOOOOOK",
+        "ORRRRRRRRKORRRRK",
+        "ORRRRRRRRKORRRRK",
+        "ORRRRRRRRKORRRRK",
+        "KKRRRRRRKORRRRRK",
+        "OOKKRRRRKORRRRRK",
+        "OROOKKKKORRRRRRK",
+        "ORRROOOKORRRRRRK",
+        "ORRRRRRKORRRRRKK",
+        "RKKKKKKROKKKKKKR",
+    };
+
+    
+    
+    
     
     public static readonly string[] SmallMarioWalk0Right =
     {

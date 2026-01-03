@@ -37,8 +37,7 @@ namespace SuperMarioBros
             
             AnimationSystem animationSystem = new AnimationSystem(marioAnimClips);
             update.AddUpdateable(animationSystem);
-            SmallMario mario = new SmallMario(animationSystem, input);
-            
+            SmallMario mario = new SmallMario(animationSystem, input, new Vector2(20, 20));
             
             update.AddUpdateable(mario);
             update.RunUpdate();

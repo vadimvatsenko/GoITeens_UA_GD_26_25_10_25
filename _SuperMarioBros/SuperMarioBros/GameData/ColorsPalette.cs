@@ -8,6 +8,7 @@ public static class ColorsPalette
         ['R'] = ConsoleColor.Red,
         ['O'] = ConsoleColor.Yellow, // "оранжевый" приближаем желтым
         ['G'] = ConsoleColor.DarkGreen,
+        ['K'] = ConsoleColor.DarkCyan,
+        
     };
-    
 }

@@ -1,7 +1,6 @@
-﻿using System.Globalization;
-using System.Text;
+﻿
 
-namespace _HomeWorksCheck
+namespace Lesson_8_Strings_5
 {
     internal class Program
     {
@@ -11,7 +10,3 @@ namespace _HomeWorksCheck
         }
     }
 }
-
-    
-
-

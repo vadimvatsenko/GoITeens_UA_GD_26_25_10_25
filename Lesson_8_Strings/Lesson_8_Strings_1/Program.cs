@@ -1,4 +1,14 @@
 ﻿// Базовий API по роботі з строками 
+// OK - void Contains(x) - чи є літера
+// Ok - void StartsWith(x) - чи починається з
+// OK - void EndsWith(x) - чи закінчується на
+// void IndexOf(x) - перший індекс входження
+// void IndexOf(x,y) - перший індекс входження символа x починаючи з y
+// void LastIndexOf(x) - останній індекс входження символа x
+// void LastIndexOf(x, y) - перший індекс входження символа x до y
+// OK - властивість Length - довжина - OK
+// void Substring(x) - виріже строку з x індекса
+// void Substring(x, y) -  виріже строку з x індекса y елементів
 
 namespace Lesson_8_Strings_1
 {
@@ -7,48 +17,55 @@ namespace Lesson_8_Strings_1
         static void Main(string[] args)
         {
             string name = "abracadabra";
-            bool containsA = name.Contains("a"); // чи є літера а
-            bool containsE = name.Contains("E"); // чи є літера E
+            Console.WriteLine(name.Length); // властивість Length - довжина
+
+            int cout = 0;
+            foreach (var s in name)
+            {
+                Console.Write($"{s} ");
+            }
             
-            Console.WriteLine($"Contains a: {containsA}");
-            Console.WriteLine($"Contains E: {containsE}");
+            Console.WriteLine();
             
-            Console.WriteLine("========================");
+            bool isAInString = name.Contains("a");
+            bool isEInString = name.Contains("E");
+            Console.WriteLine(isAInString);
+            Console.WriteLine(isEInString);
             
-            bool startWithAbra = name.StartsWith("abra");
-            bool endWithAbra = name.EndsWith("abra");
+            Console.WriteLine();
             
-            Console.WriteLine($"Starting with abra: {startWithAbra}");
-            Console.WriteLine($"Ending with abra: {endWithAbra}");
+            bool IsabraInString = name.StartsWith("abra");
+            bool IsEabraInString = name.EndsWith("abra!");
             
-            Console.WriteLine("========================");
+            Console.WriteLine(IsabraInString);
+            Console.WriteLine(IsEabraInString);
             
-            int indexOfa = name.IndexOf('a'); // перший індекс входження
-            int indexOfb = name.IndexOf('b', 2); // індекс входження з другого індекса пошук
-            Console.WriteLine($"Index of 'a': {indexOfa}");
-            Console.WriteLine($"Index of 'b': {indexOfb}");
+            Console.WriteLine();
             
-            Console.WriteLine("========================");
+            int indexOfa = name.IndexOf('r');
+            Console.WriteLine(indexOfa);
             
-            int lastIndexOfa = name.LastIndexOf('a'); // перший індекс входження з кінця
-            int lastIndexOfb = name.LastIndexOf('b', 3); // перший індекс входження з кінця до startIndex(3)
+            int indexOfB =  name.IndexOf('b', 2);
+            Console.WriteLine(indexOfB);
             
-            Console.WriteLine($"Last index of 'a': {lastIndexOfa}");
-            Console.WriteLine($"Last index of 'b': {lastIndexOfb}");
+            Console.WriteLine();
             
-            Console.WriteLine("========================");
+            int lastIndex = name.LastIndexOf('r');
+            Console.WriteLine(lastIndex);
             
-            Console.WriteLine(name.Length); // довжина строки
+            //int lastIndexOfA = name.LastIndexOf('b', 4);
+            //Console.WriteLine(lastIndexOfA);
             
-            Console.WriteLine("========================");
+            string newName = name.Substring(3);
+            Console.WriteLine(newName);
             
-            string subStringFrom5 =  name.Substring(5); // виріже строку з п'ятого індекса
-            string subStringFrom5_5Symbols =  name.Substring(5, 5); // виріже строку з п'ятого індекса п'ять символів
+            string newName1 = name.Substring(3, 3);
+            Console.WriteLine(newName1);
             
-            Console.WriteLine($"Substring from 5: {subStringFrom5}");
-            Console.WriteLine($"Substring from 5_5: {subStringFrom5_5Symbols}");
             
             Console.ReadKey();
         }
     }
+    
+    
 }
