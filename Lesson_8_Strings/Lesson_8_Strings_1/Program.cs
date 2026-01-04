@@ -53,8 +53,9 @@ namespace Lesson_8_Strings_1
             int lastIndex = name.LastIndexOf('r');
             Console.WriteLine(lastIndex);
             
-            //int lastIndexOfA = name.LastIndexOf('b', 4);
-            //Console.WriteLine(lastIndexOfA);
+            Console.WriteLine("==LastIndexOf==");
+            int lastIndexOfA = name.LastIndexOf('b', 4);
+            Console.WriteLine(lastIndexOfA);
             
             string newName = name.Substring(3);
             Console.WriteLine(newName);

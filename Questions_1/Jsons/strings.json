@@ -1,0 +1,738 @@
+﻿[
+  {
+    "id": 1,
+    "difficulty": "easy",
+    "question": "Що таке рядок (string) у C#?",
+    "answers": [
+      {
+        "text": "Тільки одне число",
+        "correct": false
+      },
+      {
+        "text": "Набір символів (текст)",
+        "correct": true
+      },
+      {
+        "text": "Тип для зберігання дат",
+        "correct": false
+      },
+      {
+        "text": "Команда для циклу",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "difficulty": "easy",
+    "question": "Який тип має значення \"Hello\" у C#?",
+    "answers": [
+      {
+        "text": "bool",
+        "correct": false
+      },
+      {
+        "text": "char",
+        "correct": false
+      },
+      {
+        "text": "int",
+        "correct": false
+      },
+      {
+        "text": "string",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "difficulty": "easy",
+    "question": "Яка властивість повертає кількість символів у рядку s?",
+    "answers": [
+      {
+        "text": "s.Length",
+        "correct": true
+      },
+      {
+        "text": "s.Capacity",
+        "correct": false
+      },
+      {
+        "text": "s.Size",
+        "correct": false
+      },
+      {
+        "text": "s.Count",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "difficulty": "easy",
+    "question": "Як отримати перший символ рядка s (якщо рядок не порожній)?",
+    "answers": [
+      {
+        "text": "s[1]",
+        "correct": false
+      },
+      {
+        "text": "s.First()",
+        "correct": false
+      },
+      {
+        "text": "s[0]",
+        "correct": true
+      },
+      {
+        "text": "s.Get(0)",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "difficulty": "easy",
+    "question": "Чим відрізняється char від string?",
+    "answers": [
+      {
+        "text": "char — це число, string — це текст",
+        "correct": false
+      },
+      {
+        "text": "string — один символ, char — текст",
+        "correct": false
+      },
+      {
+        "text": "Немає різниці",
+        "correct": false
+      },
+      {
+        "text": "char — один символ, string — набір символів",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "difficulty": "easy",
+    "question": "Як у C# записати порожній рядок?",
+    "answers": [
+      {
+        "text": "\" \"",
+        "correct": false
+      },
+      {
+        "text": "empty",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "\"\"",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "difficulty": "easy",
+    "question": "Що буде результатом виразу \"Hi\" + \"!\"?",
+    "answers": [
+      {
+        "text": "Hi",
+        "correct": false
+      },
+      {
+        "text": "\"Hi !\"",
+        "correct": false
+      },
+      {
+        "text": "\"Hi!\"",
+        "correct": true
+      },
+      {
+        "text": "Помилка",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "difficulty": "easy",
+    "question": "Що робить оператор + для рядків?",
+    "answers": [
+      {
+        "text": "Об’єднує рядки (конкатенація)",
+        "correct": true
+      },
+      {
+        "text": "Порівнює довжину рядків",
+        "correct": false
+      },
+      {
+        "text": "Додає числа",
+        "correct": false
+      },
+      {
+        "text": "Ділить рядки",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "difficulty": "medium",
+    "question": "Який метод перевіряє, чи містить рядок s підрядок \"abc\"?",
+    "answers": [
+      {
+        "text": "s.Find(\"abc\")",
+        "correct": false
+      },
+      {
+        "text": "s.Has(\"abc\")",
+        "correct": false
+      },
+      {
+        "text": "s.Contains(\"abc\")",
+        "correct": true
+      },
+      {
+        "text": "s.In(\"abc\")",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "difficulty": "medium",
+    "question": "Який метод прибирає пробіли на початку та в кінці рядка?",
+    "answers": [
+      {
+        "text": "Replace()",
+        "correct": false
+      },
+      {
+        "text": "Clear()",
+        "correct": false
+      },
+      {
+        "text": "Trim()",
+        "correct": true
+      },
+      {
+        "text": "Split()",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "difficulty": "medium",
+    "question": "Який метод перетворює рядок у верхній регістр?",
+    "answers": [
+      {
+        "text": "ToBig()",
+        "correct": false
+      },
+      {
+        "text": "Upper()",
+        "correct": false
+      },
+      {
+        "text": "Caps()",
+        "correct": false
+      },
+      {
+        "text": "ToUpper()",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "difficulty": "medium",
+    "question": "Який метод перетворює рядок у нижній регістр?",
+    "answers": [
+      {
+        "text": "Down()",
+        "correct": false
+      },
+      {
+        "text": "ToSmall()",
+        "correct": false
+      },
+      {
+        "text": "Lower()",
+        "correct": false
+      },
+      {
+        "text": "ToLower()",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "difficulty": "medium",
+    "question": "Що повертає s.IndexOf('a')?",
+    "answers": [
+      {
+        "text": "Завжди 0",
+        "correct": false
+      },
+      {
+        "text": "Індекс першого входження 'a' або -1",
+        "correct": true
+      },
+      {
+        "text": "Кількість символів 'a'",
+        "correct": false
+      },
+      {
+        "text": "Останній індекс рядка",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "difficulty": "medium",
+    "question": "Що повертає s.LastIndexOf('a')?",
+    "answers": [
+      {
+        "text": "Кількість входжень 'a'",
+        "correct": false
+      },
+      {
+        "text": "Довжину рядка",
+        "correct": false
+      },
+      {
+        "text": "Індекс першого входження 'a'",
+        "correct": false
+      },
+      {
+        "text": "Індекс останнього входження 'a' або -1",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "difficulty": "medium",
+    "question": "Який метод перевіряє, чи рядок починається з певного тексту?",
+    "answers": [
+      {
+        "text": "StartsWith()",
+        "correct": true
+      },
+      {
+        "text": "Begin()",
+        "correct": false
+      },
+      {
+        "text": "Prefix()",
+        "correct": false
+      },
+      {
+        "text": "First()",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "difficulty": "medium",
+    "question": "Який метод перевіряє, чи рядок закінчується певним текстом?",
+    "answers": [
+      {
+        "text": "Suffix()",
+        "correct": false
+      },
+      {
+        "text": "EndsWith()",
+        "correct": true
+      },
+      {
+        "text": "Last()",
+        "correct": false
+      },
+      {
+        "text": "Finish()",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "difficulty": "medium",
+    "question": "Що робить метод Replace(\"a\", \"b\")?",
+    "answers": [
+      {
+        "text": "Замінює всі 'a' на 'b'",
+        "correct": true
+      },
+      {
+        "text": "Змінює тільки першу букву",
+        "correct": false
+      },
+      {
+        "text": "Додає 'b' в кінець рядка",
+        "correct": false
+      },
+      {
+        "text": "Видаляє всі символи 'a'",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "difficulty": "medium",
+    "question": "Що робить Split(' ')?",
+    "answers": [
+      {
+        "text": "Розбиває рядок на масив частин за пробілом",
+        "correct": true
+      },
+      {
+        "text": "Рахує слова",
+        "correct": false
+      },
+      {
+        "text": "Об’єднує слова в одне",
+        "correct": false
+      },
+      {
+        "text": "Прибирає всі пробіли",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "difficulty": "medium",
+    "question": "Який метод об’єднує масив рядків через роздільник?",
+    "answers": [
+      {
+        "text": "string.MergeLines()",
+        "correct": false
+      },
+      {
+        "text": "string.Sum()",
+        "correct": false
+      },
+      {
+        "text": "string.Split()",
+        "correct": false
+      },
+      {
+        "text": "string.Join()",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "difficulty": "medium",
+    "question": "Як отримати підрядок, починаючи з індексу 2 до кінця?",
+    "answers": [
+      {
+        "text": "s.Substring(2)",
+        "correct": true
+      },
+      {
+        "text": "s.Sub(2)",
+        "correct": false
+      },
+      {
+        "text": "s.Cut(2)",
+        "correct": false
+      },
+      {
+        "text": "s.Part(2)",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "difficulty": "medium",
+    "question": "Як перевірити, що рядок s дорівнює \"test\" без врахування регістру?",
+    "answers": [
+      {
+        "text": "s == \"TEST\" завжди працює",
+        "correct": false
+      },
+      {
+        "text": "s.Contains(\"test\")",
+        "correct": false
+      },
+      {
+        "text": "s == \"test\" і все",
+        "correct": false
+      },
+      {
+        "text": "s.Equals(\"test\", StringComparison.OrdinalIgnoreCase)",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "difficulty": "medium",
+    "question": "Що робить s.TrimStart()?",
+    "answers": [
+      {
+        "text": "Прибирає пробіли тільки з початку рядка",
+        "correct": true
+      },
+      {
+        "text": "Додає пробіли на початку",
+        "correct": false
+      },
+      {
+        "text": "Прибирає пробіли з обох боків",
+        "correct": false
+      },
+      {
+        "text": "Прибирає пробіли тільки з кінця рядка",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "difficulty": "medium",
+    "question": "Що робить s.TrimEnd()?",
+    "answers": [
+      {
+        "text": "Прибирає пробіли тільки з початку рядка",
+        "correct": false
+      },
+      {
+        "text": "Замінює пробіли на таби",
+        "correct": false
+      },
+      {
+        "text": "Прибирає пробіли в середині",
+        "correct": false
+      },
+      {
+        "text": "Прибирає пробіли тільки з кінця рядка",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "difficulty": "medium",
+    "question": "Що повертає string.IsNullOrEmpty(s)?",
+    "answers": [
+      {
+        "text": "Довжину рядка",
+        "correct": false
+      },
+      {
+        "text": "Індекс першого символу",
+        "correct": false
+      },
+      {
+        "text": "true, якщо s == null або s == \"\"",
+        "correct": true
+      },
+      {
+        "text": "true, якщо рядок містить пробіли",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "difficulty": "medium",
+    "question": "Що повертає string.IsNullOrWhiteSpace(s)?",
+    "answers": [
+      {
+        "text": "true тільки якщо s == \"\"",
+        "correct": false
+      },
+      {
+        "text": "true, якщо s == null або порожній або містить тільки пробіли/таби",
+        "correct": true
+      },
+      {
+        "text": "true тільки якщо s == null",
+        "correct": false
+      },
+      {
+        "text": "Завжди false",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "difficulty": "medium",
+    "question": "Що робить метод Remove(2, 3) для рядка?",
+    "answers": [
+      {
+        "text": "Повертає підрядок довжиною 3",
+        "correct": false
+      },
+      {
+        "text": "Додає 3 символи після індексу 2",
+        "correct": false
+      },
+      {
+        "text": "Видаляє 3 символи, починаючи з індексу 2",
+        "correct": true
+      },
+      {
+        "text": "Замінює 3 символи на пробіли",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "difficulty": "medium",
+    "question": "Що робить Insert(2, \"ABC\") для рядка?",
+    "answers": [
+      {
+        "text": "Додає \"ABC\" тільки в кінець",
+        "correct": false
+      },
+      {
+        "text": "Замінює все на \"ABC\"",
+        "correct": false
+      },
+      {
+        "text": "Видаляє \"ABC\" з рядка",
+        "correct": false
+      },
+      {
+        "text": "Вставляє \"ABC\" у рядок, починаючи з індексу 2",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "difficulty": "medium",
+    "question": "Що таке інтерполяція рядків $\"Hello {name}\"?",
+    "answers": [
+      {
+        "text": "Спосіб вставляти значення змінних у рядок",
+        "correct": true
+      },
+      {
+        "text": "Спосіб видалити пробіли",
+        "correct": false
+      },
+      {
+        "text": "Спосіб випадково змінювати текст",
+        "correct": false
+      },
+      {
+        "text": "Спосіб перетворити рядок у число",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "difficulty": "medium",
+    "question": "Що таке verbatim string @\"C:\\Test\\file.txt\"?",
+    "answers": [
+      {
+        "text": "Рядок тільки для чисел",
+        "correct": false
+      },
+      {
+        "text": "Рядок, який не можна вивести",
+        "correct": false
+      },
+      {
+        "text": "Рядок, де символ \\\\ не потребує екранування",
+        "correct": true
+      },
+      {
+        "text": "Рядок, який завжди пустий",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "difficulty": "medium",
+    "question": "Що означає \\n у рядку?",
+    "answers": [
+      {
+        "text": "Табуляція",
+        "correct": false
+      },
+      {
+        "text": "Перенесення рядка (нова строка)",
+        "correct": true
+      },
+      {
+        "text": "Пробіл",
+        "correct": false
+      },
+      {
+        "text": "Кінець програми",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "difficulty": "medium",
+    "question": "Що означає \\t у рядку?",
+    "answers": [
+      {
+        "text": "Кома",
+        "correct": false
+      },
+      {
+        "text": "Перенесення рядка",
+        "correct": false
+      },
+      {
+        "text": "Нуль-символ",
+        "correct": false
+      },
+      {
+        "text": "Табуляція",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "difficulty": "medium",
+    "question": "Який варіант найзручніший, щоб “склеювати” багато рядків у циклі без зайвих витрат?",
+    "answers": [
+      {
+        "text": "StringBuilder",
+        "correct": true
+      },
+      {
+        "text": "char[]",
+        "correct": false
+      },
+      {
+        "text": "string.Split",
+        "correct": false
+      },
+      {
+        "text": "Console.WriteLine",
+        "correct": false
+      }
+    ]
+  }
+]

@@ -15,40 +15,51 @@ namespace Questions_1
             Console.InputEncoding  = Encoding.UTF8;
             
             Random random = new Random();
-            List<Student> students = new List<Student>();
-            List<Question> questions = new List<Question>();
+            
+            List<Student> students = await LoadResourses();
+            
             bool isCorrect =  false;
             
-            string studentsPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/_students.json";
-            //string qaPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/arrays.json";
-            string qaPath = @"P:/Projects/Rider/GoITeens_UA_GD_26_25_10_25/Questions_1/Jsons/cycles.json";
+            Dictionary<string, string> themes = new Dictionary<string, string>()
+            {
+                { "Arrays", StaticPath.ArrayQA },
+                { "Cycles", StaticPath.CyclesQA },
+                { "Strings", StaticPath.StringQA },
+            };
             
-            try
+            for (int i = 0; i < themes.Count; i++)
             {
-                using (FileStream fs = new FileStream(studentsPath, FileMode.OpenOrCreate))
-                {
-                    var studentsArray = await JsonSerializer.DeserializeAsync<Student[]>(fs);
-                    students.AddRange(studentsArray);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{i + 1} - {themes.ElementAt(i).Key}");
             }
             
-            try
-            {
-                using (FileStream fs = new FileStream(qaPath, FileMode.OpenOrCreate))
-                {
-                    Question[]? qa = await JsonSerializer.DeserializeAsync<Question[]>(fs);
-                    questions.AddRange(qa);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            string targetPath = ChoseTheme(themes);
+            
+            List<Question> questions = await LoadQuestions(targetPath);
 
+            int tryes = questions.Count / students.Count;
+            
+            // для подального зберігання в json. На майбутнє
+            Dictionary<Student, Question> questionsByStudent = new Dictionary<Student, Question>();
+            //
+            
+            // заповнення кількості питань на учня
+            Dictionary<Student, int> questionsByTeacher = new Dictionary<Student, int>(students.Count);
+            //
+
+            for (int i = 0; i < questions.Count; i++)
+            {
+                Student student = students[i % students.Count];
+                
+                if (!questionsByTeacher.ContainsKey(student))
+                {
+                    questionsByTeacher.Add(students[i], 1);
+                }
+                else
+                {
+                    questionsByTeacher[student]++;
+                }
+            }
+            
             do
             {
                 Console.Clear();
@@ -110,7 +121,13 @@ namespace Questions_1
                         }
                         
                         questions.Remove(question); 
-                        students.Remove(student);
+                        questionsByTeacher[student]--;
+
+                        if (questionsByTeacher[student] == 0)
+                        {
+                            students.Remove(student);
+                        }
+
                     }
                     else
                     {
@@ -125,12 +142,75 @@ namespace Questions_1
                     
                 } while (!isCorrect);
                 
-            } while (questions.Count > 0);
+            } while (questions.Count > 0 || students.Count > 0);
             
             
             Console.WriteLine("Питання закінчились, дякую");
             Console.ReadKey();
             
+        }
+
+        private static string ChoseTheme(Dictionary<string, string> themes)
+        {
+            bool isValidThemeNumber = false;
+            string targetPath =  String.Empty;
+            
+            do
+            {
+                Console.Write("Enter Theme Number: ");
+                string themeInput = Console.ReadLine();
+                
+                if (int.TryParse(themeInput, out int theme) && (theme >= 1 && theme <= themes.Count))
+                {
+                    isValidThemeNumber = true;
+                    targetPath = themes.ElementAt(theme - 1).Value;
+                }
+                else
+                {
+                    Console.Write($"Enter Valid Theme Number");
+                    continue;
+                }
+            } while (!isValidThemeNumber);
+            
+            return targetPath;
+        }
+
+        async static Task<List<Student>> LoadResourses()
+        {
+            List<Student> tempStudentsList = new List<Student>();
+            try
+            {
+                using (FileStream fs = new FileStream(StaticPath.StudentsPath, FileMode.OpenOrCreate))
+                {
+                    var studentsArray = await JsonSerializer.DeserializeAsync<Student[]>(fs);
+                    tempStudentsList.AddRange(studentsArray);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return tempStudentsList;
+        }
+
+        async static Task<List<Question>> LoadQuestions(string path)
+        {
+            List<Question> questions = new List<Question>();
+            try
+            {
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                    Question[]? qa = await JsonSerializer.DeserializeAsync<Question[]>(fs);
+                    questions.AddRange(qa);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            return questions;
         }
     }
 }

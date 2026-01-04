@@ -55,6 +55,25 @@ namespace Lesson_8_Strings_3
             {
                 Console.Write($"{c} ");
             }
+
+            string upperString = "GjyyggGGGGklllljhjgggdgdggggd";
+            string up =  upperString.ToUpper();
+            Console.WriteLine(up);
+            string lo = upperString.ToLower();
+            Console.WriteLine(lo);
+
+            string trimString = " sdfdsfds ";
+            string trim = trimString.Trim();
+            
+            string input = Console.ReadLine();
+            
+            Console.WriteLine($"before trim {input}");
+            Console.WriteLine($"after trim {input.Trim()}");
+
+            input.TrimStart();
+            input.TrimEnd();
+            
+           
             
             Console.ReadKey();
         }

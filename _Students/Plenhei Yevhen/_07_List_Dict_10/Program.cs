@@ -13,10 +13,12 @@ class Program
         distances.Add(1);
         distances.Add(1);
 
+        int sum = 0;
+        
         for (int i = 2; i < numberOfArtifacts; i++)
         {
-            int nextDistance = distances[i - 1] + distances[i - 2];
-            distances.Add(nextDistance);
+            sum += distances[i - 1] +  distances[i - 2];
+            distances.Add(sum);
         }
 
         Console.WriteLine("Відстані до артефактів:");

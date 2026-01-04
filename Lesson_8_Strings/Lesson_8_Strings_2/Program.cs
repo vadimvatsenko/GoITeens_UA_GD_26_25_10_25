@@ -9,6 +9,7 @@ namespace Lesson_8_Strings_2
         static void Main(string[] args)
         {
             string empty = "";
+            string empty2 = String.Empty;
             string withWhiteSpace = " ";
             string notEmpty = " a";
             string nullString = null;
