@@ -8,28 +8,29 @@ namespace Sample
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter a string: ");
-            string input = Console.ReadLine();
-            
-            string vowels = "aeiou";
-
-            string lowerInput = input.ToLower();
-            
-            int count = 0; 
-        
-            foreach (char c in lowerInput)
+            Dictionary<string, string> countries = new Dictionary<string, string>()
             {
-                if (vowels.Contains(c))
+                {"Україна", "Київ"},
+                {"Франція", "Париж"},
+                {"Німеччина", "Берлін"},
+                {"Італія", "Рим"},
+                {"Іспанія", "Мадрид"}
+            };
+
+            foreach (var pair in countries)
+            {
+                while (true)
                 {
-                    count++;
+                    Console.Write(pair.Key + ": ");
+                    string answer = Console.ReadLine();
+
+                    if (answer.Equals(pair.Value, StringComparison.OrdinalIgnoreCase))
+                        break;
                 }
             }
-
-            Console.WriteLine($"Number of vowels: {count}");
-            
             Console.ReadKey();
-            
         }
     }
 }
+
 
