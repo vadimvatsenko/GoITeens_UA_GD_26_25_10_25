@@ -3,14 +3,13 @@ using RPG_Monochrome.Layers;
 
 namespace RPG_Monochrome;
 
-public class Hero: IDisposable
+public class Hero: Creature, IDisposable
 {
     private Input _input;
-    public Vector2 Position {get; private set;}
+
     private Vector2 _direction = Vector2.Zero;
-    public Hero(Input input, Vector2 position)
+    public Hero(Input input, Vector2 position) : base(position)
     {
-        Position =  position;
         _input = input;
         
         _input.OnAttack += Attack;
@@ -20,6 +19,7 @@ public class Hero: IDisposable
         _input.OnDown += MoveDown;
     }
 
+    
     private void MoveLeft()
     {
         Position.X -= 2;

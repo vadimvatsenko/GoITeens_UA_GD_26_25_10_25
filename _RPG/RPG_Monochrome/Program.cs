@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using RPG_Monochrome.Data.Sprites.Bat;
 using RPG_Monochrome.Data.Sprites.Priest;
 using RPG_Monochrome.Engine;
 using RPG_Monochrome.Layers;
@@ -10,42 +11,36 @@ namespace RPG_Monochrome
     {
         static void Main(string[] args)
         {
-            // Stopwatch — точніший таймер, ніж DateTime.Now
-            Stopwatch sw = Stopwatch.StartNew();
-            
             Console.CursorVisible = false;
             
-            int symbolStep = 2;
-            int spriteIndex = 0;
-            long animLastMs = 0;
-            const int animMs = 50; // скорость анимации (поставь 80..200)
-            long lastMs = sw.ElapsedMilliseconds;
-            //
-
             int mapWidth = 200;
             int mapHeight = 100;
             
             Input input = new Input();
             Renderer renderer = new Renderer();
             
-            HeroAnimator  heroAnimator = new HeroAnimator();
-            Hero hero = new Hero(input, new Vector2(10, 10));
-            
+            // створення ігрових слоїв
             var backgroundLayer = renderer.CreateLayer(mapWidth, mapHeight);
             var heroLayer = renderer.CreateLayer(mapWidth, mapHeight);
+            var enemyLayer =  renderer.CreateLayer(mapWidth, mapHeight);
+            //
+            
+            Hero hero = new Hero(input, new Vector2(10, 10));
+            Ghost ghost = new Ghost(new Vector2(1, 1));
+            Animator heroAnimator = new Animator(renderer, hero, heroLayer, AnimationSprites.BatAnimation);
+            Animator ghostAnimator = new Animator(renderer, ghost, heroLayer, AnimationSprites.BatAnimation);
             
             renderer.Fill(backgroundLayer, '.');
             
-            
+            // Stopwatch — точніший таймер, ніж DateTime.Now
+            Stopwatch sw = Stopwatch.StartNew();
             // === Налаштування цільового FPS ============================================
             int targetFps = 60;
 
             // Час одного кадру в мілісекундах.
             // 1000 мс / 60 ≈ 16.666... мс на кадр
             double targetFrameMs = 1000.0 / targetFps;
-
             
-
             // Час, коли "має" закінчитися наступний кадр (у мс від старту програми)
             double nextFrameMs = 0;
 
@@ -59,12 +54,6 @@ namespace RPG_Monochrome
 
             while (true)
             {
-                //
-                long nowMsAnim = sw.ElapsedMilliseconds;
-                double dt = (nowMsAnim - lastMs) / 1000.0;  // секунды
-                lastMs = nowMsAnim;
-                //
-                
                 
                 // === 1) ПОЧАТОК КАДРУ ==================================================
                 double frameStartMs = sw.Elapsed.TotalMilliseconds;
@@ -79,38 +68,16 @@ namespace RPG_Monochrome
                 // Тут зазвичай викликають ігрову логіку:
                 // Update(deltaTime);
                 
+                ///////////////////////////////
                 input.Update(deltaTime);
                 renderer.Clear(heroLayer);
                 
+                heroAnimator.Update(deltaTime);
+                ghostAnimator.Update(deltaTime);
                 
-                
-                for (int y = 0; y < heroAnimator.AnimationDictionary["Idle"][spriteIndex].GetLength(0); y++)
-                {
-                    for (int x = 0; x < heroAnimator.AnimationDictionary["Idle"][spriteIndex].GetLength(1); x++)
-                    {
-                        char tile = heroAnimator.AnimationDictionary["Idle"][spriteIndex][y, x];
-
-                        if(tile == ' ') continue;
-
-                        int startX = x * symbolStep;
-
-                        for (int i = 0; i < symbolStep; i++)
-                        {
-                            //DrawChar(ground, startX + i + px, y + py, tile);
-                            renderer.DrawChar(heroLayer, startX + i + hero.Position.X, y + hero.Position.Y, tile);
-                        }
-                    }
-                }
-                
-                if (nowMsAnim - animLastMs >= animMs)
-                {
-                    spriteIndex = (spriteIndex + 1) % heroAnimator.AnimationDictionary["Idle"].Count;
-                    animLastMs = nowMsAnim;
-                }
-                
-                
-                var frame = renderer.Compose(mapWidth, mapHeight, backgroundLayer, heroLayer);
+                var frame = renderer.Compose(mapWidth, mapHeight, backgroundLayer, heroLayer, enemyLayer);
                 renderer.Render(frame);
+                ////////////////////////////////
                 
                 // === 2) ОБМЕЖЕННЯ FPS ===================================================
                 // Ми хочемо, щоб кожен кадр закінчувався не раніше, ніж через targetFrameMs
