@@ -9,40 +9,44 @@ public class Animator: IUpdatable
     // Const Field
     private const int SYMBOL_STEP = 2;
     private readonly Renderer _renderer;
-    private readonly Creature _creture;
+    private Creature _creture;
     private readonly char[,] _targetLayer;
     //
+    
+    private List<char[,]> _targetAnimation;
+    public Action OnFinishAnimation;
     
     // Sprite Render Info
     private int _spriteIndex = 0; // index of Frame
     private double _animTimer = 0; // 
     private const double FRAME_TIME = 0.12;
     
-    
     public Dictionary<SpriteName, List<char[,]>> AnimationDictionary = new Dictionary<SpriteName, List<char[,]>>();
     
-    public List<char[,]> IdleDownSprite { get; } = new List<char[,]>()
-    {
-        PriestIdle.PriestIdleDown_1,
-        PriestIdle.PriestIdleDown_2,
-        PriestIdle.PriestIdleDown_3,
-        PriestIdle.PriestIdleDown_4,
-        PriestIdle.PriestIdleDown_5,
-        PriestIdle.PriestIdleDown_6,
-    };
-
     public Animator(
         Renderer renderer, 
-        Creature creature, 
         char[,] targetLayer, 
         Dictionary<SpriteName, List<char[,]>> animationDictionary)
     {
         _renderer = renderer;
-        _creture = creature;
         _targetLayer = targetLayer;
         
         AnimationDictionary = animationDictionary;
-        
+
+        _targetAnimation = AnimationDictionary.ElementAt(0).Value;
+    }
+
+    public void SetCreature(Creature creature)
+    {
+        _creture =  creature;
+    }
+
+    public void ChangeAnimation(SpriteName spriteName)
+    {
+        if (AnimationDictionary.ContainsKey(spriteName))
+        {
+            _targetAnimation = AnimationDictionary[spriteName];
+        }
     }
 
     
@@ -53,15 +57,12 @@ public class Animator: IUpdatable
 
     private void AnimationUpdate(double deltaTime)
     {
-        char[,] targetAnimation = AnimationDictionary[SpriteName.WalkRight][_spriteIndex];
         
-        
-        
-        for (int y = 0; y < AnimationDictionary[SpriteName.WalkRight][_spriteIndex].GetLength(0); y++)
+        for (int y = 0; y < _targetAnimation[_spriteIndex].GetLength(0); y++)
         {
-            for (int x = 0; x < AnimationDictionary[SpriteName.WalkRight][_spriteIndex].GetLength(1); x++)
+            for (int x = 0; x < _targetAnimation[_spriteIndex].GetLength(1); x++)
             {
-                char tile = AnimationDictionary[SpriteName.WalkRight][_spriteIndex][y, x];
+                char tile = _targetAnimation[_spriteIndex][y, x];
 
                 if(tile == ' ') continue;
 
@@ -79,8 +80,13 @@ public class Animator: IUpdatable
 
         if (_animTimer >= FRAME_TIME)
         {
-            _spriteIndex = (_spriteIndex + 1) % IdleDownSprite.Count;
+            _spriteIndex = (_spriteIndex + 1) % _targetAnimation.Count;
             _animTimer = 0;
+        }
+
+        if (_spriteIndex >= _targetAnimation[_spriteIndex].Length)
+        {
+            OnFinishAnimation?.Invoke();
         }
     }
 }

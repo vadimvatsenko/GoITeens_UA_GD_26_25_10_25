@@ -122,4 +122,19 @@ public static class PriestIdle
         { ' ', ' ', ' ', '█', '█', '█', '█', '█', '█', '█', '█', '█', '█', ' ', ' ', ' ' },
     };
     
+    
+    
+    
+    public static List<char[,]> PriestIdleDownListSprites = new List<char[,]>()
+    {
+        PriestIdleDown_1,
+        PriestIdleDown_2,
+        PriestIdleDown_3,
+        PriestIdleDown_4,
+        PriestIdleDown_5,
+        PriestIdleDown_6,
+    };
+    
+    
+    
 }

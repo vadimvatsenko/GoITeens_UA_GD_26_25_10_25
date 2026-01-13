@@ -35,7 +35,6 @@ namespace Lesson_8_Strings_6
             string str2 = sb.ToString();
             Console.WriteLine(str2);
             
-            
             Console.ReadKey();
         }
     }

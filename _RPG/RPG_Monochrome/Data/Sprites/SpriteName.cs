@@ -3,6 +3,8 @@
 public enum SpriteName
 {
     Idle,
+    IdleDawn,
+    WalkDown,
     WalkRight,
     WalkLeft,
 }

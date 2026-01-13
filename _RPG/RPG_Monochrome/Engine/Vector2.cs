@@ -1,6 +1,6 @@
 ﻿namespace RPG_Monochrome.Engine;
 
-public class Vector2
+public struct Vector2
 {
     public int X;
     public int Y;
@@ -19,6 +19,14 @@ public class Vector2
         Y = y;
     }
 
+    public static Vector2 Clamp(Vector2 target, Vector2 min, Vector2 max)
+    {
+        int x = Math.Clamp(target.X, min.X, max.X);
+        int y = Math.Clamp(target.Y, min.Y, max.Y);
+        return new Vector2(x, y);
+    }
+       
+
     public static Vector2 operator +(Vector2 left, Vector2 right) => new(left.X + right.X, left.Y + right.Y);
     public static Vector2 operator +(Vector2 left, int right) => new(left.X + right, left.Y + right);
     public static Vector2 operator -(Vector2 left, Vector2 right) => new(left.X - right.X, left.Y - right.Y);
@@ -31,7 +39,8 @@ public class Vector2
     public static bool operator <=(Vector2 left, Vector2 right) => left.X <= right.X && left.Y <= right.Y;
     public static bool operator >=(Vector2 left, Vector2 right) => left.X >= right.X && left.Y >= right.Y;
     
-    public float Magnitude() => MathF.Sqrt(X * X + Y * Y);
+    
+    public float Magnitude() => MathF.Sqrt(X * X + Y * Y); // наскільки довгий вектор.
     
     public override bool Equals(object? obj)
     {
