@@ -11,7 +11,7 @@ namespace RPG_Monochrome
         static void Main(string[] args)
         {
             SpritesLoaderSystem spritesLoader = new SpritesLoaderSystem();
-            
+
 
             int score = 0;
 
@@ -20,15 +20,15 @@ namespace RPG_Monochrome
 
             Input input = new Input();
             Renderer renderer = new Renderer();
-            
-            
-            /*// створення ігрових слоїв та мапи
-            int mapWidth = 200;
-            int mapHeight = 100;
+
+
+            //створення ігрових слоїв та мапи
+            int mapWidth = 100;
+            int mapHeight = 50;
             Map map = new Map(mapWidth, mapHeight);
             var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
             var uiLayer = renderer.CreateLayer(map.Width, map.Height);
-            var enemyLayer =  renderer.CreateLayer(map.Width, map.Height);
+            var enemyLayer = renderer.CreateLayer(map.Width, map.Height);
             var heroLayer = renderer.CreateLayer(map.Width, map.Height);
             var itemsLayer = renderer.CreateLayer(map.Width, map.Height);
             //
@@ -39,12 +39,13 @@ namespace RPG_Monochrome
             for (int i = 0; i < coinCount; i++)
             {
                 Animator coinAnimator = new Animator(renderer, itemsLayer, AnimationSprites.CoinAnimation);
-                Coin coin = new Coin(new Vector2(random.Next(0, mapWidth - 6), random.Next(0, mapHeight - 6)), renderer, coinAnimator);
+                Coin coin = new Coin(new Vector2(random.Next(0, mapWidth - 6), random.Next(0, mapHeight - 6)), renderer,
+                    coinAnimator);
                 coinAnimator.SetCreature(coin);
                 coins.Add(coin);
             }
 
-            Animator heroAnimator = new Animator(renderer, heroLayer, AnimationSprites.PriestAnimation);
+            Animator heroAnimator = new Animator(renderer, heroLayer, spritesLoader.Sprites(x => ));
             Animator ghostAnimator = new Animator(renderer, enemyLayer, AnimationSprites.GhostAnimation);
 
             Hero hero = new Hero(new Vector2(10, 10), renderer, input, heroAnimator, coins, map);
@@ -108,7 +109,8 @@ namespace RPG_Monochrome
                 coins.ForEach(coin => coin.Animator.Update(deltaTime));
 
                 renderer.DrawString(uiLayer, 1, 1, $"FPS: {fps:F2} | deltaTime: {deltaTime:F4}s");
-                var frame = renderer.Compose(mapWidth, mapHeight, backgroundLayer, uiLayer, enemyLayer, heroLayer, itemsLayer);
+                var frame = renderer.Compose(mapWidth, mapHeight, backgroundLayer, uiLayer, enemyLayer, heroLayer,
+                    itemsLayer);
                 renderer.Render(frame);
 
                 ////////////////////////////////
@@ -155,23 +157,6 @@ namespace RPG_Monochrome
                     fpsTimerStartMs = sw.Elapsed.TotalMilliseconds;
 
                 }
-            }
-        }*/
-            
-            Console.ReadKey();
-
-        }
-
-        static void Print(char[,] mask)
-        {
-            int h = mask.GetLength(0);
-            int w = mask.GetLength(1);
-
-            for (int y = 0; y < h; y++)
-            {
-                for (int x = 0; x < w; x++)
-                    Console.Write(mask[y, x]);
-                Console.WriteLine();
             }
         }
     }

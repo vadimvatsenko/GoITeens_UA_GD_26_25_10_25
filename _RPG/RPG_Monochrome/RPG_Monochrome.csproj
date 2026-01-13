@@ -14,6 +14,10 @@
 
     <ItemGroup>
       <Folder Include="Sprites\Characters\" />
+      <Folder Include="Sprites\Characters\Hero knight\Attack\Right\" />
+      <Folder Include="Sprites\Characters\Hero knight\Hit\Left\" />
+      <Folder Include="Sprites\Characters\Hero knight\Idle\Left\" />
+      <Folder Include="Sprites\Fonts\MainFont\" />
     </ItemGroup>
 
 </Project>

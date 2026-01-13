@@ -9,51 +9,56 @@ public class SpritesLoaderSystem
     
     private List<Sprite> _sprites = new List<Sprite>();
     
-
     public SpritesLoaderSystem()
     {
         AllPathes();
-
-
-        foreach (var sprite in _sprites)
-        {
-            Console.WriteLine(sprite.Owner);
-
-            foreach (var s in sprite.animation)
-            {
-                Console.WriteLine(s.Key);
-                
-                foreach (var v in s.Value)
-                {
-                    Console.WriteLine(v);
-                }
-            }
-        }
     }
+    
+    public List<Sprite> Sprites { get => _sprites; }
 
-    private void AllPathes()
+    private async void AllPathes()
     {
         // підпапки Directory.EnumerateDirectories(path)
         foreach (var dir in Directory.EnumerateDirectories(path))
         {
-            string dirName = Path.GetFileName(dir);
+            string dirBaseFolder = Path.GetFileName(dir); // Character Fonts Items
             
-            foreach (var file in Directory.EnumerateDirectories(dir))
+            Console.ResetColor();
+            Console.WriteLine($"\n{dirBaseFolder}\t");
+            
+            foreach (var subBaseFolder in Directory.EnumerateDirectories(dir))
             {
                 // Отримає назву файла Path.GetFileName(file)
-                string fileName = Path.GetFileName(file);
-
-                foreach (var fl in Directory.EnumerateDirectories(file))
+                // Hero MainFont Items
+                string subFolderName = Path.GetFileName(subBaseFolder);
+                //Console.ForegroundColor = ConsoleColor.Green;
+                //Console.Write($"\t{subFolderName} ");
+                //Console.WriteLine();
+                
+                foreach (var animFolder in Directory.EnumerateDirectories(subBaseFolder))
                 {
-                    string flName = Path.GetFileName(fl);
-                    foreach (var f in Directory.EnumerateFiles(fl, "*.png"))
+                    string animFolderName = Path.GetFileName(animFolder);
+                    //Console.ForegroundColor = ConsoleColor.Blue;
+                    //Console.Write($"\t \t{animFolderName} ");
+                    //Console.WriteLine();
+
+                    foreach (var dirAnimFolder in Directory.EnumerateDirectories(animFolder))
                     {
-                        Sprite sprite = new Sprite(dirName);
-                        char[,] currentSprite = LoadCharMask2D(f);
-                        sprite.AddAnimation(flName, currentSprite);
+                        string animDirFolderName = Path.GetFileName(dirAnimFolder);
+                        //Console.ForegroundColor = ConsoleColor.Cyan;
+                        //Console.Write($"\t \t \t{animDirFolderName} ");
+                        //Console.WriteLine();
                         
-                        _sprites.Add(sprite);
+                        foreach (var fileNamePath in Directory.EnumerateFiles(dirAnimFolder, "*.png"))
+                        {
+                            //Console.ForegroundColor = ConsoleColor.Magenta;
+                            //Console.WriteLine($"\t \t \t \t{fileNamePath} ");
+                            Sprite sprite = new Sprite(dirBaseFolder);
+                            char[,] currentSprite = LoadCharMask2D(fileNamePath);
+                            sprite.AddAnimation(animFolderName+animDirFolderName, currentSprite);
                         
+                            _sprites.Add(sprite);
+                        }
                     }
                 }
             }
@@ -98,8 +103,6 @@ public class SpritesLoaderSystem
                 }
             }
         });
-
         return mask;
     }
-    
 }
