@@ -38,21 +38,25 @@ namespace RPG_Monochrome
 
             for (int i = 0; i < coinCount; i++)
             {
-                Animator coinAnimator = new Animator(renderer, itemsLayer, AnimationSprites.CoinAnimation);
+                /*Animator coinAnimator = new Animator(renderer, itemsLayer, AnimationSprites.CoinAnimation);
                 Coin coin = new Coin(new Vector2(random.Next(0, mapWidth - 6), random.Next(0, mapHeight - 6)), renderer,
                     coinAnimator);
                 coinAnimator.SetCreature(coin);
-                coins.Add(coin);
+                coins.Add(coin);*/
             }
 
-            Animator heroAnimator = new Animator(renderer, heroLayer, spritesLoader.Sprites(x => ));
-            Animator ghostAnimator = new Animator(renderer, enemyLayer, AnimationSprites.GhostAnimation);
+            
+            
+            List<Sprite> _heroSprites = spritesLoader.Sprites.FindAll(x => x.Owner == "Hero knight");
+            Animator heroAnimator = new Animator(renderer, heroLayer, _heroSprites);
+            
+            //Animator ghostAnimator = new Animator(renderer, enemyLayer, AnimationSprites.GhostAnimation);
 
             Hero hero = new Hero(new Vector2(10, 10), renderer, input, heroAnimator, coins, map);
-            Ghost ghost = new Ghost(new Vector2(1, 1), renderer, ghostAnimator, hero, map);
+            //Ghost ghost = new Ghost(new Vector2(1, 1), renderer, ghostAnimator, hero, map);
 
             heroAnimator.SetCreature(hero);
-            ghostAnimator.SetCreature(ghost);
+            //ghostAnimator.SetCreature(ghost);
 
             renderer.Fill(backgroundLayer, '.');
 
@@ -101,10 +105,10 @@ namespace RPG_Monochrome
                 renderer.Clear(itemsLayer);
                 renderer.Clear(uiLayer);
 
-                ghost.Update(deltaTime);
+                //ghost.Update(deltaTime);
                 hero.Update(deltaTime);
 
-                ghostAnimator.Update(deltaTime);
+                //ghostAnimator.Update(deltaTime);
 
                 coins.ForEach(coin => coin.Animator.Update(deltaTime));
 

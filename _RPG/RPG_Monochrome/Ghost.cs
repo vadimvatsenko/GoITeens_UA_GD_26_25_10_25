@@ -42,7 +42,7 @@ public class Ghost : Creature, IUpdatable
 
     private void UpdateAnimation()
     {
-        switch (_indexPatrol)
+        /*switch (_indexPatrol)
         {
             case 0:
                 Animator.ChangeAnimation(SpriteName.WalkRight);
@@ -60,7 +60,7 @@ public class Ghost : Creature, IUpdatable
                 Animator.ChangeAnimation(SpriteName.WalkLeft);
                 _multy = 1;
                 break;
-        }
+        }*/
     }
 
     private void Chase(double deltaTime)

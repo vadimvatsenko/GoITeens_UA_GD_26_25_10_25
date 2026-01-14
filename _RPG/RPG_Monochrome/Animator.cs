@@ -1,39 +1,60 @@
 ﻿using RPG_Monochrome.Data.Sprites;
 using RPG_Monochrome.Data.Sprites.Priest;
 using RPG_Monochrome.Engine;
+using RPG_Monochrome.Utils;
 
 namespace RPG_Monochrome;
 
 public class Animator: IUpdatable
 {
     // Const Field
-    private const int SYMBOL_STEP = 2;
+    private const int SYMBOL_STEP = 1;
     private readonly Renderer _renderer;
     private Creature _creture;
     private readonly char[,] _targetLayer;
     //
-    
     private List<char[,]> _targetAnimation;
+    
     public Action OnFinishAnimation;
     
     // Sprite Render Info
     private int _spriteIndex = 0; // index of Frame
     private double _animTimer = 0; // 
     private const double FRAME_TIME = 0.12;
-    
-    public Dictionary<SpriteName, List<char[,]>> AnimationDictionary = new Dictionary<SpriteName, List<char[,]>>();
+
+    Dictionary<string, List<char[,]>> _animations = new Dictionary<string, List<char[,]>>();
     
     public Animator(
         Renderer renderer, 
         char[,] targetLayer, 
-        Dictionary<SpriteName, List<char[,]>> animationDictionary)
+        List<Sprite> sprites)
     {
         _renderer = renderer;
         _targetLayer = targetLayer;
-        
-        AnimationDictionary = animationDictionary;
 
-        _targetAnimation = AnimationDictionary.ElementAt(0).Value;
+        /*foreach (Sprite sprite in sprites)
+        {
+            foreach (var s in sprite.animation)
+            {
+                if (!_animations.TryGetValue(s.Key, out var frames))
+                {
+                    frames = new List<char[,]>();
+                    _animations[s.Key] = frames;
+                }
+
+                frames.AddRange(s.Value); // добавляем все кадры этой анимации
+            }
+        }*/
+
+        foreach (Sprite sprite in sprites)
+        {
+            foreach (var spA in sprite.animation)
+            {
+                Console.WriteLine(spA.Key +  ":" + spA.Value);
+            }
+        }
+
+        Console.ReadKey();
     }
 
     public void SetCreature(Creature creature)
@@ -41,11 +62,11 @@ public class Animator: IUpdatable
         _creture =  creature;
     }
 
-    public void ChangeAnimation(SpriteName spriteName)
+    public void SetTargetAnimation(string spriteName)
     {
-        if (AnimationDictionary.ContainsKey(spriteName))
+        if (_animations.ContainsKey(spriteName))
         {
-            _targetAnimation = AnimationDictionary[spriteName];
+            _targetAnimation = _animations[spriteName];
         }
     }
 

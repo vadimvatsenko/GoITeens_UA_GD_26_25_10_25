@@ -7,6 +7,7 @@ namespace _HomeWorksCheck
     {
         static void Main(string[] args)
         {
+            Console.Write("Enter Ukrainian word: ");
             string text = Console.ReadLine().ToLower();
 
             char[] vowelsUa =
@@ -23,6 +24,8 @@ namespace _HomeWorksCheck
                 }
             }
             Console.WriteLine(count);
+            
+            Console.ReadKey();
         }
     }
 }

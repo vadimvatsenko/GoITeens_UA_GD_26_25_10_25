@@ -22,9 +22,7 @@ public class SpritesLoaderSystem
         foreach (var dir in Directory.EnumerateDirectories(path))
         {
             string dirBaseFolder = Path.GetFileName(dir); // Character Fonts Items
-            
-            Console.ResetColor();
-            Console.WriteLine($"\n{dirBaseFolder}\t");
+            //Console.ResetColor();
             
             foreach (var subBaseFolder in Directory.EnumerateDirectories(dir))
             {
@@ -53,7 +51,7 @@ public class SpritesLoaderSystem
                         {
                             //Console.ForegroundColor = ConsoleColor.Magenta;
                             //Console.WriteLine($"\t \t \t \t{fileNamePath} ");
-                            Sprite sprite = new Sprite(dirBaseFolder);
+                            Sprite sprite = new Sprite(subFolderName);
                             char[,] currentSprite = LoadCharMask2D(fileNamePath);
                             sprite.AddAnimation(animFolderName+animDirFolderName, currentSprite);
                         
@@ -68,41 +66,73 @@ public class SpritesLoaderSystem
     
     private char[,] LoadCharMask2D(
         string path,
+        int spriteW = 16,
+        int spriteH = 16,
         char fillChar = '█',
         char emptyChar = ' ',
         byte threshold = 128,
         bool invert = false)
     {
-        
         using var img = Image.Load<Rgba32>(path);
 
-        int width = img.Width;
-        int height = img.Height;
+        // Центр изображения
+        int cx = img.Width / 2;
+        int cy = img.Height / 2;
 
-        // ВАЖНО: ширина x2
-        var mask = new char[height, width * 2];
+        // Левый верхний угол окна (spriteW x spriteH), вырезаем от центра
+        int startX = cx - spriteW / 2;
+        int startY = cy - spriteH / 2;
+
+        // ВАЖНО: ширина x2 (каждый пиксель -> 2 символа)
+        var mask = new char[spriteH, spriteW * 2];
 
         img.ProcessPixelRows(accessor =>
         {
-            for (int y = 0; y < height; y++)
+            for (int sy = 0; sy < spriteH; sy++)
             {
+                int y = startY + sy;
+
+                // Если строка вне картинки — просто заполняем пустотой
+                if (y < 0 || y >= img.Height)
+                {
+                    for (int sx = 0; sx < spriteW; sx++)
+                    {
+                        int xx = sx * 2;
+                        mask[sy, xx] = emptyChar;
+                        mask[sy, xx + 1] = emptyChar;
+                    }
+                    continue;
+                }
+
                 var row = accessor.GetRowSpan(y);
 
-                for (int x = 0; x < width; x++)
+                for (int sx = 0; sx < spriteW; sx++)
                 {
-                    var p = row[x];
+                    int x = startX + sx;
 
-                    bool isDark = p.A >= 10 && p.R < threshold && p.G < threshold && p.B < threshold;
-                    if (invert) isDark = !isDark;
+                    char c = emptyChar;
 
-                    char c = isDark ? fillChar : emptyChar;
+                    if (x >= 0 && x < img.Width)
+                    {
+                        var p = row[x];
 
-                    int xx = x * 2;
-                    mask[y, xx] = c;
-                    mask[y, xx + 1] = c; // второй символ подряд
+                        bool isDark = p.A >= 10 &&
+                                      p.R < threshold &&
+                                      p.G < threshold &&
+                                      p.B < threshold;
+
+                        if (invert) isDark = !isDark;
+
+                        c = isDark ? fillChar : emptyChar;
+                    }
+
+                    int xx = sx * 2;
+                    mask[sy, xx] = c;
+                    mask[sy, xx + 1] = c; // второй символ подряд
                 }
             }
         });
+
         return mask;
     }
 }
