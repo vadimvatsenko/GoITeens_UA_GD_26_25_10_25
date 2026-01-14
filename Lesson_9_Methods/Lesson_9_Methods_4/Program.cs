@@ -1,7 +1,7 @@
-﻿using System;
+﻿
 
 //Для рефакторінга на 17.01.2026
-namespace homework_4
+namespace Lesson_9_Methods_4
 {
     class Program
     {
@@ -19,6 +19,12 @@ namespace homework_4
             {
                 ShowMessage(colors);
                 input = Console.ReadLine();
+
+                if (input.Trim() == String.Empty || !colors.Contains(input))
+                {
+                    
+                }
+                
             } while (!colors.Contains(input));
             
 

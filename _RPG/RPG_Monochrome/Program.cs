@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using RPG_Monochrome.Data.Sprites;
 using RPG_Monochrome.Engine;
 using RPG_Monochrome.Items;
 using RPG_Monochrome.Utils;
@@ -8,23 +7,19 @@ namespace RPG_Monochrome
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             SpritesLoaderSystem spritesLoader = new SpritesLoaderSystem();
-
-
-            int score = 0;
 
             Console.CursorVisible = false;
             Random random = new Random();
 
             Input input = new Input();
             Renderer renderer = new Renderer();
-
-
+            
             //створення ігрових слоїв та мапи
-            int mapWidth = 100;
-            int mapHeight = 50;
+            int mapWidth = 256;
+            int mapHeight = 120;
             Map map = new Map(mapWidth, mapHeight);
             var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
             var uiLayer = renderer.CreateLayer(map.Width, map.Height);
@@ -32,30 +27,29 @@ namespace RPG_Monochrome
             var heroLayer = renderer.CreateLayer(map.Width, map.Height);
             var itemsLayer = renderer.CreateLayer(map.Width, map.Height);
             //
+            List<Sprite> heroSprites = spritesLoader.Sprites.FindAll(x => x.Owner == "Hero knight");
+            List<Sprite> coinSprites = spritesLoader.Sprites.FindAll(x => x.Owner == "Coin");
 
             List<Coin> coins = new List<Coin>();
             int coinCount = 10;
 
-            for (int i = 0; i < coinCount; i++)
+            /*for (int i = 0; i < coinCount; i++)
             {
-                /*Animator coinAnimator = new Animator(renderer, itemsLayer, AnimationSprites.CoinAnimation);
+                Animator coinAnimator = new Animator(renderer, itemsLayer, coinSprites);
                 Coin coin = new Coin(new Vector2(random.Next(0, mapWidth - 6), random.Next(0, mapHeight - 6)), renderer,
                     coinAnimator);
                 coinAnimator.SetCreature(coin);
-                coins.Add(coin);*/
-            }
-
+                coins.Add(coin);
+            }*/
             
-            
-            List<Sprite> _heroSprites = spritesLoader.Sprites.FindAll(x => x.Owner == "Hero knight");
-            Animator heroAnimator = new Animator(renderer, heroLayer, _heroSprites);
+            BaseAnimator heroBaseAnimator = new BaseAnimator(renderer, heroLayer, heroSprites);
             
             //Animator ghostAnimator = new Animator(renderer, enemyLayer, AnimationSprites.GhostAnimation);
 
-            Hero hero = new Hero(new Vector2(10, 10), renderer, input, heroAnimator, coins, map);
+            Hero hero = new Hero(new Vector2(10, 10), renderer, input, heroBaseAnimator, coins, map);
             //Ghost ghost = new Ghost(new Vector2(1, 1), renderer, ghostAnimator, hero, map);
 
-            heroAnimator.SetCreature(hero);
+            heroBaseAnimator.SetCreature(hero);
             //ghostAnimator.SetCreature(ghost);
 
             renderer.Fill(backgroundLayer, '.');
@@ -110,7 +104,7 @@ namespace RPG_Monochrome
 
                 //ghostAnimator.Update(deltaTime);
 
-                coins.ForEach(coin => coin.Animator.Update(deltaTime));
+                coins.ForEach(coin => coin.BaseAnimator.Update(deltaTime));
 
                 renderer.DrawString(uiLayer, 1, 1, $"FPS: {fps:F2} | deltaTime: {deltaTime:F4}s");
                 var frame = renderer.Compose(mapWidth, mapHeight, backgroundLayer, uiLayer, enemyLayer, heroLayer,

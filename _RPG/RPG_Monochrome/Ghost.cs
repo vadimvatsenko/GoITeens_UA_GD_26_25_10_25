@@ -1,5 +1,4 @@
-﻿using RPG_Monochrome.Data.Sprites;
-using RPG_Monochrome.Engine;
+﻿using RPG_Monochrome.Engine;
 
 namespace RPG_Monochrome;
 
@@ -19,8 +18,8 @@ public class Ghost : Creature, IUpdatable
     private double _multy = 1;
     
     
-    public Ghost(Vector2 position, Renderer renderer, Animator animator, Hero hero, Map map)
-        : base(position, renderer, animator)
+    public Ghost(Vector2 position, Renderer renderer, BaseAnimator baseAnimator, Hero hero, Map map)
+        : base(position, renderer, baseAnimator)
     {
         _hero = hero;
         _map = map;

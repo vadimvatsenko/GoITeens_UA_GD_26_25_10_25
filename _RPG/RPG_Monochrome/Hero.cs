@@ -11,11 +11,12 @@ public class Hero: Creature, IDisposable
     private readonly Collider2D _collider;
     private readonly Map _map;
     
+    private Vector2 _prevDirection;
     private Vector2 _direction = Vector2.Zero;
-    List<Coin> _coins = new List<Coin>();
+    private readonly List<Coin> _coins = new List<Coin>();
     
-    public Hero(Vector2 position, Renderer renderer, Input input, Animator animator, List<Coin> coins, Map map) 
-        : base(position, renderer, animator)
+    public Hero(Vector2 position, Renderer renderer, Input input, BaseAnimator baseAnimator, List<Coin> coins, Map map) 
+        : base(position, renderer, baseAnimator)
     {
         _collider = new BoxCollider2D(this.Position, new Vector2(32, 16));
         _coins =  coins;
@@ -33,33 +34,58 @@ public class Hero: Creature, IDisposable
 
     private void ResetDirection()
     {
+        _prevDirection = _direction;
         _direction = Vector2.Zero;
+        Position = CalculatePosition(_direction);
+
+        if (_prevDirection == Vector2.Right)
+        {
+            BaseAnimator.SetTargetAnimation("IdleRight");
+        }
+        else if (_prevDirection == Vector2.Left)
+        {
+            BaseAnimator.SetTargetAnimation("IdleLeft");
+        }
+        else if (_prevDirection == Vector2.Up)
+        {
+            BaseAnimator.SetTargetAnimation("IdleUp");
+        }
+        else if (_prevDirection == Vector2.Down)
+        {
+            BaseAnimator.SetTargetAnimation("IdleDown");
+        }
     }
 
-    
-    
     private void MoveLeft()
     {
+        _prevDirection = _direction;
         _direction = Vector2.Left;
         Position = CalculatePosition(_direction);
+        BaseAnimator.SetTargetAnimation("WalkLeft");
     }
     
     private void MoveRight()
     {
+        _prevDirection = _direction;
         _direction = Vector2.Right;
         Position = CalculatePosition(_direction);
+        BaseAnimator.SetTargetAnimation("WalkRight");
     }
 
     private void MoveUp()
     {
+        _prevDirection = _direction;
         _direction = Vector2.Up;
         Position = CalculatePosition(_direction);
+        BaseAnimator.SetTargetAnimation("WalkUp");
     }
 
     private void MoveDown()
     {
+        _prevDirection = _direction;
         _direction = Vector2.Down;
         Position = CalculatePosition(_direction);
+        BaseAnimator.SetTargetAnimation("WalkDown");
     }
     
     private Vector2 CalculatePosition(Vector2 direction)
@@ -89,7 +115,7 @@ public class Hero: Creature, IDisposable
         
         return 
             Vector2.Clamp(
-                Position + targetDirection, Vector2.Zero,new Vector2(_map.Width - 32, _map.Height - 16)); 
+                Position + targetDirection, Vector2.Zero,new Vector2(_map.Width - 30, _map.Height - 16)); 
     }
 
     private void Attack()

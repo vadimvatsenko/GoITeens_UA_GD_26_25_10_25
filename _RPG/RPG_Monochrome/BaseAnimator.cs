@@ -1,11 +1,9 @@
-﻿using RPG_Monochrome.Data.Sprites;
-using RPG_Monochrome.Data.Sprites.Priest;
-using RPG_Monochrome.Engine;
+﻿using RPG_Monochrome.Engine;
 using RPG_Monochrome.Utils;
 
 namespace RPG_Monochrome;
 
-public class Animator: IUpdatable
+public class BaseAnimator: IUpdatable
 {
     // Const Field
     private const int SYMBOL_STEP = 1;
@@ -24,7 +22,7 @@ public class Animator: IUpdatable
 
     Dictionary<string, List<char[,]>> _animations = new Dictionary<string, List<char[,]>>();
     
-    public Animator(
+    public BaseAnimator(
         Renderer renderer, 
         char[,] targetLayer, 
         List<Sprite> sprites)
@@ -32,7 +30,7 @@ public class Animator: IUpdatable
         _renderer = renderer;
         _targetLayer = targetLayer;
 
-        /*foreach (Sprite sprite in sprites)
+        foreach (Sprite sprite in sprites)
         {
             foreach (var s in sprite.animation)
             {
@@ -44,17 +42,10 @@ public class Animator: IUpdatable
 
                 frames.AddRange(s.Value); // добавляем все кадры этой анимации
             }
-        }*/
-
-        foreach (Sprite sprite in sprites)
-        {
-            foreach (var spA in sprite.animation)
-            {
-                Console.WriteLine(spA.Key +  ":" + spA.Value);
-            }
         }
-
-        Console.ReadKey();
+        
+        _targetAnimation = _animations["WalkRight"];
+        
     }
 
     public void SetCreature(Creature creature)

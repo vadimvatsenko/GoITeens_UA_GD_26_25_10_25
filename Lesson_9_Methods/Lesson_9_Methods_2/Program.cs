@@ -1,4 +1,4 @@
-﻿namespace Sample
+﻿namespace Lesson_9_Methods_2
 {
     internal class Program
     {

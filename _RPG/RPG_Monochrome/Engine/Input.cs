@@ -7,7 +7,6 @@ public class Input : IUpdatable
     public Action OnUp;
     public Action OnDown;
     public Action OnAttack;
-
     public Action OnCancel;
 
 
@@ -16,11 +15,10 @@ public class Input : IUpdatable
         if (!Console.KeyAvailable)
         {
             OnCancel?.Invoke();
-            return;
         }
         
         ConsoleKeyInfo  keyInfo = Console.ReadKey(true);
-
+        
         switch (keyInfo.Key)
         {
             case ConsoleKey.LeftArrow or ConsoleKey.A:

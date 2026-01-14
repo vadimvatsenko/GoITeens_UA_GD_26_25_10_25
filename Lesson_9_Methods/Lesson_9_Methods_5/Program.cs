@@ -1,6 +1,6 @@
 ﻿// Для рефакторінга на 17.01.2026
 
-namespace ConsoleAppCycles
+namespace Lesson_9_Methods_5
 {
     class Program
     {
