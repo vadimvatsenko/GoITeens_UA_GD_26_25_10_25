@@ -7,23 +7,14 @@ namespace _HomeWorksCheck
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter Ukrainian word: ");
-            string text = Console.ReadLine().ToLower();
-
-            char[] vowelsUa =
-            {
-                'а','е','є','и','і','ї','о','у','ю','я'
-            };
+            List<int> planets = new List<int>() { 150, 350 };
             
-            int count = 0;
-            foreach (char c in text)
+            for(int i= 0;i < 5 ;i++)
             {
-                if (vowelsUa.Contains(c))
-                {
-                    count++;
-                }
+                int next = planets[i + 1] + (planets[i + 1] - planets[i]) * 2 ;
+                planets.Add(next);
             }
-            Console.WriteLine(count);
+            Console.WriteLine(string.Join(", ", planets));
             
             Console.ReadKey();
         }
