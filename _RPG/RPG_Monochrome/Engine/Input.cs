@@ -12,10 +12,7 @@ public class Input : IUpdatable
 
     public void Update(double deltaTime)
     {
-        if (!Console.KeyAvailable)
-        {
-            OnCancel?.Invoke();
-        }
+        if (!Console.KeyAvailable) return;
         
         ConsoleKeyInfo  keyInfo = Console.ReadKey(true);
         

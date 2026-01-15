@@ -1,9 +1,5 @@
-﻿using System;
-using System.Runtime.Serialization.Json;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
-
-// вікторина
 
 namespace Questions_1
 {
@@ -25,60 +21,48 @@ namespace Questions_1
                 { "Arrays", StaticPath.ArrayQA },
                 { "Cycles", StaticPath.CyclesQA },
                 { "Strings", StaticPath.StringQA },
+                { "Methods", StaticPath.MethodsQA },
             };
             
-            for (int i = 0; i < themes.Count; i++)
-            {
-                Console.WriteLine($"{i + 1} - {themes.ElementAt(i).Key}");
-            }
-            
+            // розрахунок шляху до теми
             string targetPath = ChoseTheme(themes);
-            
+
+            // завантаження питань
             List<Question> questions = await LoadQuestions(targetPath);
 
+            // кількість питань на учня
             int tryes = questions.Count / students.Count;
             
-            // для подального зберігання в json. На майбутнє
-            Dictionary<Student, Question> questionsByStudent = new Dictionary<Student, Question>();
-            //
-            
             // заповнення кількості питань на учня
-            Dictionary<Student, int> questionsByTeacher = new Dictionary<Student, int>(students.Count);
-            //
-
-            for (int i = 0; i < questions.Count; i++)
-            {
-                Student student = students[i % students.Count];
-                
-                if (!questionsByTeacher.ContainsKey(student))
-                {
-                    questionsByTeacher.Add(students[i], 1);
-                }
-                else
-                {
-                    questionsByTeacher[student]++;
-                }
-            }
+            Dictionary<Student, int> questionsByTeacher = FillTargertCountQaForStudents(questions, students);
             
+            RunProgramm(students, random, questions, questionsByTeacher);
+        }
+
+        private static void RunProgramm(List<Student> students, Random random, List<Question> questions, Dictionary<Student, int> questionsByTeacher)
+        {
+            bool isCorrect;
             do
             {
                 Console.Clear();
                 Console.ResetColor();
-                Student student = students[random.Next(students.Count)];
+                
+                Student student = ChooseRandom(students, random);
+                
                 Console.WriteLine("На питання буде відповідати: ");
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine($"***{student.FirstName} {student.SecondName}***");
+                
                 Console.ResetColor();
                 
                 Console.WriteLine("Натисни будь-яку клавішу щоб продовжити...");
                 Console.ReadKey();
                 
-                Question question = questions[random.Next(questions.Count)];
+                Question question = ChooseRandom(questions, random);
                 Console.Write("Питання: ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(question.Quest);
                 
-
                 for (int i = 0; i < question.Answers.Count; i++)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -86,7 +70,7 @@ namespace Questions_1
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"{question.Answers[i].Answ}");
                 }
-
+                
                 do
                 {
                     Console.ResetColor();
@@ -94,7 +78,8 @@ namespace Questions_1
                     Console.ForegroundColor = ConsoleColor.Green;
                     string input = Console.ReadLine();
                     
-                    isCorrect = int.TryParse(input, out int correctAnswer) && (correctAnswer >= 1 && correctAnswer <= 4);
+                    isCorrect = int.TryParse(input, out int correctAnswer) 
+                                && (correctAnswer >= 1 && correctAnswer <= 4);
 
                     if (isCorrect)
                     {
@@ -127,8 +112,8 @@ namespace Questions_1
                         {
                             students.Remove(student);
                         }
-
                     }
+                    
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -147,11 +132,38 @@ namespace Questions_1
             
             Console.WriteLine("Питання закінчились, дякую");
             Console.ReadKey();
+        }
+
+        private static T ChooseRandom<T>(List<T> list, Random random)
+            => list[random.Next(list.Count)];
+
+        private static Dictionary<Student, int> FillTargertCountQaForStudents(List<Question> questions, List<Student> students)
+        {
+            Dictionary<Student, int> questionsByTeacher = new Dictionary<Student, int>();
+            for (int i = 0; i < questions.Count; i++)
+            {
+                Student student = students[i % students.Count];
+                
+                if (!questionsByTeacher.ContainsKey(student))
+                {
+                    questionsByTeacher.Add(students[i], 1);
+                }
+                else
+                {
+                    questionsByTeacher[student]++;
+                }
+            }
             
+            return questionsByTeacher;
         }
 
         private static string ChoseTheme(Dictionary<string, string> themes)
         {
+            for (int i = 0; i < themes.Count; i++)
+            {
+                Console.WriteLine($"{i + 1} - {themes.ElementAt(i).Key}");
+            }
+            
             bool isValidThemeNumber = false;
             string targetPath =  String.Empty;
             
@@ -175,6 +187,7 @@ namespace Questions_1
             return targetPath;
         }
 
+        // завантаження студентів
         async static Task<List<Student>> LoadResourses()
         {
             List<Student> tempStudentsList = new List<Student>();
@@ -194,6 +207,7 @@ namespace Questions_1
             return tempStudentsList;
         }
 
+        // завантаження питань
         async static Task<List<Question>> LoadQuestions(string path)
         {
             List<Question> questions = new List<Question>();

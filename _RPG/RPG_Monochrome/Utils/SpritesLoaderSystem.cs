@@ -66,8 +66,8 @@ public class SpritesLoaderSystem
     
     private char[,] LoadCharMask2D(
         string path,
-        int spriteW = 16,
-        int spriteH = 16,
+        int spriteW = 48,
+        int spriteH = 48,
         char fillChar = '█',
         char emptyChar = ' ',
         byte threshold = 128,

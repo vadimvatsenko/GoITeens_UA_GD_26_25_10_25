@@ -17,9 +17,11 @@ namespace RPG_Monochrome
             Input input = new Input();
             Renderer renderer = new Renderer();
             
+            NewInputSystem system = new NewInputSystem();
+            
             //створення ігрових слоїв та мапи
             int mapWidth = 256;
-            int mapHeight = 120;
+            int mapHeight = 100;
             Map map = new Map(mapWidth, mapHeight);
             var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
             var uiLayer = renderer.CreateLayer(map.Width, map.Height);
@@ -29,24 +31,23 @@ namespace RPG_Monochrome
             //
             List<Sprite> heroSprites = spritesLoader.Sprites.FindAll(x => x.Owner == "Hero knight");
             List<Sprite> coinSprites = spritesLoader.Sprites.FindAll(x => x.Owner == "Coin");
-
+            
             List<Coin> coins = new List<Coin>();
             int coinCount = 10;
 
-            /*for (int i = 0; i < coinCount; i++)
+            for (int i = 0; i < coinCount; i++)
             {
-                Animator coinAnimator = new Animator(renderer, itemsLayer, coinSprites);
+                BaseAnimator coinAnimator = new CoinsAnimator(renderer, itemsLayer, coinSprites);
                 Coin coin = new Coin(new Vector2(random.Next(0, mapWidth - 6), random.Next(0, mapHeight - 6)), renderer,
                     coinAnimator);
                 coinAnimator.SetCreature(coin);
                 coins.Add(coin);
-            }*/
+            }
             
             BaseAnimator heroBaseAnimator = new BaseAnimator(renderer, heroLayer, heroSprites);
+            Hero hero = new Hero(new Vector2(0, 0), renderer, input, heroBaseAnimator, coins, map);
             
             //Animator ghostAnimator = new Animator(renderer, enemyLayer, AnimationSprites.GhostAnimation);
-
-            Hero hero = new Hero(new Vector2(10, 10), renderer, input, heroBaseAnimator, coins, map);
             //Ghost ghost = new Ghost(new Vector2(1, 1), renderer, ghostAnimator, hero, map);
 
             heroBaseAnimator.SetCreature(hero);

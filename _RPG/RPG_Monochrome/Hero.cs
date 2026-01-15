@@ -120,16 +120,18 @@ public class Hero: Creature, IDisposable
 
     private void Attack()
     {
-        Console.WriteLine("Attack");
+        BaseAnimator.SetTargetAnimation("DeathBase");
     }
     
     public void Update(double deltaTime)
     {
         base.Update(deltaTime);
+        
+        Console.WriteLine(Position.X + " " + Position.Y);
 
         _collider.UpdateColliderPosition(Position);
         
-        var coin = _coins.Find(x => _collider.IsColliding(x.Collider));
+        var coin = _coins.Find(c => _collider.IsColliding(c.Collider));
         
         if (coin != null)
         {

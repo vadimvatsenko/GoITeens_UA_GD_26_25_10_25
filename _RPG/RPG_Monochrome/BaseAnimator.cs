@@ -7,12 +7,16 @@ public class BaseAnimator: IUpdatable
 {
     // Const Field
     private const int SYMBOL_STEP = 1;
+    private const int offsetX = -32;
+    private const int offsetY = -16;
+
+    private bool _loop = false;
+    //
     private readonly Renderer _renderer;
-    private Creature _creture;
+    private IMovable _movableObj;
     private readonly char[,] _targetLayer;
     //
-    private List<char[,]> _targetAnimation;
-    
+    protected List<char[,]> TargetAnimation;
     public Action OnFinishAnimation;
     
     // Sprite Render Info
@@ -20,7 +24,7 @@ public class BaseAnimator: IUpdatable
     private double _animTimer = 0; // 
     private const double FRAME_TIME = 0.12;
 
-    Dictionary<string, List<char[,]>> _animations = new Dictionary<string, List<char[,]>>();
+    protected Dictionary<string, List<char[,]>> Animations = new Dictionary<string, List<char[,]>>();
     
     public BaseAnimator(
         Renderer renderer, 
@@ -34,30 +38,33 @@ public class BaseAnimator: IUpdatable
         {
             foreach (var s in sprite.animation)
             {
-                if (!_animations.TryGetValue(s.Key, out var frames))
+                if (!Animations.TryGetValue(s.Key, out var frames))
                 {
                     frames = new List<char[,]>();
-                    _animations[s.Key] = frames;
+                    Animations[s.Key] = frames;
                 }
 
                 frames.AddRange(s.Value); // добавляем все кадры этой анимации
             }
         }
         
-        _targetAnimation = _animations["WalkRight"];
-        
+        SetStartedAnimation();
     }
 
-    public void SetCreature(Creature creature)
+
+    protected virtual void SetStartedAnimation()
     {
-        _creture =  creature;
+        TargetAnimation = Animations["WalkRight"];
     }
+    
 
+    public void SetCreature(IMovable movableObj) => _movableObj = movableObj;
+    
     public void SetTargetAnimation(string spriteName)
     {
-        if (_animations.ContainsKey(spriteName))
+        if (Animations.ContainsKey(spriteName))
         {
-            _targetAnimation = _animations[spriteName];
+            TargetAnimation = Animations[spriteName];
         }
     }
 
@@ -70,11 +77,11 @@ public class BaseAnimator: IUpdatable
     private void AnimationUpdate(double deltaTime)
     {
         
-        for (int y = 0; y < _targetAnimation[_spriteIndex].GetLength(0); y++)
+        for (int y = 0; y < TargetAnimation[_spriteIndex].GetLength(0); y++)
         {
-            for (int x = 0; x < _targetAnimation[_spriteIndex].GetLength(1); x++)
+            for (int x = 0; x < TargetAnimation[_spriteIndex].GetLength(1); x++)
             {
-                char tile = _targetAnimation[_spriteIndex][y, x];
+                char tile = TargetAnimation[_spriteIndex][y, x];
 
                 if(tile == ' ') continue;
 
@@ -83,7 +90,7 @@ public class BaseAnimator: IUpdatable
                 for (int i = 0; i < SYMBOL_STEP; i++)
                 {
                     _renderer.DrawChar(
-                        _targetLayer, startX + i + _creture.Position.X, y + _creture.Position.Y, tile);
+                        _targetLayer, startX + i + _movableObj.Position.X + offsetX, y + _movableObj.Position.Y + offsetY, tile);
                 }
             }
         }
@@ -92,11 +99,11 @@ public class BaseAnimator: IUpdatable
 
         if (_animTimer >= FRAME_TIME)
         {
-            _spriteIndex = (_spriteIndex + 1) % _targetAnimation.Count;
+            _spriteIndex = (_spriteIndex + 1) % TargetAnimation.Count;
             _animTimer = 0;
         }
 
-        if (_spriteIndex >= _targetAnimation[_spriteIndex].Length)
+        if (_spriteIndex >= TargetAnimation[_spriteIndex].Length)
         {
             OnFinishAnimation?.Invoke();
         }

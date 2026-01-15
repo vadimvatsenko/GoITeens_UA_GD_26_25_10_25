@@ -1,0 +1,194 @@
+﻿[
+  {
+    "id": 1,
+    "topic": "Методи",
+    "difficulty": "easy",
+    "question": "Який тип повертає метод, який нічого не повертає в C#?",
+    "answers": [
+      { "text": "none", "correct": false },
+      { "text": "void", "correct": true },
+      { "text": "empty", "correct": false },
+      { "text": "null", "correct": false }
+    ]
+  },
+  {
+    "id": 2,
+    "topic": "Методи",
+    "difficulty": "easy",
+    "question": "Як правильно викликати метод DoWork() всередині Main()?",
+    "answers": [
+      { "text": "DoWork[];", "correct": false },
+      { "text": "DoWork;", "correct": false },
+      { "text": "DoWork();", "correct": true },
+      { "text": "call DoWork();", "correct": false }
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "Параметри",
+    "difficulty": "easy",
+    "question": "Як називається значення, яке передають у метод під час виклику?",
+    "answers": [
+      { "text": "Параметр", "correct": false },
+      { "text": "Аргумент", "correct": true },
+      { "text": "Клас", "correct": false },
+      { "text": "Тип", "correct": false }
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "Параметри",
+    "difficulty": "easy",
+    "question": "Що з цього є коректним оголошенням методу, який приймає int a та int b?",
+    "answers": [
+      { "text": "static void Sum(int a; int b)", "correct": false },
+      { "text": "static void Sum(int a, b)", "correct": false },
+      { "text": "static void Sum(int a, int b)", "correct": true },
+      { "text": "static void Sum(a int, b int)", "correct": false }
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "Повернення значення",
+    "difficulty": "easy",
+    "question": "Яке ключове слово використовують, щоб повернути значення з методу?",
+    "answers": [
+      { "text": "continue", "correct": false },
+      { "text": "yield", "correct": false },
+      { "text": "return", "correct": true },
+      { "text": "break", "correct": false }
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "Повернення значення",
+    "difficulty": "easy",
+    "question": "Який із методів має містити return?",
+    "answers": [
+      { "text": "void Clear()", "correct": false },
+      { "text": "void Print(string text)", "correct": false },
+      { "text": "int Add(int a, int b)", "correct": true },
+      { "text": "void Show()", "correct": false }
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "Перевантаження",
+    "difficulty": "medium",
+    "question": "Що таке перевантаження методів (method overloading)?",
+    "answers": [
+      { "text": "Коли метод викликається багато разів у циклі", "correct": false },
+      { "text": "Коли метод знаходиться в іншому класі", "correct": false },
+      { "text": "Кілька методів з одним іменем, але різними параметрами", "correct": true },
+      { "text": "Коли метод обов’язково повертає void", "correct": false }
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "Параметри",
+    "difficulty": "medium",
+    "question": "Що станеться, якщо метод приймає параметр int x (без ref/out), і всередині методу змінити x?",
+    "answers": [
+      { "text": "Зміниться тільки якщо x > 0", "correct": false },
+      { "text": "Код не скомпілюється", "correct": false },
+      { "text": "Зовні значення не зміниться, бо int передається за значенням", "correct": true },
+      { "text": "Зовні значення завжди зміниться", "correct": false }
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "ref / out",
+    "difficulty": "medium",
+    "question": "Чим відрізняється out від ref у C#?",
+    "answers": [
+      { "text": "ref працює тільки з рядками", "correct": false },
+      { "text": "out можна не ініціалізувати до виклику, але всередині методу потрібно присвоїти значення", "correct": true },
+      { "text": "out передає значення тільки для читання", "correct": false },
+      { "text": "ref можна не ініціалізувати до виклику", "correct": false }
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "in",
+    "difficulty": "medium",
+    "question": "Що означає модифікатор in у параметра методу?",
+    "answers": [
+      { "text": "Параметр обов’язково має бути string", "correct": false },
+      { "text": "Параметр можна змінювати тільки один раз", "correct": false },
+      { "text": "Параметр завжди створює копію і прискорює код", "correct": false },
+      { "text": "Параметр передається за посиланням тільки для читання (не можна змінити всередині методу)", "correct": true }
+    ]
+  },
+  {
+    "id": 11,
+    "topic": "Параметри",
+    "difficulty": "medium",
+    "question": "Як правильно задати параметр зі значенням за замовчуванням?",
+    "answers": [
+      { "text": "void Log(string text := \"ok\")", "correct": false },
+      { "text": "void Log(string text = \"ok\")", "correct": true },
+      { "text": "void Log(string text == \"ok\")", "correct": false },
+      { "text": "void Log(string text default \"ok\")", "correct": false }
+    ]
+  },
+  {
+    "id": 12,
+    "topic": "Параметри",
+    "difficulty": "medium",
+    "question": "Як називається параметр, який приймає будь-яку кількість значень (наприклад, int-ів)?",
+    "answers": [
+      { "text": "arrayable", "correct": false },
+      { "text": "multi", "correct": false },
+      { "text": "params", "correct": true },
+      { "text": "many", "correct": false }
+    ]
+  },
+  {
+    "id": 13,
+    "topic": "Область видимості",
+    "difficulty": "medium",
+    "question": "Чи може метод використовувати змінну, оголошену всередині іншого методу?",
+    "answers": [
+      { "text": "Так, якщо змінна типу int", "correct": false },
+      { "text": "Ні, бо локальні змінні видимі лише в межах свого методу", "correct": true },
+      { "text": "Ні, тільки якщо метод static", "correct": false },
+      { "text": "Так, завжди може", "correct": false }
+    ]
+  },
+  {
+    "id": 14,
+    "topic": "static",
+    "difficulty": "normal",
+    "question": "Що є правдою про static-методи?",
+    "answers": [
+      { "text": "Вони працюють тільки в Unity", "correct": false },
+      { "text": "Вони зобов’язані повертати void", "correct": false },
+      { "text": "Їх можна викликати без створення об’єкта класу", "correct": true },
+      { "text": "Вони завжди можуть напряму звертатися до нестатичних полів", "correct": false }
+    ]
+  },
+  {
+    "id": 15,
+    "topic": "Перевантаження",
+    "difficulty": "normal",
+    "question": "Що з цього НЕ може відрізнятися у двох перевантажених методів з однаковою назвою?",
+    "answers": [
+      { "text": "Ім’я методу", "correct": true },
+      { "text": "Кількість параметрів", "correct": false },
+      { "text": "Типи параметрів", "correct": false },
+      { "text": "Порядок параметрів", "correct": false }
+    ]
+  },
+  {
+    "id": 16,
+    "topic": "Повернення значення",
+    "difficulty": "normal",
+    "question": "Що станеться, якщо в методі з типом повернення int НЕ написати return на всіх шляхах виконання?",
+    "answers": [
+      { "text": "Метод автоматично поверне 0", "correct": false },
+      { "text": "Код не скомпілюється (помилка: not all code paths return a value)", "correct": true },
+      { "text": "Код скомпілюється, але поверне null", "correct": false },
+      { "text": "Код скомпілюється, але буде виняток лише під час запуску", "correct": false }
+    ]
+  }
+]
