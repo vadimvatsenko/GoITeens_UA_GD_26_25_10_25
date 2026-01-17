@@ -61,7 +61,12 @@ public class Hero: Creature, IDisposable
         _prevDirection = _direction;
         _direction = Vector2.Left;
         Position = CalculatePosition(_direction);
-        BaseAnimator.SetTargetAnimation("WalkLeft");
+        
+        if (_prevDirection != _direction)
+        {
+            BaseAnimator.SetTargetAnimation("WalkLeft");
+        }
+        
     }
     
     private void MoveRight()
@@ -69,7 +74,11 @@ public class Hero: Creature, IDisposable
         _prevDirection = _direction;
         _direction = Vector2.Right;
         Position = CalculatePosition(_direction);
-        BaseAnimator.SetTargetAnimation("WalkRight");
+
+        if (_prevDirection != _direction)
+        {
+            BaseAnimator.SetTargetAnimation("WalkRight");
+        }
     }
 
     private void MoveUp()
@@ -77,7 +86,11 @@ public class Hero: Creature, IDisposable
         _prevDirection = _direction;
         _direction = Vector2.Up;
         Position = CalculatePosition(_direction);
-        BaseAnimator.SetTargetAnimation("WalkUp");
+
+        if (_prevDirection != _direction)
+        {
+            BaseAnimator.SetTargetAnimation("WalkUp");
+        }
     }
 
     private void MoveDown()
@@ -85,7 +98,11 @@ public class Hero: Creature, IDisposable
         _prevDirection = _direction;
         _direction = Vector2.Down;
         Position = CalculatePosition(_direction);
-        BaseAnimator.SetTargetAnimation("WalkDown");
+
+        if (_prevDirection != _direction)
+        {
+            BaseAnimator.SetTargetAnimation("WalkDown");
+        }
     }
     
     private Vector2 CalculatePosition(Vector2 direction)

@@ -20,9 +20,9 @@ public class BaseAnimator: IUpdatable
     public Action OnFinishAnimation;
     
     // Sprite Render Info
-    private int _spriteIndex = 0; // index of Frame
-    private double _animTimer = 0; // 
-    private const double FRAME_TIME = 0.12;
+    protected int SpriteIndex = 0; // index of Frame
+    protected double AnimTimer = 0; // 
+    protected const double FRAME_TIME = 0.12;
 
     protected Dictionary<string, List<char[,]>> Animations = new Dictionary<string, List<char[,]>>();
     
@@ -62,9 +62,11 @@ public class BaseAnimator: IUpdatable
     
     public void SetTargetAnimation(string spriteName)
     {
-        if (Animations.ContainsKey(spriteName))
+        if (Animations.TryGetValue(spriteName, out var anim) && anim.Count > 0)
         {
-            TargetAnimation = Animations[spriteName];
+            TargetAnimation = anim;
+            SpriteIndex = 0;
+            AnimTimer = 0;
         }
     }
 
@@ -77,11 +79,11 @@ public class BaseAnimator: IUpdatable
     private void AnimationUpdate(double deltaTime)
     {
         
-        for (int y = 0; y < TargetAnimation[_spriteIndex].GetLength(0); y++)
+        for (int y = 0; y < TargetAnimation[SpriteIndex].GetLength(0); y++)
         {
-            for (int x = 0; x < TargetAnimation[_spriteIndex].GetLength(1); x++)
+            for (int x = 0; x < TargetAnimation[SpriteIndex].GetLength(1); x++)
             {
-                char tile = TargetAnimation[_spriteIndex][y, x];
+                char tile = TargetAnimation[SpriteIndex][y, x];
 
                 if(tile == ' ') continue;
 
@@ -95,15 +97,15 @@ public class BaseAnimator: IUpdatable
             }
         }
         
-        _animTimer += deltaTime;
+        AnimTimer += deltaTime;
 
-        if (_animTimer >= FRAME_TIME)
+        if (AnimTimer >= FRAME_TIME)
         {
-            _spriteIndex = (_spriteIndex + 1) % TargetAnimation.Count;
-            _animTimer = 0;
+            SpriteIndex = (SpriteIndex + 1) % TargetAnimation.Count;
+            AnimTimer = 0;
         }
 
-        if (_spriteIndex >= TargetAnimation[_spriteIndex].Length)
+        if (SpriteIndex >= TargetAnimation[SpriteIndex].Length)
         {
             OnFinishAnimation?.Invoke();
         }

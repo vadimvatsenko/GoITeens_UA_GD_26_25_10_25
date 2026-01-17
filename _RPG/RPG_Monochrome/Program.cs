@@ -9,13 +9,13 @@ namespace RPG_Monochrome
     {
         private static void Main()
         {
-            SpritesLoaderSystem spritesLoader = new SpritesLoaderSystem();
-
             Console.CursorVisible = false;
+            SpritesLoaderSystem spritesLoader = new SpritesLoaderSystem();
             Random random = new Random();
-
             Input input = new Input();
             Renderer renderer = new Renderer();
+
+
             
             NewInputSystem system = new NewInputSystem();
             
@@ -23,6 +23,7 @@ namespace RPG_Monochrome
             int mapWidth = 256;
             int mapHeight = 100;
             Map map = new Map(mapWidth, mapHeight);
+            
             var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
             var uiLayer = renderer.CreateLayer(map.Width, map.Height);
             var enemyLayer = renderer.CreateLayer(map.Width, map.Height);
@@ -105,7 +106,7 @@ namespace RPG_Monochrome
 
                 //ghostAnimator.Update(deltaTime);
 
-                coins.ForEach(coin => coin.BaseAnimator.Update(deltaTime));
+                coins.ForEach(coin => coin.Update(deltaTime));
 
                 renderer.DrawString(uiLayer, 1, 1, $"FPS: {fps:F2} | deltaTime: {deltaTime:F4}s");
                 var frame = renderer.Compose(mapWidth, mapHeight, backgroundLayer, uiLayer, enemyLayer, heroLayer,
