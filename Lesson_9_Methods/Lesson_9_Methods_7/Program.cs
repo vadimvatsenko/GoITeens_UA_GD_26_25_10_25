@@ -1,5 +1,17 @@
 ﻿//Рівень 1. Базові функції (легкі)
 
+// Метод “Мінус”  
+// Зроби метод `Subtract(int a, int b)`, який повертає `a - b`.  
+
+// Метод “Більше?”**  
+// Зроби метод `Max(int a, int b)`, який повертає більше число.
+
+// Метод “Скажи няв”**  
+// Зроби метод `Meow(int count)`, який виводить `"Няв!"` `count` разів (через `for`).
+
+// Ускладнення для уважних**  
+// Зроби метод `IsPositive(int x)` — повертає `true`, якщо число більше 0.
+
 //1. 🎮 Функція-привітання гравця: напиши функцію, яка приймає ім’я героя і виводить: Ласкаво просимо в гру, [ім’я]! .
 //2. ❤️ Функція здоров’я: створи функцію, яка приймає силу удару ворога і повертає, скільки здоров’я втратить герой.
 
@@ -39,10 +51,10 @@ namespace Lesson_9_Methods_7
         {
             
             int sum = Sum(1, 2);
-            int sum2 = Sum(1, 2, 7);
+            int sum1 = Sum(1, 2, 7);
             
-            int sum3 = Sum(10);
-            //int sum2 = Sum(1, 2, 5);
+            int sum2 = Sum(10);
+            int sum3 = Sum(1, 2, 5);
             Console.WriteLine(sum);
             Console.WriteLine(sum2);
             Console.WriteLine(sum3);
@@ -60,10 +72,10 @@ namespace Lesson_9_Methods_7
             
             Console.WriteLine(Sign(A));
 
-            int result = numbA +  numbB + numbC;
+            int result1 = numbA +  numbB + numbC;
             
             int result2 = Sign(A) + Sign(B) + Sign(C);
-            //int result = A + B;
+            double result3 = A + B;
 
             OverloadMethod();
             OverloadMethod("Denys");
@@ -73,7 +85,19 @@ namespace Lesson_9_Methods_7
             OverloadMethod(17, "Mitya");
             OverloadMethod(5,6.5,9);
             
+            
             Console.ReadKey();
+            
+            Console.WriteLine();
+            Console.WriteLine(1);
+            Console.WriteLine("string");
+            Console.WriteLine(true);
+            Console.WriteLine('r');
+
+            int a = 5;
+            int b = 6;
+            
+            Console.WriteLine("a={0}, b={1}", a, 100); // перегрузка
         }
 
         static int Sign(double x)
