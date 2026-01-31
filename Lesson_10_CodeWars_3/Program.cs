@@ -1,0 +1,25 @@
+﻿using System;
+
+
+namespace Lesson_10_CodeWars_3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(PlayerRankUp(100));
+
+            Console.ReadKey();
+        }
+        
+        public static Object PlayerRankUp(int points)
+        {
+            if (points >= 100)
+            {
+                return "Well done! You have advanced to the qualifying stage. Win 2 out of your next 3 games to rank up.";
+            }
+
+            return false;
+        }
+    }
+}

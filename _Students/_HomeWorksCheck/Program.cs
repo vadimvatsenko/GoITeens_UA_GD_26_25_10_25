@@ -5,62 +5,83 @@ namespace _HomeWorksCheck
 {
     internal class Program
     {
+        private static int _goldCost = 200;
+        private static decimal _dollarCost = 42.000m;
+        
         static void Main(string[] args)
         {
-            int playerEnergy;
-
-            Dictionary<int, string> dic = new Dictionary<int, string>()
+            
+            Dictionary<int, string> nameOfOperation = new Dictionary<int, string>()
             {
-                { 10, "Fire" },
-                { 40, "Ice Rain" },
-                { 5, "Snowball" },
-                { 70, "Thunder" }
+                [1] = "Currency exchange",
+                [2] = "Gold to cristals"
             };
-            foreach (KeyValuePair<int, string> item in dic)
-            {
-                Console.WriteLine($"Skill:{item.Key} - {item.Value}");
-            }
+            
+            int myMoney = 1000;
+            
+            int keyOfOperation = ValidOperation(nameOfOperation);
+            
+            Console.WriteLine(nameOfOperation[keyOfOperation]);
 
-            Console.WriteLine("Which skill would you like to use?(write only first number)");
-            int energy = int.Parse(Console.ReadLine());
-
-            Console.Write($"Your choice:{dic[energy]}\n");
-
-            Console.WriteLine("Now write how many energy do you have");
-            playerEnergy = int.Parse(Console.ReadLine());
-
-            bool answer;
-
-            answer = calc(playerEnergy, energy);
-
-            if (answer == true)
-            {
-                Console.WriteLine("You can use this item");
-            }
-            else
-            {
-                Console.WriteLine("You can't use this item again");
-            }
-
+            ChooseOperation(keyOfOperation, myMoney, nameOfOperation);
+            
             Console.ReadKey();
-
         }
 
-        static bool calc(int energy, int number)
+        private static int ValidOperation(Dictionary<int, string> nameOfOperation)
         {
-            Dictionary<int, string> dic = new Dictionary<int, string>()
+            bool isCorrectOperation = false;
+            int key = 0;
+            while (!isCorrectOperation)
             {
-                { 10, "Fire" },
-                { 40, "Ice Rain" },
-                { 5, "Snowball" },
-                { 70, "Thunder" }
-            };
-            bool answer = energy >= number;
-            return answer;
+                ShowOperation(nameOfOperation);
+                Console.WriteLine("Enter Operation:");
+                
+                bool tryParce = int.TryParse(Console.ReadLine(), out int numberOfOperation);
+                
+                if (nameOfOperation.ContainsKey(numberOfOperation) && tryParce)
+                {
+                    isCorrectOperation = true;
+                    key = numberOfOperation;
+                }
+                else
+                {
+                    isCorrectOperation = false;
+                    Console.WriteLine("Wrong Operation!");
+                }
+            }
+
+            return key;
         }
+
+        private static void ChooseOperation(int numberOfOperation, int myMoney, Dictionary<int, string> nameOfOperation)
+        {
+            switch (numberOfOperation)
+            {
+                case 1:
+                    Console.WriteLine($"Operation is {nameOfOperation[numberOfOperation]}");
+                    Console.WriteLine($"{myMoney/_dollarCost:F2}$");
+                    break;
+                case 2:
+                    Console.WriteLine($"Operation is {nameOfOperation[numberOfOperation]}");
+                    Console.WriteLine($"{myMoney/_goldCost:F2} Golds");
+                    break;
+                default:
+                    Console.WriteLine("Wrong Operation!");
+                    break;
+            };
+        }
+
+        private static void ShowOperation(Dictionary<int, string> nameOfOperation)
+        {
+            foreach (var item in nameOfOperation)
+            {
+                Console.WriteLine($"{item.Key} - {item.Value}");
+            }
+        }
+        
     }
 }
-
 
     
 
