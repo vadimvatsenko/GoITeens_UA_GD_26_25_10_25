@@ -1,12 +1,22 @@
 ﻿using System.Drawing;
 
-// Colorizer
+// Dictionary int Action
 
 namespace Lesson_11_MagicalCrystal
 {
+    
     internal class Program
     {
         static void Main(string[] args)
+        {
+            Dictionary<int, ConsoleColor> colors = GetColorsDict();
+            int colorNumber = CheckColorNumber(colors);
+            
+            Colorazer(colorNumber, colors);
+            Console.ReadKey();
+        }
+
+        private static Dictionary<int, ConsoleColor> GetColorsDict()
         {
             Dictionary<int, ConsoleColor> colors = new Dictionary<int, ConsoleColor>()
             {
@@ -16,56 +26,72 @@ namespace Lesson_11_MagicalCrystal
                 [4] = ConsoleColor.Yellow,
                 [5] = ConsoleColor.Magenta,
             };
+            return colors;
+        }
 
+        private static void Colorazer(int colorNumber, Dictionary<int, ConsoleColor> colors)
+        {
+            switch (colorNumber)
+            {
+                case 1:
+                    Final("Dragon", colors[colorNumber]);
+                    break;
+
+                case 2:
+                    Final("Magic Fairy", colors[colorNumber]);
+                    break;
+
+                case 3:
+                    Final("Green Goblin", colors[colorNumber]);
+                    break;
+
+                case 4:
+                    Final("Sun Elf", colors[colorNumber]);
+                    break;
+
+                case 5:
+                    Final("Magician Mage", colors[colorNumber]);
+                    break;
+                default:
+                    Console.WriteLine("Color Not Known");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+            }
+        }
+
+        private static void Final(string name, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(name);
+        }
+
+        private static int CheckColorNumber(Dictionary<int, ConsoleColor> colors)
+        {
             bool isNumber = false;
             bool isValidColorNumber = false;
-            
             
             while (!isNumber || !isValidColorNumber)
             {
                 Console.Clear();
                 ShowDict(colors);
-                Console.WriteLine("Введіть номер кольору: ");
+                Console.Write("Enter number of Color: ");
                 
                 string color = Console.ReadLine().ToLower();
                 
-                isNumber =  int.TryParse(color, out int numberColor);
-                isValidColorNumber = colors.ContainsKey(numberColor);
+                isNumber =  int.TryParse(color, out int numberOfColors);
+                isValidColorNumber = colors.ContainsKey(numberOfColors);
 
                 if (!isNumber || !isValidColorNumber)
                 {
                     Console.WriteLine("Not Valid Color number");
+                    Console.WriteLine("Press Any Key to Continue...");
                     Console.ReadKey();
+                    continue;
                 }
+
+                return numberOfColors;
             }
-
-            /*switch (color)
-            {
-                case "червоний":
-                    Console.WriteLine("Дракон");
-                    break;
-
-                case "синій":
-                    Console.WriteLine("Чарівна Фея");
-                    break;
-
-                case "зелений":
-                    Console.WriteLine("Лісовик");
-                    break;
-
-                case "жовтий":
-                    Console.WriteLine("Сонячний Ельф");
-                    break;
-
-                case "фіолетовий":
-                    Console.WriteLine("Маг Чарівник");
-                    break;
-
-                default:
-                    Console.WriteLine("Не відомий колір");
-                    break;
-            }
-            */
+            return 0;
         }
 
         private static void ShowDict(Dictionary<int, ConsoleColor> colors)
