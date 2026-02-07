@@ -7,8 +7,8 @@ public class BaseAnimator: IUpdatable
 {
     // Const Field
     private const int SYMBOL_STEP = 1;
-    private const int offsetX = -32;
-    private const int offsetY = -16;
+    private const int OFFSET_X = -32;
+    private const int OFFSET_Y = -16;
 
     private bool _loop = false;
     //
@@ -92,7 +92,7 @@ public class BaseAnimator: IUpdatable
                 for (int i = 0; i < SYMBOL_STEP; i++)
                 {
                     _renderer.DrawChar(
-                        _targetLayer, startX + i + _movableObj.Position.X + offsetX, y + _movableObj.Position.Y + offsetY, tile);
+                        _targetLayer, startX + i + _movableObj.Position.X + OFFSET_X, y + _movableObj.Position.Y + OFFSET_Y, tile);
                 }
             }
         }

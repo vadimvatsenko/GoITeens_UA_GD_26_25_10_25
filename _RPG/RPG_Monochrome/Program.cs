@@ -14,8 +14,6 @@ namespace RPG_Monochrome
             Random random = new Random();
             Input input = new Input();
             Renderer renderer = new Renderer();
-
-
             
             NewInputSystem system = new NewInputSystem();
             
@@ -150,8 +148,7 @@ namespace RPG_Monochrome
 
                     //Console.WriteLine($"FPS: {fps:F2} | deltaTime: {deltaTime:F4}s");
                     // Показуємо також останній deltaTime для наочності
-
-
+                    
                     // Скидаємо лічильники на наступну секунду
                     frames = 0;
                     fpsTimerStartMs = sw.Elapsed.TotalMilliseconds;

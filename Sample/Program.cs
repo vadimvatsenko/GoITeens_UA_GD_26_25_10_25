@@ -10,8 +10,6 @@ namespace Sample
         static void Main(string[] args)
         {
             
-            Console.WriteLine(100 % 15);
-            Console.ReadKey();
         }
     }
 }

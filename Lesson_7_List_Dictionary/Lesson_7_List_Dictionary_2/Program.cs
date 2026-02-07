@@ -9,7 +9,8 @@
 
             while (true)
             {
-                Console.Clear();
+                //enemy.Update();
+                //Console.Clear();
                 enemy.Update();
                 Thread.Sleep(500);
             }

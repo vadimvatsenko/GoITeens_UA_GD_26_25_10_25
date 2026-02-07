@@ -1,87 +1,51 @@
-﻿using System.Globalization;
-using System.Text;
-
-namespace _HomeWorksCheck
+﻿namespace _HomeWorksCheck
 {
     internal class Program
     {
-        private static int _goldCost = 200;
-        private static decimal _dollarCost = 42.000m;
-        
         static void Main(string[] args)
         {
-            
-            Dictionary<int, string> nameOfOperation = new Dictionary<int, string>()
+            string question = null;
+            do
             {
-                [1] = "Currency exchange",
-                [2] = "Gold to cristals"
-            };
+                Console.WriteLine("Write your question, and magic amethyst will answer(or write 143 to exit):");
+                question = Console.ReadLine();
             
-            int myMoney = 1000;
-            
-            int keyOfOperation = ValidOperation(nameOfOperation);
-            
-            Console.WriteLine(nameOfOperation[keyOfOperation]);
-
-            ChooseOperation(keyOfOperation, myMoney, nameOfOperation);
-            
-            Console.ReadKey();
-        }
-
-        private static int ValidOperation(Dictionary<int, string> nameOfOperation)
-        {
-            bool isCorrectOperation = false;
-            int key = 0;
-            while (!isCorrectOperation)
-            {
-                ShowOperation(nameOfOperation);
-                Console.WriteLine("Enter Operation:");
-                
-                bool tryParce = int.TryParse(Console.ReadLine(), out int numberOfOperation);
-                
-                if (nameOfOperation.ContainsKey(numberOfOperation) && tryParce)
+                if (question == "143")
                 {
-                    isCorrectOperation = true;
-                    key = numberOfOperation;
+                    break;
                 }
-                else
-                {
-                    isCorrectOperation = false;
-                    Console.WriteLine("Wrong Operation!");
-                }
-            }
 
-            return key;
+                Answer();
+            
+                Console.ReadKey();
+                Console.Clear();
+
+
+            } while (true);
+        
         }
-
-        private static void ChooseOperation(int numberOfOperation, int myMoney, Dictionary<int, string> nameOfOperation)
+        static void Answer()
         {
-            switch (numberOfOperation)
+            string answer = null;
+            int rnd = new Random().Next(1,4);
+            switch (rnd)
             {
                 case 1:
-                    Console.WriteLine($"Operation is {nameOfOperation[numberOfOperation]}");
-                    Console.WriteLine($"{myMoney/_dollarCost:F2}$");
+                    answer = "Yes";
                     break;
-                case 2:
-                    Console.WriteLine($"Operation is {nameOfOperation[numberOfOperation]}");
-                    Console.WriteLine($"{myMoney/_goldCost:F2} Golds");
+                case 2: 
+                    answer = "No";
                     break;
-                default:
-                    Console.WriteLine("Wrong Operation!");
+                case 3:
+                    answer = "Maybe";
                     break;
-            };
-        }
-
-        private static void ShowOperation(Dictionary<int, string> nameOfOperation)
-        {
-            foreach (var item in nameOfOperation)
-            {
-                Console.WriteLine($"{item.Key} - {item.Value}");
+                
             }
+            Console.WriteLine(answer);
         }
-        
     }
 }
+
 
     
 
