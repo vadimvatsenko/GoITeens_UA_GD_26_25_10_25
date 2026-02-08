@@ -12,15 +12,17 @@ namespace Lesson_12_OOP_2
             Console.InputEncoding = System.Text.Encoding.UTF8;
             
             Renderer renderer = new Renderer();
-            Map map = new Map(100, 50);
+            Map map = new Map(100, 25);
             Input heroInput = new Input();
-            Hero hero = new Hero(heroInput);
+            
             
             var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
             var walls = renderer.CreateLayer(map.Width, map.Height);
             var uiLayer = renderer.CreateLayer(map.Width, map.Height);
             var heroLayer = renderer.CreateLayer(map.Width, map.Height);
             var itemsLayer = renderer.CreateLayer(map.Width, map.Height);
+            
+            Hero hero = new Hero(heroInput, renderer, heroLayer);
 
             renderer.Fill(backgroundLayer, '.');
             
@@ -29,7 +31,6 @@ namespace Lesson_12_OOP_2
                     renderer, 
                     map, 
                     uiLayer,
-                    backgroundLayer,
                     walls,
                     heroLayer,
                     itemsLayer

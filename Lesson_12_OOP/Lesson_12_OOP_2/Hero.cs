@@ -7,13 +7,17 @@ public class Hero: IUpdatable, IDisposable
 {
     public Inventory Inventory { get; private set; }
     public HealthComponent HealthComponent { get; private set; }
+    public Renderer _renderer;
+    public char[,] _layer;
     public char Symbol {get; private set;} = '\u25C9';
     private Input _input;
     public Vector2 Position {get; private set;}
 
-    public Hero(Input input)
+    public Hero(Input input, Renderer renderer,  char[,] layer)
     {
         _input = input;
+        _renderer = renderer;
+        _layer = layer;
         Position = Vector2.Tree;
         _input.OnRight += TryToMoveRight;
         _input.OnLeft += TryToMoveLeft;
@@ -52,7 +56,7 @@ public class Hero: IUpdatable, IDisposable
     
     public void Update(double deltaTime)
     {
-        
+        _renderer.DrawChar(_layer, Position.X, Position.Y, Symbol);
     }
 
     public void HealHero(int amount)
