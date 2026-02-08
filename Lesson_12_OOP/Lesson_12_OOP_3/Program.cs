@@ -17,11 +17,11 @@ namespace Lesson_12_OOP_3
     {
         static void Main(string[] args)
         {
-            
+
             Car mustang = new Car("Mustang", "Red", 1989);
             Car lanos = new Car("Lanos", "Golden", 2001);
-            Car brabus =  new Car("Brabus", "White", 2002);
-            
+            Car brabus = new Car("Brabus", "White", 2002);
+
             List<Car> cars = new List<Car>()
             {
                 mustang,
@@ -30,14 +30,14 @@ namespace Lesson_12_OOP_3
                 new Car("Lada7", "Chery", 1977),
                 new Car("Lada6", "Blue", 1965),
             };
-            
+
             Console.WriteLine($"cars before colorize");
-            
+
             foreach (var car in cars)
             {
                 car.PrintCar();
             }
-            
+
             foreach (Car car in cars)
             {
                 if (car.Age <= 1977)
@@ -45,18 +45,17 @@ namespace Lesson_12_OOP_3
                     car.ChangeColor("White");
                     car.ChangeAge(2026);
                     car.ChangeName("TeslA");
-                    
+
                 }
             }
-            
+
             Console.WriteLine($"cars after colorize");
             foreach (var car in cars)
             {
-               car.PrintCar();
+                car.PrintCar();
             }
-            
+
             Console.ReadKey();
         }
-        
     }
 }

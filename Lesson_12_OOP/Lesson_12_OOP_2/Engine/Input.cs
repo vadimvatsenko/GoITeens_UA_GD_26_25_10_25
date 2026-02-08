@@ -21,21 +21,27 @@ public class Input : IUpdatable
         {
             case ConsoleKey.LeftArrow or ConsoleKey.A:
                 OnLeft?.Invoke();
+                Console.WriteLine("Left");
                 break;
             case ConsoleKey.D or ConsoleKey.RightArrow:
                 OnRight?.Invoke();
+                Console.WriteLine("Left");
                 break;
             case ConsoleKey.W or ConsoleKey.UpArrow:
                 OnUp?.Invoke();
+                Console.WriteLine("Left");
                 break;
             case ConsoleKey.S or ConsoleKey.DownArrow:
                 OnDown?.Invoke();
+                Console.WriteLine("Left");
                 break;
             case ConsoleKey.Spacebar:
                 OnAttack?.Invoke();
+                Console.WriteLine("Left");
                 break;
             case ConsoleKey.T:
                 OnPutItemInInventory?.Invoke();
+                Console.WriteLine("Left");
                 break;
         }
     }

@@ -57,11 +57,9 @@ public class Hero: IUpdatable, IDisposable
 
     public void HealHero(int amount)
     {
-        if(Inventory.ItemsInventory.ContainsKey("Health"))
+        //if(Inventory.ItemsInventory.ContainsKey(typeof(Item))
     }
     public void TakeDamage(int amount) => HealthComponent.Damage(amount);
-    
-    public void 
     
     public void Dispose()
     {
