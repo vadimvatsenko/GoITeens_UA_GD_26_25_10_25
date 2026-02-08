@@ -13,12 +13,15 @@ public class Hero: IUpdatable, IDisposable
     private Input _input;
     public Vector2 Position {get; private set;}
 
+    private int Health = 100;
+
     public Hero(Input input, Renderer renderer,  char[,] layer)
     {
         _input = input;
         _renderer = renderer;
         _layer = layer;
         Position = Vector2.Tree;
+        
         _input.OnRight += TryToMoveRight;
         _input.OnLeft += TryToMoveLeft;
         _input.OnUp += TryToMoveUp;
@@ -57,6 +60,7 @@ public class Hero: IUpdatable, IDisposable
     public void Update(double deltaTime)
     {
         _renderer.DrawChar(_layer, Position.X, Position.Y, Symbol);
+        _renderer.DrawString(_layer, 9, 0, Health.ToString() );
     }
 
     public void HealHero(int amount)

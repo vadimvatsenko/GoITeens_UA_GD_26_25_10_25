@@ -1,5 +1,6 @@
-﻿using Lesson_12_OOP_2.Engine;
+﻿// Hero
 
+using Lesson_12_OOP_2.Engine;
 namespace Lesson_12_OOP_2
 {
     internal class Program
@@ -15,7 +16,6 @@ namespace Lesson_12_OOP_2
             Map map = new Map(100, 25);
             Input heroInput = new Input();
             
-            
             var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
             var walls = renderer.CreateLayer(map.Width, map.Height);
             var uiLayer = renderer.CreateLayer(map.Width, map.Height);
@@ -23,6 +23,7 @@ namespace Lesson_12_OOP_2
             var itemsLayer = renderer.CreateLayer(map.Width, map.Height);
             
             Hero hero = new Hero(heroInput, renderer, heroLayer);
+            UI ui = new UI(renderer, hero.HealthComponent, uiLayer);
 
             renderer.Fill(backgroundLayer, '.');
             
@@ -30,13 +31,14 @@ namespace Lesson_12_OOP_2
                 = new Update(60, 
                     renderer, 
                     map, 
+                    backgroundLayer,
                     uiLayer,
                     walls,
                     heroLayer,
                     itemsLayer
                     );
             
-            update.AddUpdatable(hero, heroInput);
+            update.AddUpdatable(hero, heroInput, ui);
             update.RunUpdate();
             
         }

@@ -65,13 +65,12 @@ public class Update
             // Update(deltaTime);
 
             ///////////////////////////////
-            ///
-            
-            
             // порядок важливий
-            foreach (var layer in _layersArray)
+
+            // початок з першого, щоб не витерти background
+            for (int i = 1; i < _layersArray.Length; i++)
             {
-                _renderer.Clear(layer);
+                _renderer.Clear(_layersArray[i]);
             }
             
             foreach (var u in _updatableList)
@@ -79,6 +78,7 @@ public class Update
                 u.Update(deltaTime);
             }
 
+            _renderer.DrawString(_layersArray[0], 0, 0, $"FPS: {_fps:F2} | deltaTime: {deltaTime:F4}s");
             var frame = _renderer.Compose(_map.Width, _map.Height, _layersArray);
             _renderer.Render(frame);
             
@@ -118,8 +118,8 @@ public class Update
                 _fps = _frames / (passedMs / 1000.0);
 
                 // Показуємо також останній deltaTime для наочності
-                _renderer.DrawString(_layersArray[0], 1, 1, $"FPS: {_fps:F2} | deltaTime: {deltaTime:F4}s");
-                Console.WriteLine($"FPS: {_fps:F2} | deltaTime: {deltaTime:F4}s");
+                
+                //Console.WriteLine($"FPS: {_fps:F2} | deltaTime: {deltaTime:F4}s");
                 // Скидаємо лічильники на наступну секунду
                 _frames = 0;
                 _fpsTimerStartMs = _sw.Elapsed.TotalMilliseconds;

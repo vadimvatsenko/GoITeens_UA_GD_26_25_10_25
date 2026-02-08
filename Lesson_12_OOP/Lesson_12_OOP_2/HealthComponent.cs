@@ -2,28 +2,28 @@
 
 public class HealthComponent
 {
-    private int _health;
-    private int _maxHealth = 100;
+    public int Health {get; private set;}
+    public int MaxHealth {get; private set;}
     public HealthComponent(int health)
     {
-        
+        Health = health;
     }
 
     public void Damage(int damage)
     {
-        _health -= damage;
-        if (_health <= 0)
+        Health -= damage;
+        if (Health <= 0)
         {
-            _health = 0;
+            Health = 0;
         }
     }
 
     public void Heal(int heal)
     {
-        _health += heal;
-        if (_health > _maxHealth)
+        Health += heal;
+        if (Health > MaxHealth)
         {
-            _health = _maxHealth;
+            Health = MaxHealth;
         }
     }
 }
