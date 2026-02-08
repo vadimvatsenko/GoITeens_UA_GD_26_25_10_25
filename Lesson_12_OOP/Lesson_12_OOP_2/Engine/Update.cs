@@ -118,7 +118,6 @@ public class Update
                 _fps = _frames / (passedMs / 1000.0);
 
                 // Показуємо також останній deltaTime для наочності
-                
                 //Console.WriteLine($"FPS: {_fps:F2} | deltaTime: {deltaTime:F4}s");
                 // Скидаємо лічильники на наступну секунду
                 _frames = 0;

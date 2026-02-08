@@ -18,6 +18,6 @@ public class UI : IUpdatable
     
     public void Update(double deltaTime)
     {
-        _renderer.DrawString(_uiLayer, 50, 0, _heroHealthComponent.Health.ToString() );
+        _renderer.DrawString(_uiLayer, 50, 0, $"hero health: {_heroHealthComponent.Health.ToString()}" );
     }
 }

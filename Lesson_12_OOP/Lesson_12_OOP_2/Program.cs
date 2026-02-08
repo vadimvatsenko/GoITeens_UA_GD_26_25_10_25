@@ -32,15 +32,14 @@ namespace Lesson_12_OOP_2
                     renderer, 
                     map, 
                     backgroundLayer,
-                    uiLayer,
                     walls,
                     heroLayer,
-                    itemsLayer
+                    itemsLayer,
+                    uiLayer
                     );
             
             update.AddUpdatable(hero, heroInput, ui);
             update.RunUpdate();
-            
         }
     }
 }
