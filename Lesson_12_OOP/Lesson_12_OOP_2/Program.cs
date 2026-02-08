@@ -38,8 +38,6 @@ namespace Lesson_12_OOP_2
             update.AddUpdatable(hero, heroInput);
             update.RunUpdate();
             
-            
-            
         }
     }
 }
