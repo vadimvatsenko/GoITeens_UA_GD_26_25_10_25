@@ -5,6 +5,26 @@ public class Car
     public string Name { get; private set; } 
     public string Color {get; private set;}
     public int Age {get; private set;}
+    
+    private int _speed;
+    public int Speed => _speed;
+
+    /*public int Speed
+    {
+        get => _speed;
+        set
+        {
+            if (value > 200)
+            {
+                _speed = 199;
+            }
+        }
+    }*/
+
+    public void ChanchSpeed(int speed)
+    {
+        _speed = speed;
+    }
 
     public Car(string name, string color, int age)
     {
@@ -37,6 +57,11 @@ public class Car
     public void PrintCar()
     {
         Console.WriteLine($"{Name}, {Color}, {Age}");
+    }
+
+    public void Move()
+    {
+        Console.WriteLine($"{Name} go home");
     }
 }
     

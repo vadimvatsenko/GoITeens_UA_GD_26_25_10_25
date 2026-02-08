@@ -1,4 +1,4 @@
-﻿// Hero
+﻿// Hero - Input Renderer Layer HealthComponent
 
 using Lesson_12_OOP_2.Engine;
 namespace Lesson_12_OOP_2
@@ -9,12 +9,8 @@ namespace Lesson_12_OOP_2
         {
             Console.CursorVisible = false;
             
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.InputEncoding = System.Text.Encoding.UTF8;
-            
             Renderer renderer = new Renderer();
             Map map = new Map(100, 25);
-            Input heroInput = new Input();
             
             var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
             var walls = renderer.CreateLayer(map.Width, map.Height);
@@ -22,12 +18,6 @@ namespace Lesson_12_OOP_2
             var heroLayer = renderer.CreateLayer(map.Width, map.Height);
             var itemsLayer = renderer.CreateLayer(map.Width, map.Height);
             
-            Hero hero = new Hero(heroInput, renderer, heroLayer);
-            UI ui = new UI(renderer, hero.HealthComponent, uiLayer);
-
-            Random random = new Random();
-            Damager damager 
-                = new Damager("Bomb", hero, renderer, uiLayer, new Vector2(random.Next(0, map.Width), random.Next(0, map.Height)));
             
             renderer.Fill(backgroundLayer, '.');
             
@@ -42,10 +32,7 @@ namespace Lesson_12_OOP_2
                     uiLayer
                     );
             
-            
-
-            
-            update.AddUpdatable(hero, heroInput, ui, damager);
+            //update.AddUpdatable(hero, heroInput, ui, damager);
             update.RunUpdate();
         }
     }

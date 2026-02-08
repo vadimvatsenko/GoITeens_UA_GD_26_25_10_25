@@ -21,7 +21,7 @@ namespace Lesson_12_OOP_3
             Car mustang = new Car("Mustang", "Red", 1989);
             Car lanos = new Car("Lanos", "Golden", 2001);
             Car brabus = new Car("Brabus", "White", 2002);
-
+            
             List<Car> cars = new List<Car>()
             {
                 mustang,
@@ -47,6 +47,11 @@ namespace Lesson_12_OOP_3
                     car.ChangeName("TeslA");
 
                 }
+            }
+
+            foreach (var car in cars)
+            {
+                car.Move();
             }
 
             Console.WriteLine($"cars after colorize");
