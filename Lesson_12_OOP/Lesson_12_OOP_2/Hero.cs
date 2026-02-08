@@ -60,7 +60,6 @@ public class Hero: IUpdatable, IDisposable
     public void Update(double deltaTime)
     {
         _renderer.DrawChar(_layer, Position.X, Position.Y, Symbol);
-        _renderer.DrawString(_layer, 9, 0, Health.ToString() );
     }
 
     public void HealHero(int amount)

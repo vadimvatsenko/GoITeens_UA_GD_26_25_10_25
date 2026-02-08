@@ -25,6 +25,10 @@ namespace Lesson_12_OOP_2
             Hero hero = new Hero(heroInput, renderer, heroLayer);
             UI ui = new UI(renderer, hero.HealthComponent, uiLayer);
 
+            Random random = new Random();
+            Damager damager 
+                = new Damager("Bomb", hero, renderer, uiLayer, new Vector2(random.Next(0, map.Width), random.Next(0, map.Height)));
+            
             renderer.Fill(backgroundLayer, '.');
             
             Update update 
@@ -38,7 +42,10 @@ namespace Lesson_12_OOP_2
                     uiLayer
                     );
             
-            update.AddUpdatable(hero, heroInput, ui);
+            
+
+            
+            update.AddUpdatable(hero, heroInput, ui, damager);
             update.RunUpdate();
         }
     }
