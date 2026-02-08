@@ -1,6 +1,4 @@
-﻿using Lesson_12_OOP_2.Engine;
-
-namespace RPG_Monochrome.Engine.Collider;
+﻿namespace Lesson_12_OOP_2.Engine.Collider;
 
 public abstract class Collider2D
 {

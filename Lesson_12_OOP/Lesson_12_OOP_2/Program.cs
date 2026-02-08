@@ -8,6 +8,10 @@ namespace Lesson_12_OOP_2
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
+
+            Item item = new Item("Health", new Vector2(5, 3));
+            
+            
             
             Console.CursorVisible = false;
             
@@ -30,6 +34,11 @@ namespace Lesson_12_OOP_2
             while (true)
             {
                 input.Update(16);
+
+                if (hero.Position == item.InWorldCoordinates)
+                {
+                    hero.Inventory.AddOrPutItem(item, 1);
+                }
                 
                 renderer.Clear(heroLayer);
                 renderer.Clear(itemsLayer);

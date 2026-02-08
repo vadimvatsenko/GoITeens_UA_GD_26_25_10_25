@@ -7,6 +7,7 @@ public class Input : IUpdatable
     public Action OnUp;
     public Action OnDown;
     public Action OnAttack;
+    public Action OnPutItemInInventory;
     public Action OnCancel;
 
 
@@ -32,6 +33,9 @@ public class Input : IUpdatable
                 break;
             case ConsoleKey.Spacebar:
                 OnAttack?.Invoke();
+                break;
+            case ConsoleKey.T:
+                OnPutItemInInventory?.Invoke();
                 break;
         }
     }

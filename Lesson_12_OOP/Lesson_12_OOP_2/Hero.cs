@@ -5,6 +5,8 @@ namespace Lesson_12_OOP_2;
 
 public class Hero: IUpdatable, IDisposable
 {
+    public Inventory Inventory { get; private set; }
+    public HealthComponent HealthComponent { get; private set; }
     public char Symbol {get; private set;} = '\u25C9';
     private Input _input;
     public Vector2 Position {get; private set;}
@@ -17,6 +19,9 @@ public class Hero: IUpdatable, IDisposable
         _input.OnLeft += TryToMoveLeft;
         _input.OnUp += TryToMoveUp;
         _input.OnDown += TryToMoveDown;
+
+        Inventory = new Inventory(20);
+        HealthComponent = new HealthComponent(100);
     }
 
     private void TryToMoveLeft()
@@ -47,10 +52,17 @@ public class Hero: IUpdatable, IDisposable
     
     public void Update(double deltaTime)
     {
-        throw new NotImplementedException();
+        
     }
 
-
+    public void HealHero(int amount)
+    {
+        if(Inventory.ItemsInventory.ContainsKey("Health"))
+    }
+    public void TakeDamage(int amount) => HealthComponent.Damage(amount);
+    
+    public void 
+    
     public void Dispose()
     {
         _input.OnRight -= TryToMoveRight;

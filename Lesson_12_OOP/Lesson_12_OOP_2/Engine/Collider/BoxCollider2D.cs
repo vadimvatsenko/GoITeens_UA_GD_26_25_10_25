@@ -1,4 +1,5 @@
 ﻿using Lesson_12_OOP_2.Engine;
+using Lesson_12_OOP_2.Engine.Collider;
 
 namespace RPG_Monochrome.Engine.Collider;
 
