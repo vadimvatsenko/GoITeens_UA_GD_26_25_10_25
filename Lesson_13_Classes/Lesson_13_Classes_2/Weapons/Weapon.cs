@@ -1,4 +1,5 @@
-﻿namespace Lesson_13_Classes_2;
+﻿namespace Lesson_13_Classes_2.Weapons;
+
 
 public abstract class Weapon
 {
@@ -13,9 +14,9 @@ public abstract class Weapon
         Range = range;
     }
 
-    public void Attack(Unit attacker, Unit target)
+    public void Attack()
     {
-        target.TakeDamage(Damage);
-        Console.WriteLine($"{Name} attacked {target.Name} for {Damage} damage");
+        
     }
+    
 }

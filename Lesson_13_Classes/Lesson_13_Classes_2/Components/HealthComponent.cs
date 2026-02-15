@@ -1,4 +1,4 @@
-﻿namespace Lesson_13_Classes_2;
+﻿namespace Lesson_13_Classes_2.Components;
 
 public class HealthComponent
 {
@@ -11,18 +11,18 @@ public class HealthComponent
         MaxHealth = maxHealth;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int damage)
     {
-        CurrentHealth -= amount;
+        CurrentHealth -= damage;
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(int heal)
     {
-        CurrentHealth += amount;
+        CurrentHealth += heal;
         if (CurrentHealth > MaxHealth)
         {
             CurrentHealth = MaxHealth;
