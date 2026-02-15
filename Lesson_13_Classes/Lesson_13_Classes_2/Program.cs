@@ -4,7 +4,6 @@
 // Наслідування таполіморфізм
 // ДЗ в ЛМС дедлайн до 22.02.2026
 
-
 // Завдання 6: Розширення Геймплея
 // Розробіть систему інвентаря, де персонаж може зберігати кілька предметів зброї.
 // Реалізуйте можливість зміни зброї персонажем під час бою.
@@ -37,9 +36,6 @@ namespace Lesson_13_Classes_2
             inventory.SelectWeaponFromIndex(0);
             inventory.ShowWeapons();
             
-
-            
-            
             /*inventory.NextWeapon();
             inventory.ShowCurrentWeapon();
             inventory.NextWeapon();
@@ -61,7 +57,6 @@ namespace Lesson_13_Classes_2
                     inventory.ShowCurrentWeapon();
                 }
             }*/
-            
             
             Console.ReadKey();
         }
