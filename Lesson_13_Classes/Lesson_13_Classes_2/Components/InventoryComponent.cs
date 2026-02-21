@@ -4,12 +4,20 @@ namespace Lesson_13_Classes_2.Components;
 
 public class InventoryComponent
 {
+    public event Action<List<Weapon>, int> OnInventoryChanged; 
     
     private List<Weapon> _weapons = new List<Weapon>();
     public int CurrentWeaponIndex { get; private set; } = 0;
     public Weapon CurrentWeapon => _weapons.Count == 0 ? null : _weapons[CurrentWeaponIndex];
-    public void AddWeapon(Weapon weapon) => _weapons.Add(weapon);
 
+
+    public void AddWeapon(Weapon weapon)
+    {
+        _weapons.Add(weapon);
+        //OnInventoryChanged?.Invoke(_weapons, CurrentWeaponIndex);
+    }
+
+    
     public void NextWeapon()
     {
         if (_weapons.Count <= 0)
@@ -20,6 +28,7 @@ public class InventoryComponent
         
         // 0 1 2 - 0 1 2 - 0 1 2 - 0 1 2
         CurrentWeaponIndex = (CurrentWeaponIndex + 1) % _weapons.Count;
+        OnInventoryChanged?.Invoke(_weapons, CurrentWeaponIndex);
     }
 
     public void SelectWeaponFromIndex(int index)
@@ -31,24 +40,18 @@ public class InventoryComponent
         }
         
         CurrentWeaponIndex = index;
-        ShowCurrentWeapon();
+        OnInventoryChanged?.Invoke(_weapons, CurrentWeaponIndex);
     }
 
-    public void ShowCurrentWeapon()
+    /*public void ShowCurrentWeapon()
     {
         Console.WriteLine(_weapons[CurrentWeaponIndex].Name);
-    }
+    }*/
 
-    public void ShowWeapons()
+    /*public void ShowWeapons()
     {
-        Console.WriteLine("Inventory Weapons");
-
-        for (int i = 0; i < _weapons.Count; i++)
-        {
-            string marker = (i == CurrentWeaponIndex) ? "==>" : "   ";
-            Console.WriteLine($"{marker}: {_weapons[i].Name}");
-        }
-    }
+        
+    }*/
 
     public List<Weapon> GetAllWeapons()
     {

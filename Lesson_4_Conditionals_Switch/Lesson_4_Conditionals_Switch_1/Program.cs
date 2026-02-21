@@ -54,7 +54,6 @@ namespace Lesson_4_Conditionals_Switch_1
             Console.ReadKey();
             
         }
-        
     }
 }
 

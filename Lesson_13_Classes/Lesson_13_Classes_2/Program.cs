@@ -23,18 +23,21 @@ namespace Lesson_13_Classes_2
             Weapon bow = new Bow();
 
             InventoryComponent inventory = new InventoryComponent();
+            InventoryUI ui = new InventoryUI(inventory);
+            
+            
             inventory.AddWeapon(sword);
             inventory.AddWeapon(shotgun);
             inventory.AddWeapon(bow);
             
-            inventory.SelectWeaponFromIndex(2);
+            /*inventory.SelectWeaponFromIndex(2);
             
-            inventory.ShowWeapons();
+            //inventory.ShowWeapons();
             
             Console.WriteLine("-------");
             
-            inventory.SelectWeaponFromIndex(0);
-            inventory.ShowWeapons();
+            inventory.SelectWeaponFromIndex(0);*/
+            //inventory.ShowWeapons();
             
             /*inventory.NextWeapon();
             inventory.ShowCurrentWeapon();
@@ -46,7 +49,7 @@ namespace Lesson_13_Classes_2
             Console.WriteLine("-----------");
             Console.WriteLine(inventory.CurrentWeapon.Name);*/
 
-            /*while (true)
+            while (true)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
@@ -54,9 +57,9 @@ namespace Lesson_13_Classes_2
                 {
                     Console.Clear();
                     inventory.NextWeapon();
-                    inventory.ShowCurrentWeapon();
+                    //inventory.ShowCurrentWeapon();
                 }
-            }*/
+            }
             
             Console.ReadKey();
         }
