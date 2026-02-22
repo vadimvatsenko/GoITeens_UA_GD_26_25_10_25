@@ -1,34 +1,91 @@
-﻿namespace Lesson_14_Polymorphism_2
+﻿using System.Reflection.Metadata;
+
+namespace Lesson_14_Polymorphism_2
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<string> answers = new List<string>()
-            {
-                "Yes",
-                "No",
-                "Maybi"
-            };
-            
-            Random random = new Random();
-            
-            Console.ForegroundColor = ReturnColor("No");
-            Console.WriteLine("Welcome to Rider!");
-        }
+            HealthComponent healthComponent1 = new HealthComponent(100, 100);
+            HealthComponent healthComponent2 = new HealthComponent(100, 100);
 
-        static ConsoleColor ReturnColor(string anwer)
+            Unit warrior1 = new Warrior(healthComponent1, "warrior1");
+            Unit warrior2 = new Warrior(healthComponent2, "warrior2");
+            
+            warrior1.Attack(warrior2);
+        }
+    }
+
+    public class HealthComponent
+    {
+        private int _health;
+        private int _maxHealth;
+        
+        public int Health => _health;
+        public int MaxHealth => _maxHealth;
+
+        public HealthComponent(int health, int maxHealth)
         {
-            switch (anwer)
+            _health = health;
+            _maxHealth = maxHealth;
+        }
+        
+        public  void TakeDamage(int damage)
+        {
+            _health -= damage;
+            if (_health <= 0)
             {
-                case "Yes":
-                    return ConsoleColor.Green;
-                case "No":
-                    return ConsoleColor.Red;
+                _health = 0;
             }
-            
-            return ConsoleColor.White;
-            
+        }
+        
+        public void  Heal(int heal)
+        {
+            _health += heal;
+            if (_health > _maxHealth)
+            {
+                _health = _maxHealth;
+            }
+        }
+    }
+    
+    public abstract class Unit
+    {
+        private readonly HealthComponent _healthComponent;
+        private readonly Weapon _weapon;
+        private string _name;
+        public string Name => _name;
+        public HealthComponent HealthComponent => _healthComponent;
+        
+        public Unit(HealthComponent healthComponent,  string name)
+        {
+            _healthComponent = healthComponent;
+            _name = name;
+        }
+        
+        public virtual void Attack(Unit damager)
+        {
+            _weapon.Attack(this, damager);
+            Console.WriteLine($"name {typeof(Unit)} is attacking");
+        }
+    }
+
+    public class Weapon
+    {
+        private int _power;
+
+        public void Attack(Unit attacker, Unit damager)
+        {
+            Console.WriteLine($"{attacker.Name} is attacking {damager.Name} ");
+            damager.HealthComponent.TakeDamage(_power);
+        }
+    }
+
+    public class Warrior : Unit
+    {
+        
+        public Warrior(HealthComponent healthComponent, string name) : base(healthComponent, name)
+        {
         }
     }
 }
