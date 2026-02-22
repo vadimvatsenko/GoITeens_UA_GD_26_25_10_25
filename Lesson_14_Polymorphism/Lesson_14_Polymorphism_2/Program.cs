@@ -1,4 +1,7 @@
-﻿using System.Reflection.Metadata;
+﻿using System.Text;
+using Lesson_14_Polymorphism_2.Components;
+using Lesson_14_Polymorphism_2.Engine;
+using Lesson_14_Polymorphism_2.Weapons;
 
 namespace Lesson_14_Polymorphism_2
 {
@@ -6,86 +9,53 @@ namespace Lesson_14_Polymorphism_2
     {
         static void Main(string[] args)
         {
-            HealthComponent healthComponent1 = new HealthComponent(100, 100);
-            HealthComponent healthComponent2 = new HealthComponent(100, 100);
-
-            Unit warrior1 = new Warrior(healthComponent1, "warrior1");
-            Unit warrior2 = new Warrior(healthComponent2, "warrior2");
+            Console.CursorVisible = false;
+            Console.OutputEncoding = Encoding.UTF8;
             
-            warrior1.Attack(warrior2);
-        }
-    }
+            char heroSymbol = '❖';
+            char warriorSymbol = '◙';
+            char archer = '▲';
+            char mage = '◉';
+            
+            Map map = new Map(100, 25);
+            Renderer renderer = new Renderer();
+            Input input = new Input();
+            
+            var uiLayer = renderer.CreateLayer(map.Width, map.Height);
+            var backgroundLayer = renderer.CreateLayer(map.Width, map.Height);
+            var heroLayer = renderer.CreateLayer(map.Width, map.Height);
+            var enemiesLayer = renderer.CreateLayer(map.Width, map.Height);
+            
+            InventoryComponent heroInventory = new InventoryComponent();
+            HealthComponent healthComponent = new HealthComponent(100, 100);
+            
+            Weapon sword = new Sword();
+            Weapon bow = new Bow();
+            Weapon shotgun = new Shorgun();
+            
+            InventoryUI heroUI = new InventoryUI(heroInventory, healthComponent, renderer, map, uiLayer);
+            Hero hero = new Hero(new Vector2(2,2), heroSymbol, renderer, heroLayer, map, heroInventory, input);
+            
+            hero.AddWeaponInInventory(sword);
+            //hero.AddWeaponInInventory(bow);
+            hero.AddWeaponInInventory(shotgun);
+            
+            renderer.Fill(backgroundLayer, '.');
 
-    public class HealthComponent
-    {
-        private int _health;
-        private int _maxHealth;
-        
-        public int Health => _health;
-        public int MaxHealth => _maxHealth;
-
-        public HealthComponent(int health, int maxHealth)
-        {
-            _health = health;
-            _maxHealth = maxHealth;
-        }
-        
-        public  void TakeDamage(int damage)
-        {
-            _health -= damage;
-            if (_health <= 0)
+            while (true)
             {
-                _health = 0;
-            }
-        }
-        
-        public void  Heal(int heal)
-        {
-            _health += heal;
-            if (_health > _maxHealth)
-            {
-                _health = _maxHealth;
+                //renderer.Clear(uiLayer);
+                renderer.Clear(enemiesLayer);
+                renderer.Clear(heroLayer);
+                
+                input.Update(16666);
+                hero.Update();
+                
+                var frame 
+                    = renderer.Compose(map.Width,  map.Height, backgroundLayer, uiLayer, enemiesLayer, heroLayer);
+                renderer.Render(frame);
             }
         }
     }
     
-    public abstract class Unit
-    {
-        private readonly HealthComponent _healthComponent;
-        private readonly Weapon _weapon;
-        private string _name;
-        public string Name => _name;
-        public HealthComponent HealthComponent => _healthComponent;
-        
-        public Unit(HealthComponent healthComponent,  string name)
-        {
-            _healthComponent = healthComponent;
-            _name = name;
-        }
-        
-        public virtual void Attack(Unit damager)
-        {
-            _weapon.Attack(this, damager);
-            Console.WriteLine($"name {typeof(Unit)} is attacking");
-        }
-    }
-
-    public class Weapon
-    {
-        private int _power;
-
-        public void Attack(Unit attacker, Unit damager)
-        {
-            Console.WriteLine($"{attacker.Name} is attacking {damager.Name} ");
-            damager.HealthComponent.TakeDamage(_power);
-        }
-    }
-
-    public class Warrior : Unit
-    {
-        
-        public Warrior(HealthComponent healthComponent, string name) : base(healthComponent, name)
-        {
-        }
-    }
 }

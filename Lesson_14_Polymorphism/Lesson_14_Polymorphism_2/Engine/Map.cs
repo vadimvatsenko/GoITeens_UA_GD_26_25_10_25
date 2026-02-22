@@ -1,0 +1,13 @@
+﻿namespace Lesson_14_Polymorphism_2.Engine;
+
+public class Map
+{
+    public int Width { get; private set; }
+    public int Height { get; private set; }
+
+    public Map(int width, int height)
+    {
+        Width = width;
+        Height = height;
+    }
+}
