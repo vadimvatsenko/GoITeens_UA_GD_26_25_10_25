@@ -31,27 +31,12 @@ public class InventoryUI
     
     public void RenderWeapons(List<Weapon> weapons, int currentIndex)
     {
-        //Console.WriteLine("Inventory Weapons");
-
-        /*for (int i = 0; i < weapons.Count; i++)
-        {
-            string marker = (i == currentIndex) ? "==>" : "   ";
-            Console.WriteLine($"{marker}: {weapons[i].Name}");
-        }*/
-        
         _renderer.DrawString(_layer, 1,5, $"{_health.CurrentHealth} / {_health.MaxHealth}");
         
         for (int i = 0; i < weapons.Count; i++)
         {
             string marker = (i == currentIndex) ? "==>" : "   ";
-            //Console.WriteLine($"{marker}: {weapons[i].Name}");
-            
             _renderer.DrawString(_layer, 1,i, $"{marker}: {weapons[i].Name}");
         }
-        
-        
-        
-        
-        
     }
 }

@@ -5,7 +5,6 @@ namespace Lesson_13_Classes_2.Components;
 public class InventoryUI
 {
     private readonly InventoryComponent _inventory;
-
     public InventoryUI(InventoryComponent inventory)
     {
         _inventory = inventory;

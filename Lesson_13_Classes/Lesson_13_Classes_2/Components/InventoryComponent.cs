@@ -13,8 +13,8 @@ public class InventoryComponent
 
     public void AddWeapon(Weapon weapon)
     {
-        _weapons.Add(weapon);
-        //OnInventoryChanged?.Invoke(_weapons, CurrentWeaponIndex);
+        _weapons.Add(weapon); 
+        OnInventoryChanged?.Invoke(_weapons, CurrentWeaponIndex);
     }
 
     
@@ -42,17 +42,7 @@ public class InventoryComponent
         CurrentWeaponIndex = index;
         OnInventoryChanged?.Invoke(_weapons, CurrentWeaponIndex);
     }
-
-    /*public void ShowCurrentWeapon()
-    {
-        Console.WriteLine(_weapons[CurrentWeaponIndex].Name);
-    }*/
-
-    /*public void ShowWeapons()
-    {
-        
-    }*/
-
+    
     public List<Weapon> GetAllWeapons()
     {
         if (_weapons.Count <= 0)

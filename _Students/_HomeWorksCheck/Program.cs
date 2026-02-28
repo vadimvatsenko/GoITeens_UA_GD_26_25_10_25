@@ -1,29 +1,117 @@
-﻿using System;
-using System.Collections.Generic;
-
-class Program
+﻿using  System;
+namespace Project
 {
-    static void Main()
+    internal class Program
     {
-        string text = "У кімнаті є меч, щит і зілля. Меч лежить на столі, а щит біля дверей.";
-
-        Dictionary<string, int> items = new Dictionary<string, int>()
+        static void Main(string[] args)
         {
-            {"меч", 0},
-            {"щит", 0},
-            {"зілля", 0}
-        };
-
-        foreach (var key in new List<string>(items.Keys))
-        {
-            items[key] = text.ToLower().Split(key).Length - 1;
+            Weapon weapon = new Weapon("AK-47", 5, 1, 100, 0);
+            weapon.Attack();
+            Sword sword = new Sword("Sword", 20, 5, 5, 100, 0);
+            sword.Attack();
+            Bow bow = new Bow("Bow", 40, 20, 50, 100, 0);
+            bow.Attack();
+            Unit unit = new Unit("Bob", 100);
+            sword.SpecialAttack(unit);
+            bow.SpecialAttack(unit);
+            bow.Reload(unit);
+            Console.ReadKey();
         }
-
-        foreach (var item in items)
+    }
+    public class Unit
+    {
+        public string Name { get; private set; }
+        public int Health { get; private set; }
+        public Unit(string name, int health)
         {
-            Console.WriteLine($"Предмет '{item.Key}' зустрічається {item.Value} раз(ів)");
+            Name = name;
+            Health = health;
         }
-        
-        Console.ReadKey();
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+            if (Health <= 0)
+            {
+                Health = 0;
+            }
+            Console.WriteLine($"{Name} damaged {damage}");
+            Console.WriteLine($"Health is {Health}");
+        }
+    }
+    public class Weapon
+    {
+        public string Name { get; private set; }
+        public int Damage { get; protected set; }
+        public int Range { get; private set; }
+        public int Status { get; private set; } = 100;
+        public int StatusVtoma { get; protected set; }
+        public Weapon(string name, int damage, int range, int status, int statusVtoma)
+        {
+            Name = name;
+            Damage = damage;
+            Range = range;
+            Status = status;
+            StatusVtoma = statusVtoma;
+        }
+        public virtual void Attack()
+        {
+            Console.WriteLine("{0} attacks {1} damage {2} range {3} status", Name, Damage, Range, Status);
+        }
+        public virtual void SpecialAttack(Unit unit)
+        {
+            Console.WriteLine($"Weapon {Name} damage {Damage} ");
+        }
+        public virtual void Vtoma()
+        {
+            Console.WriteLine($"Weapon have {StatusVtoma}% status inefficiency");
+        }
+    }
+    public class Sword: Weapon
+    {
+        public int BladeLength { get; private set; }
+        public Sword(string name, int damage, int bladelength, int range, int status, int statusVtoma) : base(name, damage, range, status, statusVtoma)
+        {
+            BladeLength = bladelength;
+        }
+        public override void Attack()
+        {
+            StatusVtoma += 15;
+            base.Attack();
+            base.Vtoma();
+            Console.WriteLine($"Blade length is {BladeLength}");
+        }
+        public override void SpecialAttack(Unit unit)
+        {
+            base.SpecialAttack(unit);
+            int prevdamage = Damage;
+            Damage *= 2;
+            unit.TakeDamage(Damage);
+            Damage = prevdamage;
+        }
+    }
+    public class Bow: Weapon
+    {
+        public int ArrowCount  { get; private set; }
+        public Bow(string name, int damage, int arrowcount, int range, int status, int statusVtoma) : base(name, damage, range, status, statusVtoma)
+        {
+            ArrowCount = arrowcount;
+        }
+        public override void Attack()
+        {
+            StatusVtoma += 10;
+            base.Attack();
+            base.Vtoma();
+            Console.WriteLine($"Arrow count is {ArrowCount}");
+        }
+        public override void SpecialAttack(Unit unit)
+        {
+            int maxdamage = Damage * ArrowCount;
+            unit.TakeDamage(maxdamage);
+            ArrowCount = 0;
+        }
+        public void Reload(Unit unit)
+        {
+            ArrowCount = 20;
+        }
     }
 }

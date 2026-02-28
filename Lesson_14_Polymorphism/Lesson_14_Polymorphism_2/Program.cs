@@ -1,7 +1,21 @@
-﻿using System.Text;
-using Lesson_14_Polymorphism_2.Components;
+﻿// Продовжуемо Поліморфізм
+// Практика
+
+// ДЗ Килюшик Влад
+// ДЗ Роман Подорожу часі та Магічний Кристал
+// ДЗ Скурту ООП
+
+
+// Мітя ДЗ поправка
+// ДЗ розібрати
+
+// Hero
+// Weapon в инвентарь
+
+using System.Text;
 using Lesson_14_Polymorphism_2.Engine;
-using Lesson_14_Polymorphism_2.Weapons;
+
+
 
 namespace Lesson_14_Polymorphism_2
 {
@@ -11,11 +25,18 @@ namespace Lesson_14_Polymorphism_2
         {
             Console.CursorVisible = false;
             Console.OutputEncoding = Encoding.UTF8;
+
+            char backgroundSymbol = '░';
             
             char heroSymbol = '❖';
             char warriorSymbol = '◙';
             char archer = '▲';
             char mage = '◉';
+
+            char bow = '◗';
+            //char shogun = ''
+            char projectTile = '▫';
+            char arrow = '◃';
             
             Map map = new Map(100, 25);
             Renderer renderer = new Renderer();
@@ -26,21 +47,7 @@ namespace Lesson_14_Polymorphism_2
             var heroLayer = renderer.CreateLayer(map.Width, map.Height);
             var enemiesLayer = renderer.CreateLayer(map.Width, map.Height);
             
-            InventoryComponent heroInventory = new InventoryComponent();
-            HealthComponent healthComponent = new HealthComponent(100, 100);
-            
-            Weapon sword = new Sword();
-            Weapon bow = new Bow();
-            Weapon shotgun = new Shorgun();
-            
-            InventoryUI heroUI = new InventoryUI(heroInventory, healthComponent, renderer, map, uiLayer);
-            Hero hero = new Hero(new Vector2(2,2), heroSymbol, renderer, heroLayer, map, heroInventory, input);
-            
-            hero.AddWeaponInInventory(sword);
-            //hero.AddWeaponInInventory(bow);
-            hero.AddWeaponInInventory(shotgun);
-            
-            renderer.Fill(backgroundLayer, '.');
+            renderer.Fill(backgroundLayer, backgroundSymbol);
 
             while (true)
             {
@@ -49,11 +56,14 @@ namespace Lesson_14_Polymorphism_2
                 renderer.Clear(heroLayer);
                 
                 input.Update(16666);
-                hero.Update();
+               
+                // hero upppppdate
                 
                 var frame 
                     = renderer.Compose(map.Width,  map.Height, backgroundLayer, uiLayer, enemiesLayer, heroLayer);
                 renderer.Render(frame);
+                
+                Thread.Sleep(16666);
             }
         }
     }
