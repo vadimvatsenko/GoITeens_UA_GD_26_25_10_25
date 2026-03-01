@@ -1,117 +1,218 @@
-﻿using  System;
+﻿using System;
+using System.Collections.Generic;
+
 namespace Project
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Weapon weapon = new Weapon("AK-47", 5, 1, 100, 0);
-            weapon.Attack();
-            Sword sword = new Sword("Sword", 20, 5, 5, 100, 0);
-            sword.Attack();
-            Bow bow = new Bow("Bow", 40, 20, 50, 100, 0);
-            bow.Attack();
-            Unit unit = new Unit("Bob", 100);
-            sword.SpecialAttack(unit);
-            bow.SpecialAttack(unit);
-            bow.Reload(unit);
+            // 1️ Enemy
+            Enemy enemy = new Enemy("Orc", 100);
+            enemy.Attack();
+
+            // 2️ Magic
+            Magic magic = new Magic();
+            magic.CastSpell();
+            magic.UsePotion();
+
+            // 3️ TreasureChest
+            TreasureChest chest = new TreasureChest("Gold");
+            chest.OpenChest();
+            chest.TakeTreasure();
+
+            // 4️ Inventory
+            Inventory inventory = new Inventory();
+            inventory.AddItem("Sword");
+            inventory.AddItem("Potion");
+            inventory.RemoveItem("Potion");
+
+            // 5️ MedicinalPlant
+            MedicinalPlant plant = new MedicinalPlant();
+            plant.CollectPlant();
+            plant.MakeMedicine();
+
+            // 6️ Trap
+            Trap trap = new Trap();
+            trap.SetTrap();
+            trap.TriggerTrap();
+
+            // 7️ KnightSword
+            KnightSword knightSword = new KnightSword(50);
+            knightSword.Attack();
+            knightSword.DisplayStatus();
+
+            // 8️ Recipe
+            Recipe recipe = new Recipe("Health Potion");
+            recipe.AddIngredient("Herb");
+            recipe.AddIngredient("Water");
+            recipe.ShowRecipe();
+
             Console.ReadKey();
         }
     }
-    public class Unit
+
+    // 1️ Enemy
+    public class Enemy
     {
-        public string Name { get; private set; }
-        public int Health { get; private set; }
-        public Unit(string name, int health)
+        public string Name { get; set; }
+        public int Health { get; set; }
+
+        public Enemy(string name, int health)
         {
             Name = name;
             Health = health;
         }
-        public void TakeDamage(int damage)
+
+        public void Attack()
         {
-            Health -= damage;
-            if (Health <= 0)
-            {
-                Health = 0;
-            }
-            Console.WriteLine($"{Name} damaged {damage}");
-            Console.WriteLine($"Health is {Health}");
+            Console.WriteLine($"{Name} attacks! Health: {Health}");
         }
     }
-    public class Weapon
+
+    // 2️ Magic
+    public class Magic
     {
-        public string Name { get; private set; }
-        public int Damage { get; protected set; }
-        public int Range { get; private set; }
-        public int Status { get; private set; } = 100;
-        public int StatusVtoma { get; protected set; }
-        public Weapon(string name, int damage, int range, int status, int statusVtoma)
+        public void CastSpell()
+        {
+            Console.WriteLine("Spell has been cast!");
+        }
+
+        public void UsePotion()
+        {
+            Console.WriteLine("Potion used!");
+        }
+    }
+
+    // 3️ TreasureChest
+    public class TreasureChest
+    {
+        public string Treasure { get; set; }
+        private bool isOpen = false;
+
+        public TreasureChest(string treasure)
+        {
+            Treasure = treasure;
+        }
+
+        public void OpenChest()
+        {
+            isOpen = true;
+            Console.WriteLine("Chest opened!");
+        }
+
+        public void TakeTreasure()
+        {
+            if (isOpen)
+                Console.WriteLine($"You took: {Treasure}");
+            else
+                Console.WriteLine("Chest is closed!");
+        }
+    }
+
+    // 4️ Inventory
+    public class Inventory
+    {
+        private List<string> items = new List<string>();
+
+        public void AddItem(string item)
+        {
+            items.Add(item);
+            Console.WriteLine($"{item} added to inventory.");
+        }
+
+        public void RemoveItem(string item)
+        {
+            items.Remove(item);
+            Console.WriteLine($"{item} removed from inventory.");
+        }
+    }
+
+    // 5️ MedicinalPlant
+    public class MedicinalPlant
+    {
+        private bool collected = false;
+
+        public void CollectPlant()
+        {
+            collected = true;
+            Console.WriteLine("Plant collected.");
+        }
+
+        public void MakeMedicine()
+        {
+            if (collected)
+                Console.WriteLine("Medicine created!");
+            else
+                Console.WriteLine("No plant collected.");
+        }
+    }
+
+    // 6️ Trap
+    public class Trap
+    {
+        private bool isSet = false;
+
+        public void SetTrap()
+        {
+            isSet = true;
+            Console.WriteLine("Trap is set.");
+        }
+
+        public void TriggerTrap()
+        {
+            if (isSet)
+                Console.WriteLine("Trap triggered!");
+            else
+                Console.WriteLine("Trap is not set.");
+        }
+    }
+
+    // 7️ KnightSword
+    public class KnightSword
+    {
+        public int Damage { get; set; }
+        public int Durability { get; set; } = 100;
+
+        public KnightSword(int damage)
+        {
+            Damage = damage;
+        }
+
+        public void Attack()
+        {
+            Durability -= 10;
+            Console.WriteLine($"Knight sword attacks for {Damage} damage!");
+        }
+
+        public void DisplayStatus()
+        {
+            Console.WriteLine($"Sword durability: {Durability}");
+        }
+    }
+
+    // 8️ Recipe
+    public class Recipe
+    {
+        public string Name { get; set; }
+        private List<string> ingredients = new List<string>();
+
+        public Recipe(string name)
         {
             Name = name;
-            Damage = damage;
-            Range = range;
-            Status = status;
-            StatusVtoma = statusVtoma;
         }
-        public virtual void Attack()
+
+        public void AddIngredient(string ingredient)
         {
-            Console.WriteLine("{0} attacks {1} damage {2} range {3} status", Name, Damage, Range, Status);
+            ingredients.Add(ingredient);
+            Console.WriteLine($"{ingredient} added.");
         }
-        public virtual void SpecialAttack(Unit unit)
+
+        public void ShowRecipe()
         {
-            Console.WriteLine($"Weapon {Name} damage {Damage} ");
-        }
-        public virtual void Vtoma()
-        {
-            Console.WriteLine($"Weapon have {StatusVtoma}% status inefficiency");
-        }
-    }
-    public class Sword: Weapon
-    {
-        public int BladeLength { get; private set; }
-        public Sword(string name, int damage, int bladelength, int range, int status, int statusVtoma) : base(name, damage, range, status, statusVtoma)
-        {
-            BladeLength = bladelength;
-        }
-        public override void Attack()
-        {
-            StatusVtoma += 15;
-            base.Attack();
-            base.Vtoma();
-            Console.WriteLine($"Blade length is {BladeLength}");
-        }
-        public override void SpecialAttack(Unit unit)
-        {
-            base.SpecialAttack(unit);
-            int prevdamage = Damage;
-            Damage *= 2;
-            unit.TakeDamage(Damage);
-            Damage = prevdamage;
-        }
-    }
-    public class Bow: Weapon
-    {
-        public int ArrowCount  { get; private set; }
-        public Bow(string name, int damage, int arrowcount, int range, int status, int statusVtoma) : base(name, damage, range, status, statusVtoma)
-        {
-            ArrowCount = arrowcount;
-        }
-        public override void Attack()
-        {
-            StatusVtoma += 10;
-            base.Attack();
-            base.Vtoma();
-            Console.WriteLine($"Arrow count is {ArrowCount}");
-        }
-        public override void SpecialAttack(Unit unit)
-        {
-            int maxdamage = Damage * ArrowCount;
-            unit.TakeDamage(maxdamage);
-            ArrowCount = 0;
-        }
-        public void Reload(Unit unit)
-        {
-            ArrowCount = 20;
+            Console.WriteLine($"Recipe: {Name}");
+            foreach (var item in ingredients)
+                Console.WriteLine($"- {item}");
         }
     }
 }
