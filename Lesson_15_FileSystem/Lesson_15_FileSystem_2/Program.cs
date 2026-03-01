@@ -203,6 +203,11 @@ public class Program
                 case "4":
                     user.PlayerData.Range += 20;
                     break;
+                case "5":
+                    Console.Write("Enter name of weapon :");
+                    string? name = Console.ReadLine().Trim();
+                    user.PlayerData.AddWeapon(name);
+                    break;
                 default:
                     Console.WriteLine("Invalid option.");
                     continue;
@@ -216,9 +221,15 @@ public class Program
 
 public class PlayerData
 {
+    public List<string> _weapons { get; set; } = new List<string>();
     public int Health { get; set; }
     public int Level {get; set;}
     public int Range {get; set;}
+
+    public void AddWeapon(string weap)
+    {
+        _weapons.Add(weap);
+    }
 }
 
 public class User
