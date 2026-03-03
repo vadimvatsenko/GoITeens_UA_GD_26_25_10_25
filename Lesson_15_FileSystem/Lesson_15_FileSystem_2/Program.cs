@@ -263,7 +263,7 @@ public class Program
             Console.WriteLine($"Hello user {user.Name}");
 
             // Показуємо поточні дані гравця
-            Console.WriteLine($"HP {user.PlayerData.Health} | Level {user.PlayerData.Level}");
+            Console.WriteLine($"HP {user.PlayerData.Health} | Level {user.PlayerData.Level} | Range {user.PlayerData.Range} | Weapon {user.PlayerData.Weapons}");
             Console.WriteLine();
 
             // Виводимо всі пункти ігрового меню
@@ -326,7 +326,7 @@ public class Program
 public class PlayerData
 {
     // Список зброї. public властивість, щоб JSON міг зберігати/читати
-    public List<string> _weapons { get; set; } = new List<string>();
+    public List<string> Weapons { get; set; } = new List<string>();
 
     // Поточне здоров'я
     public int Health { get; set; }
@@ -341,7 +341,7 @@ public class PlayerData
     public void AddWeapon(string weap)
     {
         // Додаємо назву зброї у список
-        _weapons.Add(weap);
+        Weapons.Add(weap);
     }
 }
 
