@@ -103,7 +103,6 @@ Console.WriteLine("Мене звати " + lastName + " " + lastName);
 ## 11
 ```csharp
 // Знайди помилку.
-// Тут неправильний тип даних.
 int price = 19.99;
 Console.WriteLine(price);
 ```

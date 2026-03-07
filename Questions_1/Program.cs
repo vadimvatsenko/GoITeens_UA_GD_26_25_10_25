@@ -22,6 +22,7 @@ namespace Questions_1
                 { "Cycles", StaticPath.CyclesQA },
                 { "Strings", StaticPath.StringQA },
                 { "Methods", StaticPath.MethodsQA },
+                { "File System", StaticPath.FileSystem },
             };
             
             // розрахунок шляху до теми
@@ -51,6 +52,7 @@ namespace Questions_1
                 
                 Console.WriteLine("На питання буде відповідати: ");
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"***{student.FirstName} {student.SecondName}***");
                 
                 Console.ResetColor();

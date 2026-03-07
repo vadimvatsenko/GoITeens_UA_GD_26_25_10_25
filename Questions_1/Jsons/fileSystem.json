@@ -1,0 +1,554 @@
+﻿[
+  {
+    "id": 1,
+    "difficulty": "easy",
+    "question": "Для чого в коді підключено `using System.IO;`?",
+    "answers": [
+      {
+        "text": "Для роботи з циклами",
+        "correct": false
+      },
+      {
+        "text": "Для роботи з файлами та папками",
+        "correct": true
+      },
+      {
+        "text": "Для створення масивів",
+        "correct": false
+      },
+      {
+        "text": "Для роботи тільки з числами",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "difficulty": "easy",
+    "question": "Що зберігається у змінній `mainDir` string mainDir = \"data\"?",
+    "answers": [
+      {
+        "text": "Назва файлу",
+        "correct": false
+      },
+      {
+        "text": "Шлях до головної папки `data`",
+        "correct": true
+      },
+      {
+        "text": "Текст для запису у файл",
+        "correct": false
+      },
+      {
+        "text": "Абсолютний шлях до диска C",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "difficulty": "easy",
+    "question": "Що робить `Directory.CreateDirectory(dirFrom)`?",
+    "answers": [
+      {
+        "text": "Видаляє папку",
+        "correct": false
+      },
+      {
+        "text": "Створює папку за вказаним шляхом",
+        "correct": true
+      },
+      {
+        "text": "Створює текстовий файл",
+        "correct": false
+      },
+      {
+        "text": "Переміщує файл у папку",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "difficulty": "easy",
+    "question": "Що робить `File.Create(fullPathFrom)`?",
+    "answers": [
+      {
+        "text": "Створює файл за вказаним шляхом",
+        "correct": true
+      },
+      {
+        "text": "Читає файл",
+        "correct": false
+      },
+      {
+        "text": "Копіює файл",
+        "correct": false
+      },
+      {
+        "text": "Перевіряє, чи існує папка",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "difficulty": "easy",
+    "question": "Що повертає `File.Exists(fullPathFrom)`?",
+    "answers": [
+      {
+        "text": "Рядок з текстом файла",
+        "correct": false
+      },
+      {
+        "text": "Кількість файлів у папці",
+        "correct": false
+      },
+      {
+        "text": "Значення `true` або `false`, чи існує файл",
+        "correct": true
+      },
+      {
+        "text": "Назву файла",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "difficulty": "easy",
+    "question": "Що робить `File.WriteAllText(fullPathFrom, \"Hello \\nWorld\")`?",
+    "answers": [
+      {
+        "text": "Додає текст у кінець без перезапису",
+        "correct": false
+      },
+      {
+        "text": "Записує текст у файл, перезаписуючи попередній вміст",
+        "correct": true
+      },
+      {
+        "text": "Видаляє файл",
+        "correct": false
+      },
+      {
+        "text": "Зчитує текст із файла",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "difficulty": "easy",
+    "question": "Що означає (`\\n`) у рядку `\"Hello \\nWorld\"`?",
+    "answers": [
+      {
+        "text": "Пробіл",
+        "correct": false
+      },
+      {
+        "text": "Нова строка",
+        "correct": true
+      },
+      {
+        "text": "Табуляція",
+        "correct": false
+      },
+      {
+        "text": "Кінець програми",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "difficulty": "easy",
+    "question": "Що робить `File.ReadAllText(fullPathFrom)`?",
+    "answers": [
+      {
+        "text": "Читає весь текст із файла",
+        "correct": true
+      },
+      {
+        "text": "Створює новий файл",
+        "correct": false
+      },
+      {
+        "text": "Переміщує файл",
+        "correct": false
+      },
+      {
+        "text": "Видаляє текст із файла",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "difficulty": "easy",
+    "question": "Що робить `File.AppendAllText(fullPathFrom, \" \\nRoman\")`?",
+    "answers": [
+      {
+        "text": "Повністю очищає файл",
+        "correct": false
+      },
+      {
+        "text": "Додає текст у кінець файла",
+        "correct": true
+      },
+      {
+        "text": "Створює нову папку",
+        "correct": false
+      },
+      {
+        "text": "Копіює файл в іншу директорію",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "difficulty": "easy",
+    "question": "Навіщо перед `File.Copy(fullPathFrom, fullPathTo1, true)` викликається `Directory.CreateDirectory(dirTo1)`?",
+    "answers": [
+      {
+        "text": "Щоб змінити назву файла",
+        "correct": false
+      },
+      {
+        "text": "Щоб папка призначення точно існувала",
+        "correct": true
+      },
+      {
+        "text": "Щоб очистити файл перед копіюванням",
+        "correct": false
+      },
+      {
+        "text": "Це необов’язково, бо CreateDirectory видаляє файли",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "difficulty": "medium",
+    "question": "Що означає третій параметр `true` у `File.Copy(fullPathFrom, fullPathTo1, true)`?",
+    "answers": [
+      {
+        "text": "Копіювати тільки папки",
+        "correct": false
+      },
+      {
+        "text": "Дозволити перезапис існуючого файла",
+        "correct": true
+      },
+      {
+        "text": "Копіювати приховані файли",
+        "correct": false
+      },
+      {
+        "text": "Копіювати файл у фоновому режимі",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "difficulty": "easy",
+    "question": "Що робить `File.Delete(fullPathFrom)`?",
+    "answers": [
+      {
+        "text": "Переміщує файл",
+        "correct": false
+      },
+      {
+        "text": "Видаляє файл",
+        "correct": true
+      },
+      {
+        "text": "Читає файл",
+        "correct": false
+      },
+      {
+        "text": "Створює копію файла",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "difficulty": "medium",
+    "question": "Що означає параметр `false` у `Directory.Delete(dirFrom, false)`?",
+    "answers": [
+      {
+        "text": "Видалити папку разом з усім вмістом",
+        "correct": false
+      },
+      {
+        "text": "Не видаляти підпапки та файли всередині",
+        "correct": true
+      },
+      {
+        "text": "Не видаляти саму папку",
+        "correct": false
+      },
+      {
+        "text": "Видаляти тільки текстові файли",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "difficulty": "medium",
+    "question": "Що робить `File.Move(fullPathTo1, fullPathTo2, true)`?",
+    "answers": [
+      {
+        "text": "Створює копію файла, залишаючи старий",
+        "correct": false
+      },
+      {
+        "text": "Переміщує або перейменовує файл",
+        "correct": true
+      },
+      {
+        "text": "Видаляє файл після читання",
+        "correct": false
+      },
+      {
+        "text": "Читає файл по рядках",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "difficulty": "medium",
+    "question": "Яка потенційна проблема є в частині коду з `File.Move(fullPathTo1, fullPathTo2, true)`?",
+    "answers": [
+      {
+        "text": "Папка `dirTo2` у коді не створюється перед переміщенням файла",
+        "correct": true
+      },
+      {
+        "text": "Файл не можна переміщувати після копіювання",
+        "correct": false
+      },
+      {
+        "text": "Метод `File.Move` працює тільки з абсолютними шляхами",
+        "correct": false
+      },
+      {
+        "text": "Спочатку треба викликати `ReadAllText`",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "difficulty": "medium",
+    "question": "Що робить `Directory.Move(dirTo2, dirTo3)`?",
+    "answers": [
+      {
+        "text": "Переміщує або перейменовує папку",
+        "correct": true
+      },
+      {
+        "text": "Копіює файл у папку",
+        "correct": false
+      },
+      {
+        "text": "Читає всі папки всередині",
+        "correct": false
+      },
+      {
+        "text": "Видаляє папку `dirTo3`",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "difficulty": "medium",
+    "question": "Що повертає `File.ReadAllLines(fullPathTo2)`?",
+    "answers": [
+      {
+        "text": "Один великий рядок",
+        "correct": false
+      },
+      {
+        "text": "Масив рядків, де кожен елемент — окремий рядок файла",
+        "correct": true
+      },
+      {
+        "text": "Масив символів",
+        "correct": false
+      },
+      {
+        "text": "Кількість слів у файлі",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "difficulty": "medium",
+    "question": "Що повертає `Directory.GetFiles(dirTo3)`?",
+    "answers": [
+      {
+        "text": "Масив шляхів до всіх файлів у папці",
+        "correct": true
+      },
+      {
+        "text": "Тільки назву першого файла",
+        "correct": false
+      },
+      {
+        "text": "Масив папок",
+        "correct": false
+      },
+      {
+        "text": "Вміст файлів як текст",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "difficulty": "medium",
+    "question": "Що повертає `Directory.GetDirectories(mainDir)`?",
+    "answers": [
+      {
+        "text": "Масив назв усіх файлів",
+        "correct": false
+      },
+      {
+        "text": "Масив підпапок у папці `data`",
+        "correct": true
+      },
+      {
+        "text": "Один текстовий рядок з усіма папками",
+        "correct": false
+      },
+      {
+        "text": "Кількість папок у `data`",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "difficulty": "medium",
+    "question": "Що таке абсолютний шлях у цьому коді?",
+    "answers": [
+      {
+        "text": "Шлях від поточної папки проєкту",
+        "correct": false
+      },
+      {
+        "text": "Повний шлях, наприклад `C:\\\\Users\\\\user\\\\Documents...`",
+        "correct": true
+      },
+      {
+        "text": "Тільки ім’я файла",
+        "correct": false
+      },
+      {
+        "text": "Шлях без диска та папок",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "difficulty": "medium",
+    "question": "Що таке відносний шлях?",
+    "answers": [
+      {
+        "text": "Шлях від поточного місця запуску програми",
+        "correct": true
+      },
+      {
+        "text": "Повний шлях від диска C",
+        "correct": false
+      },
+      {
+        "text": "Шлях тільки до файлу `.exe`",
+        "correct": false
+      },
+      {
+        "text": "Шлях, який працює лише в браузері",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "difficulty": "medium",
+    "question": "Для чого використано конструкцію `using (File.Create(fullPathFrom)) { ... }`?",
+    "answers": [
+      {
+        "text": "Щоб автоматично закрити файловий ресурс після використання",
+        "correct": true
+      },
+      {
+        "text": "Щоб цикл працював швидше",
+        "correct": false
+      },
+      {
+        "text": "Щоб створити одразу кілька файлів",
+        "correct": false
+      },
+      {
+        "text": "Щоб видалити файл після створення",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "difficulty": "hard",
+    "question": "Що може статися, якщо викликати `Directory.Delete(dirFrom, false)`, коли всередині папки ще є файл?",
+    "answers": [
+      {
+        "text": "Папка видалиться разом із файлом",
+        "correct": false
+      },
+      {
+        "text": "Метод поверне `false`",
+        "correct": false
+      },
+      {
+        "text": "Буде помилка, бо папка не порожня",
+        "correct": true
+      },
+      {
+        "text": "Файл автоматично переміститься в корзину",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "difficulty": "medium",
+    "question": "Який тип даних має змінна `lines` після `File.ReadAllLines(fullPathTo2)`?",
+    "answers": [
+      {
+        "text": "string",
+        "correct": false
+      },
+      {
+        "text": "char[]",
+        "correct": false
+      },
+      {
+        "text": "string[]",
+        "correct": true
+      },
+      {
+        "text": "List<string>",
+        "correct": false
+      }
+    ]
+  }
+]

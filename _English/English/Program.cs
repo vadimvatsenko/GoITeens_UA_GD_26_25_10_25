@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace English
 {
@@ -7,76 +9,183 @@ namespace English
         private static readonly string DirPath = "A0";
         
         private static readonly string FilePath = Path.GetFullPath(
-            Path.Combine(AppContext.BaseDirectory, $"..\\..\\..\\{DirPath}\\A0_1.json")
+            Path.Combine(AppContext.BaseDirectory, $"..\\..\\..\\{DirPath}\\A0_3.json")
         );
+        
+        private static Dictionary<int, string> englishMenu = new Dictionary<int, string>()
+        {
+            [0] = "Vocabulary",
+            [1] = "Sections",
+        };
         
         /*private static readonly string FilePath 
             = Path.Combine(AppContext.BaseDirectory, DirPath, "A0_1.json");*/
         
         public static async Task Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;   // для виводу
+            Console.InputEncoding  = Encoding.UTF8;
             
             Console.WriteLine(FilePath);
             
             bool isFileExist = File.Exists(FilePath);
             
-            Console.WriteLine(isFileExist);
-            
-            List<Vocabulary> vocabularies = new List<Vocabulary>();
-            
-            vocabularies = await GetAsync();
+            Data dataList = await GetAsync();
 
-            foreach (var vocabulary in vocabularies)
+            foreach (var m in englishMenu)
             {
-                Console.WriteLine(vocabulary.En);
+                Console.WriteLine($"[{m.Key}]: [{m.Value}]");
             }
             
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("Enter your option: ");
+            string option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "0":
+                    foreach (var d in dataList.Vocabulary)
+                    {
+                        Console.Clear();
+                        
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine(d.Ru);
+                        
+                        Console.Write("Enter Word: ");
+                        string words = Console.ReadLine().Trim();
+
+                        bool isEqual = false;
+                        
+                        for (int i = 0; i < words.Length; i++)
+                        {
+                            if (d.En.Length != words.Length)
+                            {
+                                isEqual = false;
+                                break;
+                            }
+
+                            if (words[i] != d.En[i])
+                            {
+                                isEqual = false;
+                                break;
+                            }
+                            
+                            isEqual = true;
+                        }
+                        
+                        Console.ForegroundColor = isEqual ? ConsoleColor.Green : ConsoleColor.Red;
+                        Console.WriteLine(isEqual ? "CORRECT" : "MISSTAKE");
+                        
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine(d.Ipa);
+                        
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(d.En);
+                        
+                        Console.WriteLine();
+                        Console.ResetColor();
+                            
+                        Console.WriteLine("press any key to continue...");
+                        Console.WriteLine();    
+                        Console.ReadKey();
+                        
+                    }
+                    break;
+                
+                case "1":
+                    foreach (var d in dataList.Sections)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(d.Title);
+                        Console.WriteLine(d.Rule);
+
+                        foreach (var e in d.Examples)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine(e.Ru);
+                            
+                            Console.ReadKey();
+                            
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine(e.Ipa + " ");
+                            
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine(e.En);
+                            
+                            Console.WriteLine();
+                            
+                            Console.ResetColor();
+                            
+                            Console.WriteLine("press any key to continue...");
+                            Console.WriteLine();  
+                            
+                            Console.ReadKey();
+                        }
+                    }
+                    
+                    break;
+            }
 
             Console.ReadKey();
         }
 
-        public static async Task<List<Vocabulary>?> GetAsync()
+        public static async Task<Data?> GetAsync()
         {
 
             string json = await File.ReadAllTextAsync(FilePath);
             
-            List<Vocabulary> vocabularies = new List<Vocabulary>();
-            
             try
             {
-                return JsonSerializer.Deserialize<List<Vocabulary>>(json) ?? new List<Vocabulary>();
+                return JsonSerializer.Deserialize<Data>(json) ?? new Data();
             }
             catch (Exception e)
             {
-                return vocabularies;
                 Console.WriteLine(e);
-                throw;
+                return new Data();
             }
         }
     }
 
+    [Serializable]
+    public class Data
+    {
+        [JsonPropertyName("vocabulary")]
+        public List<Vocabulary> Vocabulary { get; set; }
+        [JsonPropertyName("sections")]
+        public List<Sections> Sections { get; set; }
+    }
+    
+
+    [Serializable]
     public class Vocabulary
     {
+        [JsonPropertyName("en")]
         public string En { get; set; }
+        [JsonPropertyName("ipa")]
         public string Ipa { get; set; }
+        [JsonPropertyName("ru")]
         public string Ru { get; set; }
     }
 
+    [Serializable]
     public class Sections
     {
+        [JsonPropertyName("title")]
         public string Title { get; set; }
+        [JsonPropertyName("rule")]
         public string Rule {get; set;}
+        [JsonPropertyName("examples")]
         public Examples[] Examples {get; set;}
     }
 
+    [Serializable]
     public class Examples
     {
+        [JsonPropertyName("en")]
         public string En { get; set; }
+        [JsonPropertyName("ipa")]
         public string Ipa { get; set; }
+        [JsonPropertyName("ru")]
         public string Ru { get; set; }
     }
-
-    
 }
 

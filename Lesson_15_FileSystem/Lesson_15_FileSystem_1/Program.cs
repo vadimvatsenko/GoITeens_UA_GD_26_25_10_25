@@ -1,55 +1,92 @@
-﻿// Заняття 1,5 години,
-// Кахут
+﻿
+namespace Lesson_15_FileSystem_1;
 
-// Сьогодні ми ознайомимось з основними класами для роботи з файлами та директоріями.
-// Навчимося читати та записувати дані.
-// Опрацюємо команди файлової системи.
-// Розглянемо, як правильно обробляти винятки за допомогою try-catch.
-// Розглянемо типи винятків.
-
-
-class Program
+public class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
-        string dirFrom = "data/dirFrom/";
-        string dirTo1 = "data/dirTo1/";
-        string dirTo2 = "data/dirTo2/";
-        string dirTo3 = "data/dirTo3/";
-        
-        string fileName = "saveData.txt";
-        
-        string fullPathFrom = dirFrom + fileName; // "data/dirFrom/saveData.txt"
-        
-        // створить директорію
-        Directory.CreateDirectory(dirFrom);
+        string mainDir = @"data";
+        string dirFrom = @"data/dirFrom/";
+        string dirTo1 = @"data/dirTo1/";
+        string dirTo2 = @"data/dirTo2/";
+        string dirTo3 = @"data/dirTo3/";
 
-        // створить файл в директорії
-        bool isFileInDirect = File.Exists(fullPathFrom);
-        Console.WriteLine(isFileInDirect);
+        string fileName = $"data.txt";
         
-        if (!isFileInDirect)
+        string fullPathFrom = dirFrom + fileName;
+        string fullPathTo1 = dirTo1 + fileName;
+        string fullPathTo2 = dirTo2 + fileName;
+        
+        // ця команда створює директорію за вказаним шляхом
+        Directory.CreateDirectory(dirFrom);
+        
+        // створить файл за вказаною адресою
+        using (File.Create(fullPathFrom))
         {
-            // чи є файл в директорії
-            using (File.Create(fullPathFrom))
-            {
-                Console.WriteLine("File created {0}.", fullPathFrom);
-            }
-        }
+            Console.WriteLine(fileName + " " + "created");
+        } 
+        
+        // чи є файл у даній директорії
+        bool isFileExist = File.Exists(fullPathFrom);
+        Console.WriteLine(isFileExist);
+        
+        // Запише даний текст перезаписавши, що там було
+        File.WriteAllText(fullPathFrom, "Hello \nWorld");
+        
+        // зчитає текст з файла
+        string linesBefore = File.ReadAllText(fullPathFrom);
+        Console.WriteLine(linesBefore);
+        
+        // додасть текст у кінець
+        File.AppendAllText(fullPathFrom, " \nRoman");
+        string linesAfter = File.ReadAllText(fullPathFrom);
+        Console.WriteLine(linesAfter);
+        
+        // копіювання файла, створення директорії обов'їязково
+        Directory.CreateDirectory(dirTo1);
+        File.Copy(fullPathFrom, fullPathTo1, true);
+        
+        // видалить файл з директорії
+        File.Delete(fullPathFrom);
+        // true false, для видалення всього вмісту
+        Directory.Delete(dirFrom, true);
         
         // 
-        File.AppendAllText(fullPathFrom, "Hello \nRoman fr \nom Cherkasy \nGoIteens");
+        Directory.CreateDirectory(dirTo3);
+        File.Move(fullPathTo1, fullPathTo2,  false);
+        Directory.Move(dirTo2, dirTo3);
         
+        // Кожен рядок файлу в окремий масив
+        string[] lines = File.ReadAllLines(fullPathTo2);
+        Console.WriteLine($"line {lines[0]}");
         
-        string text = File.ReadAllText(fullPathFrom);
-        Console.WriteLine(text);
+        // зчитує кожен рядок тексту в окремий массив.
+        string[] words = lines[0].Split(' ');
+        Console.WriteLine($"words {words[0]}");
         
-        string[] lines = File.ReadAllLines(fullPathFrom);
+        // директорія свіх файлів у папці
+        string[] directoryPathFiles = Directory.GetFiles(dirTo3);
+        Console.WriteLine($"directory path files {directoryPathFiles[0]}");
+        
+        // директорія свіх підпапок
+        string[] directoryPathDirectories = Directory.GetDirectories(mainDir);
+        Console.WriteLine($"directory path directories {directoryPathDirectories[0]}");
 
-        foreach (string line in lines)
+        // абсолютний шлях до файлів
+        string absolutePath = @"C:\Users\user\Documents\EA Games\Dead Space 2";
+        string[] allFilesInPath = Directory.GetFiles(absolutePath);
+        foreach (string file in allFilesInPath)
         {
-            Console.WriteLine(line);
+            Console.WriteLine(file);
         }
+        
+        string relativePath = @"\Documents\EA Games\Dead Space 2";
+        string[] allFilesFromRelativePath = Directory.GetFiles(relativePath);
+        foreach (string file in allFilesFromRelativePath)
+        {
+            Console.WriteLine(file);
+        }
+        
         
         Console.ReadKey();
     }
