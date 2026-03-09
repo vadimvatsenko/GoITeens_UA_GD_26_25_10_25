@@ -1,354 +1,371 @@
-﻿using System.Text.Json;
-using System.Text.RegularExpressions;
-using System.Text;
+﻿
+// Підключаємо бібліотеку для роботи з JSON (серіалізація/десеріалізація)
+using System.Text.Json;
 
-namespace ConsoleApp10;
+// Оголошуємо простір імен (щоб класи групувалися в одній “папці” проєкту)
+namespace Lesson_15_FileSystem_2;
 
+// Оголошуємо клас Program — це головний клас консольного застосунку
 public class Program
 {
+    // Шлях до папки, де будемо зберігати дані (файли збережень)
     private static readonly string DirPath = "save data";
-    private static readonly string FilePath = Path.Combine(DirPath, "save.json");
-    private static readonly List<string> Weapons = new() { "Sword", "Bow", "Axe", "Magic Staff", "Dagger" };
 
+    // Повний шлях до файлу save.json всередині папки DirPath
+    // Path.Combine правильно “склеює” частини шляху під Windows/macOS/Linux
+    private static readonly string FilePath = Path.Combine(DirPath, "save.json");
+
+    // Словник головного меню: ключ (int) -> текст пункту меню (string)
+    private static readonly Dictionary<int, string> MainMenu = new Dictionary<int, string>()
+    {
+        [0] = "Exit",      // 0 — вихід
+        [1] = "Register",  // 1 — реєстрація
+        [2] = "Login"      // 2 — логін
+    };
+
+    // Словник ігрового меню: дії з гравцем
+    private static readonly Dictionary<int, string> GameMenu = new Dictionary<int, string>()
+    {
+        [0] = "Exit",               // 0 — вихід з меню гравця
+        [1] = "Take Damage (-10HP)",// 1 — відняти здоров’я
+        [2] = "Take Heal (+10HP)",  // 2 — додати здоров’я
+        [3] = "Next Level (+1 level)", // 3 — підвищити рівень
+        [4] = "Add Range",          // 4 — додати дальність/радіус
+        [5] = "Add Weapon"          // 5 — додати зброю в список
+	[6] = "Save all Users"
+    };
+
+	private static async Task SaveAllUsersAsync()
+{
+    List<User> users = await LoadUsersAsync();
+    await SaveUsersAsync(users);
+
+    Console.WriteLine("All users saved successfully.");
+    Console.ReadKey();
+};
+
+    // Головний метод програми. async означає, що всередині можна використовувати await
+    // Task — це “обіцянка” завершення роботи методу в майбутньому
     public static async Task Main(string[] args)
     {
-        // Фікс кодування для українських літер
-        Console.OutputEncoding = Encoding.UTF8;
-        Console.InputEncoding = Encoding.UTF8;
-
+        // Створюємо папку DirPath, якщо її ще немає
         Directory.CreateDirectory(DirPath);
-        if (!File.Exists(FilePath)) await File.WriteAllTextAsync(FilePath, "[]");
 
+        // Якщо файлу збереження ще немає — створимо його
+        if (!File.Exists(FilePath))
+        {
+            // Записуємо "[]" — порожній JSON-масив (тобто порожній список користувачів)
+            await File.WriteAllTextAsync(FilePath, "[]");
+        }
+
+        // Нескінченний цикл головного меню (працює, поки не вийдемо з програми)
         while (true)
         {
+            // Очищаємо консоль для “чистого” меню
             Console.Clear();
-            DrawLogo();
-            PrintColored("==== MAIN MENU ====\n", ConsoleColor.Cyan);
-            Console.WriteLine("[1] Register\n[2] Login\n[0] Exit");
 
-            int choice = GetSafeInt("Enter your choice: ");
+            // Виводимо всі пункти головного меню
+            foreach (var m in MainMenu)
+            {
+                // m.Key — число (0/1/2), m.Value — текст пункту
+                Console.WriteLine($"{m.Key}: {m.Value}");
+            }
 
+            // Просимо користувача ввести вибір
+            Console.WriteLine("Enter your choice: ");
+
+            // Зчитуємо введення. ReadLine може повернути null, тому тип string?
+            // Trim прибирає пробіли з початку/кінця
+            string? choice = Console.ReadLine().Trim();
+
+            // Змінна для поточного користувача (може бути null, якщо не залогінилися)
             User? user = null;
+
+            // Обробляємо вибір меню
             switch (choice)
             {
-                case 0: return;
-                case 1: user = await RegisterUserAsync(); break;
-                case 2: user = await LoginUserAsync(); break;
-                default: 
-                    PrintColored("Invalid choice!", ConsoleColor.Red); 
-                    Console.ReadKey(); 
+                case "0":
+                    // Вихід з програми (завершує Main)
+                    return;
+
+                case "1":
+                    // Реєструємо нового користувача і отримуємо об'єкт User (або null якщо помилка)
+                    user = await RegisterUserAsync();
+                    break;
+
+                case "2":
+                    // Логінимося і отримуємо User (або null якщо невірні дані)
+                    user = await LoginUserAsync();
+                    break;
+
+                default:
+                    // Якщо введено щось інше — повідомляємо
+                    Console.WriteLine("Invalid choice.");
                     break;
             }
 
-            if (user != null) await PlayerMenuAsync(user);
+            // Якщо користувач успішно отриманий (зареєстрований або залогінений)
+            if (user != null)
+            {
+                // Переходимо в меню гравця
+                await PlayerMenuAsync(user);
+            }
         }
     }
 
-    // ================= UTILS & VISUALS =================
-
-    private static void DrawLogo()
+    // Метод для завантаження списку користувачів з JSON-файлу
+    private static async Task<List<User>> LoadUsersAsync()
     {
-        PrintColored(@"
-***************************************
-* The CLASS              *
-* Ultimate RPG Experience      *
-***************************************", ConsoleColor.Magenta);
-        Console.WriteLine("\n");
-    }
+        // Якщо файлу немає — повертаємо порожній список, щоб програма не падала
+        if (!File.Exists(FilePath)) return new List<User>();
 
-    private static int GetSafeInt(string prompt)
-    {
-        while (true)
+        // Читаємо весь текст JSON з файлу
+        string json = await File.ReadAllTextAsync(FilePath);
+
+        // Якщо текст порожній/з пробілами — теж повертаємо порожній список
+        if (string.IsNullOrWhiteSpace(json)) return new List<User>();
+
+        try
         {
-            Console.Write(prompt);
-            string? input = Console.ReadLine();
-            if (int.TryParse(input, out int result)) return result;
-            PrintColored("Error: Enter a number!\n", ConsoleColor.Red);
+            // Десеріалізуємо JSON у List<User>
+            // Якщо Deserialize повернув null — повертаємо порожній список
+            return JsonSerializer.Deserialize<List<User>>(json) ?? new List<User>();
+        }
+        catch (Exception e)
+        {
+            // Якщо JSON зламався або формат неправильний — не падаємо, просто повертаємо порожній список
+            // Console.WriteLine(e.Message); // можна включити для дебагу
+            return new List<User>();
         }
     }
 
-    private static void PrintColored(string text, ConsoleColor color)
+    // Метод для збереження всіх користувачів у JSON-файл
+    private static async Task SaveUsersAsync(List<User> users)
     {
-        Console.ForegroundColor = color;
-        Console.Write(text);
-        Console.ResetColor();
+        // Перетворюємо список users у JSON-рядок
+        // WriteIndented = true робить JSON “красивим” з відступами
+        string json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
+
+        // Записуємо JSON у файл (перезаписуємо повністю)
+        await File.WriteAllTextAsync(FilePath, json);
     }
 
-    private static (string Name, ConsoleColor Color) GetTitle(int level)
+    // Метод для оновлення конкретного користувача у файлі (наприклад, після зміни HP/Level/Weapons)
+    private static async Task UpdateUsersAsync(User users)
     {
-        if (level >= 5000) return ("Подорожуючий бог", ConsoleColor.Cyan);
-        if (level >= 500) return ("Гроза всіх селищ", ConsoleColor.DarkYellow);
-        if (level >= 100) return ("Тебе бояться комарі", ConsoleColor.Yellow);
-        if (level >= 10) return ("В тебе не плюнуть", ConsoleColor.Green);
-        return ("Ніхто", ConsoleColor.Gray);
+        // Завантажуємо всіх користувачів з файлу
+        List<User> allUser = await LoadUsersAsync();
+
+        // Шукаємо індекс користувача в списку за ім'ям (без врахування регістру)
+        int index = allUser.FindIndex(u => u.Name.Equals(users.Name, StringComparison.OrdinalIgnoreCase));
+
+        // Якщо користувач знайдений
+        if (index != -1)
+        {
+            // Замінюємо старий запис користувача на оновлений
+            allUser[index] = users;
+
+            // Зберігаємо список назад у файл
+            await SaveUsersAsync(allUser);
+        }
     }
 
-    private static void DrawHeader(User user)
-    {
-        var title = GetTitle(user.PlayerData.Level);
-        Console.WriteLine(new string('=', 65));
-        
-        Console.Write($" Player: {user.Name} | Title: ");
-        PrintColored($"[{title.Name}]", title.Color);
-        
-        Console.Write("\n HP: ");
-        if (user.PlayerData.Health < 30) Console.ForegroundColor = ConsoleColor.Red;
-        else if (user.PlayerData.Health > 70) Console.ForegroundColor = ConsoleColor.Green;
-        else Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write(user.PlayerData.Health);
-        Console.ResetColor();
-
-        Console.Write($" | LVL: {user.PlayerData.Level}");
-        Console.Write($" | Weapon: ");
-        PrintColored(user.PlayerData.Weapon, ConsoleColor.Cyan);
-        Console.WriteLine();
-        Console.WriteLine(new string('=', 65));
-    }
-
-    // ================= REGISTER & LOGIN =================
-
+    // Реєстрація нового користувача
     private static async Task<User?> RegisterUserAsync()
     {
-        if (!AntiBotCheck()) 
-        { 
-            PrintColored("\nBot detected! Access denied.", ConsoleColor.Red); 
-            Console.ReadKey(); 
-            return null; 
-        }
+        // Завантажуємо всіх користувачів, щоб додати нового
+        List<User> allUser = await LoadUsersAsync();
 
+        // Очищаємо екран
         Console.Clear();
-        PrintColored("==== REGISTER ====\n", ConsoleColor.Cyan);
-        Console.Write("Enter Name: ");
-        string name = Console.ReadLine()?.Trim() ?? "";
 
-        List<User> allUsers = await LoadUsersAsync();
-        if (allUsers.Any(u => u.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+        // Заголовок
+        Console.WriteLine($"====Register User====");
+
+        // Запитуємо ім'я
+        Console.Write("Enter your Name: ");
+        string name = Console.ReadLine().Trim();
+
+        // Запитуємо пароль
+        Console.Write("Enter your Password: ");
+        string password = Console.ReadLine().Trim();
+
+        // Перевірка: якщо ім'я або пароль порожні — реєстрацію не робимо
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(password))
         {
-            PrintColored("User already exists!", ConsoleColor.Red);
-            Console.ReadKey();
-            return null;
+            Console.WriteLine("Enter valid Name and Password");
+            Console.ReadKey(); // чекаємо натискання клавіші, щоб учень встиг прочитати
+            return null;        // повертаємо null — означає “неуспішно”
         }
 
-        Console.Write("Enter Password: ");
-        string password = Console.ReadLine()?.Trim() ?? "";
-
-        /*if (password.Length < 6 || !Regex.IsMatch(password, @"[A-Z]") || !Regex.IsMatch(password, @"\d"))
+        // Створюємо нового користувача
+        User user = new User
         {
-            PrintColored("Weak password! (6+ chars, 1 Upper, 1 Digit)\n", ConsoleColor.Red);
-            Console.ReadKey();
-            return null;
-        }*/
+            Name = name,               // записуємо ім'я
+            Password = password,       // записуємо пароль
+            PlayerData = new PlayerData { Health = 100, Level = 1, Range = 0 } // стартові дані гравця
+        };
 
-        User user = new() { Name = name, Password = password };
-        ChooseClass(user);
+        // Додаємо користувача у список
+        allUser.Add(user);
 
-        allUsers.Add(user);
-        await SaveUsersAsync(allUsers);
+        // Зберігаємо список у файл
+        await SaveUsersAsync(allUser);
+
+        // Повідомлення про успіх
+        Console.WriteLine($"User {user.Name} created.");
+
+        // Повертаємо створеного користувача
         return user;
     }
 
+    // Логін користувача
     private static async Task<User?> LoginUserAsync()
     {
-        List<User> allUsers = await LoadUsersAsync();
+        // Завантажуємо всіх користувачів
+        List<User> allUser = await LoadUsersAsync();
+
+        // Очищаємо екран
         Console.Clear();
-        Console.Write("Enter Name: ");
-        string name = Console.ReadLine()?.Trim() ?? "";
-        User? user = allUsers.FirstOrDefault(u => u.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
-        if (user == null) { PrintColored("User not found!\n", ConsoleColor.Red); Console.ReadKey(); return null; }
+        // Заголовок
+        Console.WriteLine("====Login====");
 
-        Console.Write("Enter Password: ");
-        if (Console.ReadLine() == user.Password)
+        // Вводимо ім'я
+        Console.Write("Enter your Name: ");
+        string name = Console.ReadLine().Trim();
+
+        // Вводимо пароль
+        Console.Write("Enter your Password: ");
+        string password = Console.ReadLine().Trim();
+
+        // Шукаємо користувача по імені (перший, який підходить)
+        User user = allUser.FirstOrDefault(u => u.Name.Equals(name));
+
+        // Якщо користувача не знайдено або пароль не співпав — логін невдалий
+        if (user == null || user.Password != password)
         {
-            user.PlayerData.LastLogin = DateTime.Now.ToString("g");
-            await UpdateUsersAsync(user);
-            return user;
+            Console.WriteLine("Wrong password or name");
+            Console.ReadKey();
+            return null;
         }
-        
-        PrintColored("Wrong password!\n", ConsoleColor.Red); Console.ReadKey();
-        return null;
+
+        // Якщо все добре — повідомляємо про успіх
+        Console.WriteLine($"User {user.Name} successfully logged in.");
+        Console.ReadKey();
+
+        // Повертаємо знайденого користувача
+        return user;
     }
 
-    // ================= PLAYER MENU =================
-
+    // Меню гравця (зміна HP/Level/Range/Weapons)
     private static async Task PlayerMenuAsync(User user)
     {
+        // Нескінченний цикл, поки не натиснуть Exit
         while (true)
         {
+            // Очищення екрану
             Console.Clear();
-            DrawHeader(user);
-            Console.WriteLine("[1] Take Damage | [2] Take Heal | [3] Next Level");
-            Console.WriteLine("[4] Choose Weapon | [5] Show Full Stats");
-            Console.WriteLine("[6] Bonus Menu | [7] Change Password | [0] Logout");
 
-            int choice = GetSafeInt("\nEnter option: ");
-            switch (choice)
+            // Вітання
+            Console.WriteLine($"Hello user {user.Name}");
+
+            // Показуємо поточні дані гравця
+            Console.WriteLine($"HP {user.PlayerData.Health} | Level {user.PlayerData.Level} | Range {user.PlayerData.Range} | Weapon {user.PlayerData.Weapons}");
+            Console.WriteLine();
+
+            // Виводимо всі пункти ігрового меню
+            foreach (var m in GameMenu)
             {
-                case 0: return;
-                case 1: user.PlayerData.Health = Math.Max(0, user.PlayerData.Health - 10); break;
-                case 2: user.PlayerData.Health += 10; break;
-                case 3: LevelUp(user, 1); break;
-                case 4: ChooseWeapon(user); break;
-                case 5: ShowStats(user); break;
-                case 6: BonusMenu(user); break;
-                case 7: await ChangePasswordSafe(user); break;
-                default: PrintColored("Invalid option!\n", ConsoleColor.Red); Console.ReadKey(); break;
+                Console.WriteLine($"{m.Key}: {m.Value}");
             }
 
+            // Запитуємо опцію
+            Console.Write("Enter option: ");
+            string? option = Console.ReadLine().Trim();
+
+            // Обробляємо дію
+            switch (option)
+            {
+                case "0":
+                    // Вихід з меню гравця і повернення у головне меню
+                    return;
+
+                case "1":
+                    // Отримати урон: мінус 10 HP
+                    user.PlayerData.Health -= 10;
+                    break;
+
+                case "2":
+                    // Лікування: плюс 10 HP
+                    user.PlayerData.Health += 10;
+                    break;
+
+                case "3":
+                    // Підняти рівень на 1
+                    user.PlayerData.Level++;
+                    break;
+
+                case "4":
+                    // Додати дальність (range) на 20
+                    user.PlayerData.Range += 20;
+                    break;
+
+                case "5":
+                    // Додати зброю у список
+                    Console.Write("Enter name of weapon :");
+                    string? name = Console.ReadLine().Trim(); // читаємо назву зброї
+                    user.PlayerData.AddWeapon(name);          // додаємо в список
+                    break;
+
+		case "6":
+                    await SaveAllUsersAsync();
+                    continue;
+
+                default:
+                    // Якщо команда неправильна — повідомляємо і повертаємось на початок циклу
+                    Console.WriteLine("Invalid option.");
+                    continue;
+            }
+
+            // Після будь-якої зміни — зберігаємо оновлені дані користувача у файл
             await UpdateUsersAsync(user);
         }
     }
-
-    private static void LevelUp(User user, int amount)
-    {
-        Random rnd = new();
-        if (rnd.Next(1, 101) <= 3) 
-        {
-            user.PlayerData.Level = 1;
-            user.PlayerData.Health = 100;
-            Console.Clear();
-            PrintColored("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", ConsoleColor.Red);
-            PrintColored("ОЙ! Ти спіткнувся об камінь і забув усе на світі!\n", ConsoleColor.Red);
-            PrintColored("Твій рівень скинуто до 1!\n", ConsoleColor.Red);
-            PrintColored("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", ConsoleColor.Red);
-            Console.ReadKey();
-            return;
-        }
-
-        string oldTitle = GetTitle(user.PlayerData.Level).Name;
-        user.PlayerData.Level += amount;
-
-        int hpBonus = user.PlayerData.PlayerClass switch { "Warrior" => 20, "Mage" => 5, _ => 10 };
-        user.PlayerData.Health += hpBonus * amount;
-
-        PrintColored($"\n+++ LEVEL UP! (+{amount}) +++\n", ConsoleColor.Yellow);
-        
-        if (oldTitle != GetTitle(user.PlayerData.Level).Name)
-        {
-            PrintColored($"ВІТАЄМО! Твій новий титул: {GetTitle(user.PlayerData.Level).Name}!\n", ConsoleColor.Magenta);
-        }
-        Console.ReadKey();
-    }
-
-    private static async Task ChangePasswordSafe(User user)
-    {
-        Console.Clear();
-        PrintColored("==== CHANGE PASSWORD ====\n", ConsoleColor.Cyan);
-        Console.Write("Confirm your Name: ");
-        if (Console.ReadLine() != user.Name) { PrintColored("Wrong name!", ConsoleColor.Red); Console.ReadKey(); return; }
-
-        Console.Write("Enter OLD Password: ");
-        if (Console.ReadLine() != user.Password) { PrintColored("Incorrect old password!", ConsoleColor.Red); Console.ReadKey(); return; }
-
-        Console.Write("Enter NEW Password: ");
-        string newPass = Console.ReadLine() ?? "";
-        if (newPass.Length >= 6 && Regex.IsMatch(newPass, @"[A-Z]") && Regex.IsMatch(newPass, @"\d"))
-        {
-            user.Password = newPass;
-            PrintColored("Password updated successfully!", ConsoleColor.Green);
-        }
-        else PrintColored("New password is too weak! (Need 6+ chars, 1 Upper, 1 Digit)", ConsoleColor.Red);
-        
-        Console.ReadKey();
-    }
-
-    private static void BonusMenu(User user)
-    {
-        Console.Clear();
-        PrintColored("==== BONUS MENU ====\n", ConsoleColor.Yellow);
-        Console.WriteLine("[1] Quick Heal (+50 HP)\n[2] Secret Riddle (Promo)");
-        int choice = GetSafeInt("Choice: ");
-
-        if (choice == 1) { user.PlayerData.Health += 50; PrintColored("Healed!", ConsoleColor.Green); }
-        else if (choice == 2)
-        {
-            PrintColored("\nRIDDLE: ", ConsoleColor.Blue);
-            PrintColored("Скільки місяців у році мають 28 днів?\n", ConsoleColor.Blue);
-            Console.Write("Your answer: ");
-            string code = Console.ReadLine()?.ToLower() ?? "";
-
-            if (code == "усі" || code == "vsi" || code == "all" || code == "всі") LevelUp(user, 10);
-            else PrintColored("Wrong! No bonus.\n", ConsoleColor.Red);
-        }
-        Console.ReadKey();
-    }
-
-    private static void ChooseWeapon(User user)
-    {
-        Console.Clear();
-        PrintColored("==== ARMORY ====\n", ConsoleColor.Cyan);
-        for (int i = 0; i < Weapons.Count; i++) Console.WriteLine($"[{i + 1}] {Weapons[i]}");
-        int w = GetSafeInt("\nSelect weapon: ");
-        if (w > 0 && w <= Weapons.Count) user.PlayerData.Weapon = Weapons[w - 1];
-    }
-
-    private static void ShowStats(User user)
-    {
-        Console.Clear();
-        DrawHeader(user);
-        Console.WriteLine($"Class: {user.PlayerData.PlayerClass}");
-        Console.WriteLine($"Range: {user.PlayerData.Range}");
-        Console.WriteLine($"Last Login: {user.PlayerData.LastLogin}");
-        Console.WriteLine("\nPress any key to return...");
-        Console.ReadKey();
-    }
-
-    private static void ChooseClass(User user)
-    {
-        Console.WriteLine("\n[1] Warrior [2] Mage [3] Rogue");
-        int c = GetSafeInt("Choose Class: ");
-        user.PlayerData.PlayerClass = c switch { 1 => "Warrior", 2 => "Mage", 3 => "Rogue", _ => "Beginner" };
-    }
-
-    private static bool AntiBotCheck()
-    {
-        Console.Clear();
-        PrintColored("==== ANTI-BOT CHECK ====\n", ConsoleColor.Yellow);
-        
-        Console.Write("2 + 2 = ");
-        if (Console.ReadLine() != "5") return false;
-
-        Console.Write("Type exactly 'human': ");
-        if (Console.ReadLine()?.ToLower() != "human") return false;
-
-        Console.Write("How many legs does a spider... have? ");
-        if (Console.ReadLine() != "2") return false;
-
-        return true;
-    }
-
-    // ================= FILE SYSTEM =================
-
-    private static async Task<List<User>> LoadUsersAsync()
-    {
-        try { return JsonSerializer.Deserialize<List<User>>(await File.ReadAllTextAsync(FilePath)) ?? new(); }
-        catch { return new(); }
-    }
-
-    private static async Task SaveUsersAsync(List<User> users) 
-        => await File.WriteAllTextAsync(FilePath, JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true }));
-
-    private static async Task UpdateUsersAsync(User user)
-    {
-        var users = await LoadUsersAsync();
-        int i = users.FindIndex(u => u.Name == user.Name);
-        if (i != -1) { users[i] = user; await SaveUsersAsync(users); }
-    }
 }
 
+// Клас даних гравця (те, що “прив’язано” до користувача)
 public class PlayerData
 {
-    public string PlayerClass { get; set; } = "Beginner";
-    public int Health { get; set; } = 100;
-    public int Level { get; set; } = 1;
-    public int Range { get; set; } = 0;
-    public string Weapon { get; set; } = "None";
-    public string LastLogin { get; set; } = "First time";
+    // Список зброї. public властивість, щоб JSON міг зберігати/читати
+    public List<string> Weapons { get; set; } = new List<string>();
+
+    // Поточне здоров'я
+    public int Health { get; set; }
+
+    // Поточний рівень
+    public int Level { get; set; }
+
+    // Дальність/радіус
+    public int Range { get; set; }
+
+    // Метод для додавання зброї до списку
+    public void AddWeapon(string weap)
+    {
+        // Додаємо назву зброї у список
+        Weapons.Add(weap);
+    }
 }
 
+// Клас користувача (логін/пароль + дані гравця)
 public class User
 {
+    // Ім'я користувача
     public string Name { get; set; } = "";
+
+    // Пароль користувача
     public string Password { get; set; } = "";
-    public PlayerData PlayerData { get; set; } = new();
+
+    // Дані гравця (HP/Level/Range/Weapons)
+    public PlayerData PlayerData { get; set; } = new PlayerData();
 }
