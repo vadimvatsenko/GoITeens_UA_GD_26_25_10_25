@@ -62,7 +62,7 @@ class Program
             _health = health;
             _weapon = new Weapon(10, 5);
         }
-
+//
         public void DisplayInfo()
         {
             Console.WriteLine($"Name: {_name}");
