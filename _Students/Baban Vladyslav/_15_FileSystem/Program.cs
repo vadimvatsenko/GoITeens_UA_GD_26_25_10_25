@@ -12,11 +12,41 @@ public class Program
 
     public static async Task Main(string[] args)
     {
-        // Фікс кодування для українських літер
+        /*// Фікс кодування для українських літер
         Console.OutputEncoding = Encoding.UTF8;
         Console.InputEncoding = Encoding.UTF8;
+        
+        // не дуже виглядає
+        PlayerData player = new PlayerData();
+        player.Health = 100;
+        player.Level = 1;
+        player.Range = 5;
+        player.Experience = 50;
+        player.Gold = 200;
+
+        player.AddWeapon("Sword");
+        player.AddWeapon("Bow");
+
+        string path = "player.json";
+        var json = JsonSerializer.Serialize(player, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(path, json);
+
+        Console.WriteLine("Saved to file: " + path);
+
+        if (File.Exists(path))
+        {
+            string text = File.ReadAllText(path);
+            var loaded = JsonSerializer.Deserialize<PlayerData>(text);
+
+            Console.WriteLine("Loaded player:");
+            Console.WriteLine("HP: " + loaded.Health);
+            Console.WriteLine("Lvl: " + loaded.Level);
+            Console.WriteLine("Gold: " + loaded.Gold);
+            Console.WriteLine("Weapons: " + string.Join(", ", loaded.Weapons));
+        }
 
         Directory.CreateDirectory(DirPath);
+        
         if (!File.Exists(FilePath)) await File.WriteAllTextAsync(FilePath, "[]");
 
         while (true)
@@ -41,7 +71,7 @@ public class Program
             }
 
             if (user != null) await PlayerMenuAsync(user);
-        }
+        }*/
     }
 
     // ================= UTILS & VISUALS =================
@@ -49,10 +79,10 @@ public class Program
     private static void DrawLogo()
     {
         PrintColored(@"
-***************************************
-* The CLASS              *
-* Ultimate RPG Experience      *
-***************************************", ConsoleColor.Magenta);
+        ***************************************
+        * The CLASS              *
+        * Ultimate RPG Experience      *
+        ***************************************", ConsoleColor.Magenta);
         Console.WriteLine("\n");
     }
 
@@ -100,7 +130,7 @@ public class Program
 
         Console.Write($" | LVL: {user.PlayerData.Level}");
         Console.Write($" | Weapon: ");
-        PrintColored(user.PlayerData.Weapon, ConsoleColor.Cyan);
+        PrintColored(user.PlayerData.Weapon.Name, ConsoleColor.Cyan);
         Console.WriteLine();
         Console.WriteLine(new string('=', 65));
     }
@@ -122,6 +152,7 @@ public class Program
         string name = Console.ReadLine()?.Trim() ?? "";
 
         List<User> allUsers = await LoadUsersAsync();
+        
         if (allUsers.Any(u => u.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
         {
             PrintColored("User already exists!", ConsoleColor.Red);
@@ -144,6 +175,7 @@ public class Program
 
         allUsers.Add(user);
         await SaveUsersAsync(allUsers);
+        
         return user;
     }
 
@@ -160,7 +192,7 @@ public class Program
         Console.Write("Enter Password: ");
         if (Console.ReadLine() == user.Password)
         {
-            user.PlayerData.LastLogin = DateTime.Now.ToString("g");
+            //user.PlayerData.LastLogin = DateTime.Now.ToString("g");
             await UpdateUsersAsync(user);
             return user;
         }
@@ -218,7 +250,8 @@ public class Program
         string oldTitle = GetTitle(user.PlayerData.Level).Name;
         user.PlayerData.Level += amount;
 
-        int hpBonus = user.PlayerData.PlayerClass switch { "Warrior" => 20, "Mage" => 5, _ => 10 };
+        int hpBonus 
+            = user.PlayerData.PlayerClass switch { "Warrior" => 20, "Mage" => 5, _ => 10 };
         user.PlayerData.Health += hpBonus * amount;
 
         PrintColored($"\n+++ LEVEL UP! (+{amount}) +++\n", ConsoleColor.Yellow);
@@ -235,10 +268,19 @@ public class Program
         Console.Clear();
         PrintColored("==== CHANGE PASSWORD ====\n", ConsoleColor.Cyan);
         Console.Write("Confirm your Name: ");
-        if (Console.ReadLine() != user.Name) { PrintColored("Wrong name!", ConsoleColor.Red); Console.ReadKey(); return; }
+        
+        if (Console.ReadLine() != user.Name)
+        {
+            PrintColored("Wrong name!", ConsoleColor.Red); Console.ReadKey(); return;
+        }
 
         Console.Write("Enter OLD Password: ");
-        if (Console.ReadLine() != user.Password) { PrintColored("Incorrect old password!", ConsoleColor.Red); Console.ReadKey(); return; }
+        if (Console.ReadLine() != user.Password)
+        {
+            PrintColored("Incorrect old password!", ConsoleColor.Red); 
+            Console.ReadKey(); 
+            return;
+        }
 
         Console.Write("Enter NEW Password: ");
         string newPass = Console.ReadLine() ?? "";
@@ -277,9 +319,16 @@ public class Program
     {
         Console.Clear();
         PrintColored("==== ARMORY ====\n", ConsoleColor.Cyan);
-        for (int i = 0; i < Weapons.Count; i++) Console.WriteLine($"[{i + 1}] {Weapons[i]}");
+        
+        for (int i = 0; i < Weapons.Count; i++)
+        {
+            Console.WriteLine($"[{i + 1}] {Weapons[i]}");
+        }
         int w = GetSafeInt("\nSelect weapon: ");
-        if (w > 0 && w <= Weapons.Count) user.PlayerData.Weapon = Weapons[w - 1];
+        
+        // добавлено
+        //if (w > 0 && w <= Weapons.Count) user.PlayerData.Weapon = Weapons[w - 1];
+        //if (w > 0 && w <= Weapons.Count) user.PlayerData.Weapon = Weapons[w - 1];
     }
 
     private static void ShowStats(User user)
@@ -288,7 +337,7 @@ public class Program
         DrawHeader(user);
         Console.WriteLine($"Class: {user.PlayerData.PlayerClass}");
         Console.WriteLine($"Range: {user.PlayerData.Range}");
-        Console.WriteLine($"Last Login: {user.PlayerData.LastLogin}");
+        //Console.WriteLine($"Last Login: {user.PlayerData.LastLogin}");
         Console.WriteLine("\nPress any key to return...");
         Console.ReadKey();
     }
@@ -338,12 +387,33 @@ public class Program
 
 public class PlayerData
 {
-    public string PlayerClass { get; set; } = "Beginner";
-    public int Health { get; set; } = 100;
-    public int Level { get; set; } = 1;
-    public int Range { get; set; } = 0;
-    public string Weapon { get; set; } = "None";
-    public string LastLogin { get; set; } = "First time";
+    public List<string> Weapons { get; set; } = new List<string>();
+    public int Health { get; set; }
+    public int Level { get; set; }
+    public int Range { get; set; }
+    public int Experience { get; set; }
+    public int Gold { get; set; }
+    public bool IsAlive { get; set; } = true;
+    
+    // добавлено
+    public string PlayerClass { get; set; }
+    
+    // добавлено
+    public Weapon Weapon  { get; set; }
+
+    public void AddWeapon(string weapon)
+    {
+        if (!string.IsNullOrWhiteSpace(weapon))
+        {
+            Weapons.Add(weapon);
+        }
+    }
+}
+
+
+public class Weapon
+{
+    public string Name { get; set; }
 }
 
 public class User

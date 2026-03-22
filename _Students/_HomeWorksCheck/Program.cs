@@ -1,243 +1,158 @@
-﻿using System;
-using System.Collections.Generic;
-
-// Завдання 1: Клас "Ворог"
-
-public class Program
+﻿class Program
 {
-    public static void Main()
+    static void Main()
     {
-        Enemy enemy = new Enemy("Bob", 100);
+        Enemy enemy = new Enemy("Орк", 100);
         enemy.Attack();
 
-        TreasureChest treasureChest = new TreasureChest();
-        treasureChest.OpenChest();
-        treasureChest.PutTreasure("sword");
-        
-        MedicinalPlant med =  new MedicinalPlant();
-        
-        med.CollectPlant("red");
-        med.CollectPlant("yellow");
-        med.CollectPlant("green");
-        
-        med.MakeMedicine();
-
+        Magic magic = new Magic();
+        magic.CastSpell("Вогняна пуля");
+        magic.UsePotion("Зілля здоров'я");
+        TreasureChest chest = new TreasureChest();
+        chest.OpenChest();
+        chest.TakeTreasure("Золото");
+        Inventory inventory = new Inventory();
+        inventory.AddItem("Меч");
+        inventory.RemoveItem("Меч");
+        MedicinalPlant plant = new MedicinalPlant();
+        plant.CollectPlant("Роза");
+        plant.MakeMedicine();
+        Trap trap = new Trap();
+        trap.SetTrap();
+        trap.TriggerTrap();
+        KnightSword sword = new KnightSword();
+        sword.Attack();
+        sword.ShowState();
+        Recipe recipe = new Recipe();
+        recipe.AddIngredient("Трава");
+        recipe.AddIngredient("Вода");
+        recipe.ShowRecipe();
         Console.ReadKey();
     }
-}
-class Enemy
-{
-    private string _name;
-    private int _health;
 
-    public Enemy(string name, int health)
-    {
-        _name = name;
-        _health = health;
-    }
 
-    public void Attack()
-    {
-        Console.WriteLine(_name + " атакує!");
-    }
-}
 
-// Завдання 2: Клас "Магія"
-class Magic
-{
-    public void CastSpell(string spellName)
+    class Enemy
     {
-        Console.WriteLine("Використано заклинання: " + spellName);
-    }
+        public string Name { get; set; }
+        public int Health { get; set; }
 
-    public void UsePotion(string potionName)
-    {
-        Console.WriteLine("Використано зілля: " + potionName);
-    }
-}
-
-// Завдання 3: Клас "Скринька з Скарбами"
-class TreasureChest
-{
-    private List<string> _treasures = new List<string>();
-    private bool _isOpen = false;
-    
-    public void OpenChest()
-    {
-        _isOpen =  true;
-        Console.WriteLine("Скринька відкрита!");
-    }
-
-    public void CloseChest()
-    {
-        _isOpen = false;
-        Console.WriteLine("Treasure is closed!");
-    }
-
-    public void TakeTreasure(string item)
-    {
-        if (_isOpen)
+        public Enemy(string name, int health)
         {
-            if (_treasures.Contains(item))
-            {
-                _treasures.Remove(item);
-                Console.WriteLine("Ви взяли: " + item);
-            }
-            else
-            {
-                ////
-            }
+            Name = name;
+            Health = health;
+        }
+
+        public void Attack()
+        {
+            Console.WriteLine(Name + " атакує!");
         }
     }
 
-    public void PutTreasure(string item)
+    class Magic
     {
-        if (_isOpen)
+        public void CastSpell(string spell)
         {
-            _treasures.Add(item);
-            Console.WriteLine($"Add item in chest: {item}");
+            Console.WriteLine("Використано заклинання " + spell);
         }
-        else
+
+        public void UsePotion(string potion)
         {
-            Console.WriteLine("Can`t put item, Treasure is closed!");
+            Console.WriteLine("Використано зілля " + potion);
         }
     }
-}
 
-// Завдання 4: Клас "Інвентар"
-class Inventory
-{
-    private List<string> _items = new List<string>();
 
-    public void AddItem(string item)
+    class TreasureChest
     {
-        _items.Add(item);
-        Console.WriteLine("Додано предмет: " + item);
+        public void OpenChest()
+        {
+            Console.WriteLine("Скриню відкрито");
+        }
+
+        public void TakeTreasure(string treasure)
+        {
+            Console.WriteLine("Взято скарб " + treasure);
+        }
     }
 
-    public void RemoveItem(string item)
-    {
-        _items.Remove(item);
-        Console.WriteLine("Видалено предмет: " + item);
-    }
-}
 
-// Завдання 5: Клас "Лікарська Рослина"
-class MedicinalPlant
-{
-    private Dictionary<string, int> _medicinalPlants = new Dictionary<string, int>()
+    class Inventory
     {
-        ["green"] = 0,
-        ["red"] = 0,
-        ["yellow"] = 0,
-    };
-    
-    
-    public void CollectPlant(string plantName)
-    {
-        if (_medicinalPlants.ContainsKey(plantName))
+        private List<string> items = new List<string>();
+
+        public void AddItem(string item)
         {
-            _medicinalPlants[plantName]++;
+            items.Add(item);
+            Console.WriteLine(item + " додано до інвентаря");
         }
-        else
+
+        public void RemoveItem(string item)
         {
-            _medicinalPlants.Add(plantName, 1);
+            items.Remove(item);
+            Console.WriteLine(item + " видалено з інвентаря");
         }
-        Console.WriteLine("Зібрано рослину: " + plantName);
     }
 
-    public void MakeMedicine()
+
+    class MedicinalPlant
     {
-        bool isEnough = false;
-        
-        foreach (var item in _medicinalPlants)
+        public void CollectPlant(string plant)
         {
-            if (item.Value > 0)
-            {
-                isEnough = true;
-            }
-            else
-            {
-                isEnough =  false;
-            }
+            Console.WriteLine("Зібрано рослину" + plant);
         }
-        
-        Console.WriteLine($"Enough medicine {isEnough}");
-        if (isEnough)
+
+        public void MakeMedicine()
         {
-            Console.WriteLine("Make a first aid kit");
+            Console.WriteLine("Ліки виготовлено");
         }
-        
     }
-}
 
-// Завдання 6: Клас "Пастка"
-class Trap
-{
-    private bool _isPutTrap = false;
-
-    public Trap()
+    class Trap
     {
-        _isPutTrap = true;
+        public void SetTrap()
+        {
+            Console.WriteLine("Пастку встановлено");
+        }
+
+        public void TriggerTrap()
+        {
+            Console.WriteLine("Пастка спрацювала");
+        }
     }
     
-    public void SetTrap()
+    class KnightSword
     {
-        _isPutTrap = true;
-        Console.WriteLine("Пастку встановлено.");
-    }
+        public int Durability { get; set; } = 100;
 
-    public void TriggerTrap()
-    {
-        _isPutTrap = false;
-        Console.WriteLine("Пастка спрацювала!");
-    }
-}
-
-// Завдання 7: Клас "Меч Лицаря"
-class KnightSword
-{
-    private int _durability  = 100;
-
-    public void Attack()
-    {
-        if (_durability <= 0) return;
-        _durability -= 10;
-        Console.WriteLine("Атака мечем! Міцність: " + _durability);
-    }
-
-    public void ShowStatus()
-    {
-        Console.WriteLine("Стан меча: " + _durability);
-    }
-
-    public void RepairSward(int heal = 10)
-    {
-        _durability += heal;
-        if (_durability > 100)
+        public void Attack()
         {
-            _durability = 100;
+            Durability -= 10;
+            Console.WriteLine("Меч атакуе Міцність " + Durability);
+        }
+
+        public void ShowState()
+        {
+            Console.WriteLine("Стан меча " + Durability);
         }
     }
-}
 
-// Завдання 8: Клас "Рецепт"
-class Recipe
-{
-    private List<string> ingredients = new List<string>();
 
-    public void AddIngredient(string ingredient)
+    class Recipe
     {
-        ingredients.Add(ingredient);
-        Console.WriteLine("Додано інгредієнт: " + ingredient);
-    }
+        private List<string> ingredients = new List<string>();
 
-    public void ShowRecipe()
-    {
-        Console.WriteLine("Інгредієнти рецепту:");
-        foreach (var item in ingredients)
+        public void AddIngredient(string ingredient)
         {
-            Console.WriteLine("- " + item);
+            ingredients.Add(ingredient);
+        }
+
+        public void ShowRecipe()
+        {
+            Console.WriteLine("Інгредієнти рецепту");
+            foreach (var i in ingredients)
+            {
+                Console.WriteLine( i );
+            }
         }
     }
-}

@@ -66,7 +66,7 @@ public class Renderer
         }
     }
 
-    // ===== Compose + Render =====
+    // Compose + Render
     // Композитний кадр
     
     public char[,] Compose(int w, int h, params char[][,] layers)
