@@ -23,9 +23,9 @@ using System.Text.Json;
 
 // 60 балів
 // Завдання, реестрація та логінізація нового гравця + 10 балів
-// На вибір гра з людиною або опонентом + 10 балів
-// HealthComponent для Character + 10 балів
 // UI хто проти кого грає + 5 балів
+// На вибір гра з людиною або опонентом + 10 балів
+// HealthComponent для Character  + 10 балів
 // Кількість поразок та виграшів + 5 балів
 
 // Роман, ДЗ Полі
@@ -45,8 +45,22 @@ namespace Hearthstone
             SetSettings(150, 50);
             
             string path = Path.Combine(AppContext.BaseDirectory, "Data");
+            
+            //string path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, $"Data"));
+            
             string jsonPath = Directory.GetFiles(path).First(x => x.EndsWith(".json"));
-            Console.WriteLine(jsonPath);
+            
+            List<Card> allCards = await GetCardsFromJsonAsync(jsonPath);
+
+            Character character = new Character("Player", 3, allCards);
+
+            for (int i = 0; i < 5; i++)
+            {
+                character.ChooseCard();
+            }
+
+            character.DisplayCardsOnHand();
+            
             
             Console.ReadKey();
         }
@@ -58,6 +72,24 @@ namespace Hearthstone
             Console.OutputEncoding = Encoding.UTF8;
             Console.WindowWidth = width;
             Console.WindowHeight = height;
+        }
+
+        private static async Task<List<Card>> GetCardsFromJsonAsync(string jsonPath)
+        {
+            List<Card> allcards = new List<Card>();
+
+            try
+            {
+                string json = await File.ReadAllTextAsync(jsonPath);
+                allcards = JsonSerializer.Deserialize<List<Card>>(json) ?? new List<Card>() ;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            
+            return allcards;
         }
     }
 }
