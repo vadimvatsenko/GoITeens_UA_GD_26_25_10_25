@@ -68,10 +68,14 @@ namespace Hearthstone
         private static void SetSettings(int width, int height)
         {
             Console.CursorVisible = false;
+            if (OperatingSystem.IsWindows())
+            {
+                Console.WindowWidth = width;
+                Console.WindowHeight = height;
+            }
             Console.InputEncoding = Encoding.UTF8;
             Console.OutputEncoding = Encoding.UTF8;
-            Console.WindowWidth = width;
-            Console.WindowHeight = height;
+            
         }
 
         private static async Task<List<Card>> GetCardsFromJsonAsync(string jsonPath)
