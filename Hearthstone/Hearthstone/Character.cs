@@ -2,7 +2,7 @@
 
 public class Character
 {
-    private string _name;
+    public string Name {get; private set;}
     public int Health { get; private set; }
     public bool IsAlive = true;
     public List<Card> CardsOnHand { get; private set; } 
@@ -10,7 +10,7 @@ public class Character
 
     public Character(string name, int health, List<Card> cardsOnDeck)
     {
-        _name = name;
+        Name = name;
         Health = health;
         _cardsOnDeck = cardsOnDeck;
         CardsOnHand = new List<Card>();
@@ -38,7 +38,7 @@ public class Character
             CardsOnHand.Add(card);
             _cardsOnDeck.Remove(card);
             
-            Console.WriteLine($"{_name} take card {card.Name}");
+            //Console.WriteLine($"{Name} take card {card.Name}");
         }
         else
         {
@@ -68,5 +68,11 @@ public class Character
         }
     }
 
-    public void DisplayCardsOnHand() => CardsOnHand.ForEach(c => c.Draw());
+    public void DisplayCardsOnHand()
+    {
+        foreach (Card card in CardsOnHand)
+        {
+            card.Draw();
+        }
+    }
 }

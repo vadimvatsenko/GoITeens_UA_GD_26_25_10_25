@@ -22,11 +22,13 @@ using System.Text.Json;
 // Перевірка на перемогу, поразку.
 
 // 60 балів
+// HealthComponent для Character та карти  + 10 балів
 // Завдання, реестрація та логінізація нового гравця + 10 балів
+// Кількість поразок та виграшів + 5 балів
 // UI хто проти кого грає + 5 балів
 // На вибір гра з людиною або опонентом + 10 балів
-// HealthComponent для Character  + 10 балів
-// Кількість поразок та виграшів + 5 балів
+
+
 
 // Роман, ДЗ Полі
 // Async
@@ -51,18 +53,66 @@ namespace Hearthstone
             string jsonPath = Directory.GetFiles(path).First(x => x.EndsWith(".json"));
             
             List<Card> allCards = await GetCardsFromJsonAsync(jsonPath);
+            
+            Character player = new Character("Player", 3, allCards);
+            Character enemy = new Character("Enemy",  3, allCards);
 
-            Character character = new Character("Player", 3, allCards);
-
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
-                character.ChooseCard();
+                player.ChooseCard();
+                enemy.ChooseCard();
             }
 
-            character.DisplayCardsOnHand();
-            
-            
-            Console.ReadKey();
+            while (true)
+            {
+                Console.WriteLine("Player Choose Card");
+                player.ChooseCard();
+                
+                Console.WriteLine("Shoe all Player Cards: ");
+                player.DisplayCardsOnHand();
+                
+                Card playerCard = null;
+
+                while (playerCard == null)
+                {
+                    Console.Write("Player Choose Cards: ");
+                    int selectedIndex = int.Parse(Console.ReadLine());
+                    playerCard = player.GetCardFromIndex(selectedIndex);
+                }
+                
+                /*Console.WriteLine($"{player.Name} Choose Card: {playerCard.Name}");
+                playerCard.Draw();*/
+                
+                Console.WriteLine("Enter any key for continue");
+                Console.ReadKey();
+                
+                Console.Clear();
+                
+                Console.WriteLine($"{enemy.Name} start play");
+                enemy.ChooseCard();
+                
+                Random random = new Random();
+                int index = random.Next(0, enemy.CardsOnHand.Count);
+                Card enemyCard = enemy.GetCardFromIndex(index);
+                
+                Console.WriteLine("Enter any key for continue");
+                Console.ReadKey();
+                
+                Console.Clear();
+                
+                Console.WriteLine($"{player.Name} attack card: {playerCard.Name}");
+                Console.ForegroundColor = ConsoleColor.Green;
+                playerCard.Draw();
+                
+                Console.ResetColor();
+                
+                Console.WriteLine($"{enemy.Name} attack card: {enemyCard.Name}");
+                Console.ForegroundColor = ConsoleColor.Red;
+                enemyCard.Draw();
+
+                Console.ReadKey();
+
+            }
         }
 
         private static void SetSettings(int width, int height)
@@ -75,7 +125,6 @@ namespace Hearthstone
             }
             Console.InputEncoding = Encoding.UTF8;
             Console.OutputEncoding = Encoding.UTF8;
-            
         }
 
         private static async Task<List<Card>> GetCardsFromJsonAsync(string jsonPath)

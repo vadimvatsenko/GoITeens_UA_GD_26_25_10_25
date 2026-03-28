@@ -13,20 +13,19 @@ namespace Project
             Unit unit = new Unit("Biba", 109, 33, 29);
             Unit unit1 = new Unit("Boba", 141, 11, 35);
 
+            sword.Sharpen();
+            bow.Reload();
+
             unit.TakeWeapon(sword);
             unit.Attack(unit1);
             
-            sword.Sharpen();
-            bow.Reload();
+            Console.WriteLine();
 
             unit1.TakeWeapon(bow);
             unit1.Attack(unit);
             
             Console.WriteLine();
             
-            Console.WriteLine();
-            
-
             Console.ReadKey();
         }
     }
@@ -38,8 +37,8 @@ namespace Project
         public int Health { get; private set; }
         public int Defence { get; private set; }
         public int DodgeChance { get; private set; }
-
-        private Weapon _weapon;
+        
+        public Weapon Weapon {get; private set;}
 
         public Unit(string name, int health, int defence, int dodgeChance)
         {
@@ -47,16 +46,6 @@ namespace Project
             Health = health;
             Defence = defence;
             DodgeChance = dodgeChance;
-        }
-
-        public void TakeWeapon(Weapon weapon) => _weapon = weapon;
-
-        public void Attack(Unit unit)
-        {
-            if (_weapon != null)
-            {
-                _weapon.SpecialAtack(unit);
-            }
         }
 
         public void TakeDamage(string attacker, int damage, bool ignoreDef = false)
@@ -79,6 +68,16 @@ namespace Project
                 Console.WriteLine($"{attacker} hit {Name} for {finalDamage} damage");
 
             Console.WriteLine($"{Name} health: {Health}");
+        }
+
+        public void TakeWeapon(Weapon weapon)
+        {
+            Weapon = weapon;
+        }
+
+        public void Attack(Unit unit)
+        {
+            Weapon.SpecialAtack(unit);
         }
     }
 
@@ -111,7 +110,18 @@ namespace Project
             return final;
         }
 
-        public virtual void SpecialAtack(Unit unit) { }
+        public virtual void SpecialAtack(Unit unit)
+        {
+            Console.WriteLine($"{Name} special attack!");
+
+            int dmg1 = ApplyFatigue(Damage * 2);
+            if (IsCrit())
+            {
+                dmg1 *= 5;
+                Console.WriteLine($"{unit.Name} received CRIT!");
+            }
+            unit.TakeDamage(Name, dmg1);
+        }
     }
 
     public class Sword : Weapon
@@ -137,34 +147,25 @@ namespace Project
 
         public override void SpecialAtack(Unit unit)
         {
-            Console.WriteLine($"{Name} special attack!");
-
-            int dmg1 = ApplyFatigue(Damage * 2);
-            if (IsCrit())
-            {
-                dmg1 *= 5;
-                Console.WriteLine($"{unit.Name} received CRIT!");
-            }
-            unit.TakeDamage(Name, dmg1);
-            
+            base.SpecialAtack(unit);
         }
     }
 
     public class Bow : Weapon
     {
         public int ArrowCount { get; private set; }
-        private int maxArrows;
+        private int _maxArrows;
 
         public Bow(string name, int damage, int count, int range)
             : base(name, damage, range)
         {
             ArrowCount = count;
-            maxArrows = count;
+            _maxArrows = count;
         }
 
         public void Reload()
         {
-            ArrowCount = maxArrows;
+            ArrowCount = _maxArrows;
             Console.WriteLine($"{Name} reloaded!");
         }
 

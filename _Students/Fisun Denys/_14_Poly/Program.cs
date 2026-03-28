@@ -1,4 +1,4 @@
-﻿6)
+﻿
 namespace Homework_14._6
 {
     class Weapon

@@ -120,7 +120,7 @@
             Console.WriteLine("Пастка спрацювала");
         }
     }
-    
+
     class KnightSword
     {
         public int Durability { get; set; } = 100;
@@ -152,7 +152,8 @@
             Console.WriteLine("Інгредієнти рецепту");
             foreach (var i in ingredients)
             {
-                Console.WriteLine( i );
+                Console.WriteLine(i);
             }
         }
     }
+}
