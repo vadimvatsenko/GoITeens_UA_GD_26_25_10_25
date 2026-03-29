@@ -38,7 +38,7 @@ public class Character
             CardsOnHand.Add(card);
             _cardsOnDeck.Remove(card);
             
-            //Console.WriteLine($"{Name} take card {card.Name}");
+            Console.WriteLine($"{Name} take card {card.Name}");
         }
         else
         {
@@ -65,6 +65,10 @@ public class Character
         if (CardsOnHand.Contains(card))
         {
             CardsOnHand.Remove(card);
+        }
+        else
+        {
+            Console.WriteLine($"No card found {card.Name}");
         }
     }
 

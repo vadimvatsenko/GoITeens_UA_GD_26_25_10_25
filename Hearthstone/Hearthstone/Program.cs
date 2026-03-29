@@ -28,13 +28,6 @@ using System.Text.Json;
 // UI хто проти кого грає + 5 балів
 // На вибір гра з людиною або опонентом + 10 балів
 
-
-
-// Роман, ДЗ Полі
-// Async
-// Пригадаємо що зробили на минулому уроці
-// продовжуємо писати наш додаток.
-
 namespace Hearthstone
 {
     public class Program
@@ -57,18 +50,22 @@ namespace Hearthstone
             Character player = new Character("Player", 3, allCards);
             Character enemy = new Character("Enemy",  3, allCards);
 
-            for (int i = 0; i < 3; i++)
+             for (int i = 0; i < 3; i++)
             {
                 player.ChooseCard();
                 enemy.ChooseCard();
+                await Task.Delay(1000);
             }
+             
+            Console.Clear();
 
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Player Choose Card");
                 player.ChooseCard();
                 
-                Console.WriteLine("Shoe all Player Cards: ");
+                Console.WriteLine("Show all Player's Cards: ");
                 player.DisplayCardsOnHand();
                 
                 Card playerCard = null;
@@ -93,10 +90,12 @@ namespace Hearthstone
                 
                 Random random = new Random();
                 int index = random.Next(0, enemy.CardsOnHand.Count);
+                
                 Card enemyCard = enemy.GetCardFromIndex(index);
                 
-                Console.WriteLine("Enter any key for continue");
-                Console.ReadKey();
+                Console.WriteLine($"{enemy.Name} play card {enemyCard.Name}");
+                
+                await Task.Delay(3000);
                 
                 Console.Clear();
                 
@@ -109,9 +108,67 @@ namespace Hearthstone
                 Console.WriteLine($"{enemy.Name} attack card: {enemyCard.Name}");
                 Console.ForegroundColor = ConsoleColor.Red;
                 enemyCard.Draw();
+                
+                playerCard.TakeDamage(enemyCard.AttackPower);
+                enemyCard.TakeDamage(playerCard.AttackPower);
 
+                if (!enemyCard.IsAlive && playerCard.IsAlive)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"{player.Name} is win");
+                    Console.ResetColor();
+                    enemy.TakeDamage(1);
+                }
+                else if(!playerCard.IsAlive && enemyCard.IsAlive)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{player.Name} is lose");
+                    Console.ResetColor();
+                    player.TakeDamage(1);
+                }
+                else
+                {
+                    Console.ForegroundColor =  ConsoleColor.Yellow;
+                    Console.WriteLine($"It's a draw!");
+                    Console.ResetColor();
+                }
+                
+                await Task.Delay(2000);
+                
+                enemy.RemoveCardFromHand(enemyCard);
+                player.RemoveCardFromHand(playerCard);
+                
+                Console.WriteLine($"PlayerHealth {player.Health}  - EnemyHealth {enemy.Health}");
+                Console.WriteLine($"Player {player.IsAlive} - Enemy {enemy.IsAlive}");
+
+                if (!player.IsAlive)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{player.Name} is dead");
+                    Console.WriteLine($"{enemy.Name} is win!");
+                    Console.WriteLine("Enter any key for exit...");
+                    Console.ReadKey();
+                    break;
+                }
+                else if(!enemy.IsAlive)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"{enemy.Name} is dead");
+                    Console.WriteLine($"{player.Name} is win!");
+                    Console.WriteLine("Enter any key for exit...");
+                    Console.ReadKey();
+                    break;
+                }
+                else if(player.CardsOnHand.Count == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"It's a draw!");
+                    Console.WriteLine("Enter any key for exit...");
+                    Console.ReadKey();
+                    break;
+                }
+                
                 Console.ReadKey();
-
             }
         }
 
