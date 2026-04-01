@@ -109,22 +109,22 @@ namespace Hearthstone
                 Console.ForegroundColor = ConsoleColor.Red;
                 enemyCard.Draw();
                 
-                playerCard.TakeDamage(enemyCard.AttackPower);
-                enemyCard.TakeDamage(playerCard.AttackPower);
+                playerCard.HealthComponent.TakeDamage(enemyCard.AttackPower);
+                enemyCard.HealthComponent.TakeDamage(playerCard.AttackPower);
 
-                if (!enemyCard.IsAlive && playerCard.IsAlive)
+                if (!enemyCard.HealthComponent.IsAlive && playerCard.HealthComponent.IsAlive)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"{player.Name} is win");
                     Console.ResetColor();
-                    enemy.TakeDamage(1);
+                    enemy.HealthComponent.TakeDamage(1);
                 }
-                else if(!playerCard.IsAlive && enemyCard.IsAlive)
+                else if(!playerCard.HealthComponent.IsAlive && enemyCard.HealthComponent.IsAlive)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"{player.Name} is lose");
                     Console.ResetColor();
-                    player.TakeDamage(1);
+                    player.HealthComponent.TakeDamage(1);
                 }
                 else
                 {
@@ -138,10 +138,10 @@ namespace Hearthstone
                 enemy.RemoveCardFromHand(enemyCard);
                 player.RemoveCardFromHand(playerCard);
                 
-                Console.WriteLine($"PlayerHealth {player.Health}  - EnemyHealth {enemy.Health}");
-                Console.WriteLine($"Player {player.IsAlive} - Enemy {enemy.IsAlive}");
+                Console.WriteLine($"PlayerHealth {player.HealthComponent.Health}  - EnemyHealth {enemy.HealthComponent.Health}");
+                Console.WriteLine($"Player {player.HealthComponent.IsAlive} - Enemy {enemy.HealthComponent.IsAlive}");
 
-                if (!player.IsAlive)
+                if (!player.HealthComponent.IsAlive)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"{player.Name} is dead");
@@ -150,7 +150,7 @@ namespace Hearthstone
                     Console.ReadKey();
                     break;
                 }
-                else if(!enemy.IsAlive)
+                else if(!enemy.HealthComponent.IsAlive)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"{enemy.Name} is dead");

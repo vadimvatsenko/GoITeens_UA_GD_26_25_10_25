@@ -3,28 +3,19 @@
 public class Character
 {
     public string Name {get; private set;}
-    public int Health { get; private set; }
-    public bool IsAlive = true;
+    public HealthComponent HealthComponent {get; private set;}
     public List<Card> CardsOnHand { get; private set; } 
     private List<Card> _cardsOnDeck;
 
     public Character(string name, int health, List<Card> cardsOnDeck)
     {
         Name = name;
-        Health = health;
+        HealthComponent = new HealthComponent(health);
         _cardsOnDeck = cardsOnDeck;
         CardsOnHand = new List<Card>();
     }
 
-    public void TakeDamage(int damage)
-    {
-        Health -= damage;
-        if (Health <= 0)
-        {
-            Health = 0;
-            IsAlive = false;
-        }
-    }
+    
 
     public void ChooseCard()
     {

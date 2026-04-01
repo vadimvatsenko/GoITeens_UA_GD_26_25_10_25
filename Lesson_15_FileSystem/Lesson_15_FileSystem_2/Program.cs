@@ -14,7 +14,7 @@ public class Program
     private static readonly string DirPath = "save data";
 
     // Повний шлях до файлу save.json всередині папки DirPath
-    // Path.Combine правильно “склеює” частини шляху під Windows/macOS/Linux
+    // Path.Combine правильно “склеює” частини шляху під Windows/macOS/Linux /save data/save.json
     private static readonly string FilePath = Path.Combine(DirPath, "save.json");
 
     // Словник головного меню: ключ (int) -> текст пункту меню (string)
@@ -33,7 +33,8 @@ public class Program
         [2] = "Take Heal (+10HP)",  // 2 — додати здоров’я
         [3] = "Next Level (+1 level)", // 3 — підвищити рівень
         [4] = "Add Range",          // 4 — додати дальність/радіус
-        [5] = "Add Weapon"          // 5 — додати зброю в список
+        [5] = "Add Weapon",         // 5 — додати зброю в список
+        [6] = "Add Stamina"
     };
 
     // Головний метод програми. async означає, що всередині можна використовувати await
@@ -263,7 +264,13 @@ public class Program
             Console.WriteLine($"Hello user {user.Name}");
 
             // Показуємо поточні дані гравця
-            Console.WriteLine($"HP {user.PlayerData.Health} | Level {user.PlayerData.Level} | Range {user.PlayerData.Range} | Weapon {user.PlayerData.Weapons}");
+            Console.Write($"HP {user.PlayerData.Health} " +
+                              $"| Level {user.PlayerData.Level} " +
+                              $"| Range {user.PlayerData.Range} " +
+                              $"|Stamina {user.PlayerData.Stamina} ");
+            Console.Write("| All Weapons: ");
+            user.PlayerData.Weapons.ForEach(w => Console.Write($"{w}, "));
+            
             Console.WriteLine();
 
             // Виводимо всі пункти ігрового меню
@@ -309,7 +316,11 @@ public class Program
                     string? name = Console.ReadLine().Trim(); // читаємо назву зброї
                     user.PlayerData.AddWeapon(name);          // додаємо в список
                     break;
-
+                
+                case "6":
+                    // Додати стаміну
+                    user.PlayerData.Stamina += 30;
+                    break;
                 default:
                     // Якщо команда неправильна — повідомляємо і повертаємось на початок циклу
                     Console.WriteLine("Invalid option.");
@@ -336,6 +347,8 @@ public class PlayerData
 
     // Дальність/радіус
     public int Range { get; set; }
+    
+    public int Stamina { get; set; }
 
     // Метод для додавання зброї до списку
     public void AddWeapon(string weap)

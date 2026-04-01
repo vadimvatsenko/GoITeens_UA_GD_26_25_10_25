@@ -9,9 +9,10 @@ public class Card
     public string Name { get; private set; }
     [JsonPropertyName("power")]
     public int AttackPower {get; private set;}
-    [JsonPropertyName("health")]
+
+    [JsonPropertyName("health")] 
     public int Health {get; private set;}
-    public bool IsAlive { get; private set; } = true;
+    public HealthComponent HealthComponent {get; private set;}
 
     [JsonConstructor]
     public Card(string name, int attackPower, int health)
@@ -19,16 +20,7 @@ public class Card
         Name = name;
         AttackPower = attackPower;
         Health = health;
-    }
-    
-    public void TakeDamage(int damage)
-    {
-        Health -= damage;
-        if (Health <= 0)
-        {
-            Health = 0;
-            IsAlive = false;
-        }
+        HealthComponent = new HealthComponent(Health);
     }
     
     public void Draw()
